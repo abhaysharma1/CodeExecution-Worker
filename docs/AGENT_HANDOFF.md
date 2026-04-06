@@ -7,7 +7,7 @@ Last updated: 2026-04-06
 This repository currently runs in a DB-backed architecture (not the earlier placeholder-only worker).
 
 Main runtime files:
-- src/worker.ts: SQS worker loop that fetches submissions from DB, executes testcases, updates submission status, and deletes SQS message on success.
+- src/worker.ts: strict-priority dual-queue worker loop (exam queue first, practice queue second), executes testcases, updates DB, and deletes SQS message on success.
 - src/test-api.ts: Express testing API with Morgan logging.
 - src/executor.ts: Piston integration and testcase execution logic.
 - src/db.ts: DB connection and submission/testcase persistence helpers.
@@ -39,7 +39,8 @@ From worker:
 
 At minimum:
 - AWS_REGION
-- SQS_QUEUE_URL
+- EXAM_SQS_QUEUE_URL
+- PRACTICE_SQS_QUEUE_URL
 - DATABASE_URL
 - PISTON_URL
 
@@ -52,15 +53,18 @@ Also used:
 ## Execution Flow Summary
 
 Worker flow (src/worker.ts):
-1. Poll SQS.
-2. Parse submissionId from message payload.
-3. Fetch submission from DB.
-4. Mark submission processing.
-5. Fetch problem testcases from DB.
-6. Execute testcase inputs via Piston (src/executor.ts).
-7. Aggregate pass/time/memory.
-8. Mark submission completed or failed.
-9. Delete SQS message only after successful handling.
+1. Poll exam queue first.
+2. If exam queue is empty, poll practice queue.
+3. Parse payload by queue type:
+	- exam: { submissionId: string }
+	- practice: { selfSubmissionId: string }
+4. Fetch submission/selfSubmission from DB.
+5. Mark status as RUNNING (and aiStatus=PROCESSING for exam Submission).
+6. Fetch problem testcases from DB.
+7. Execute testcase inputs via Piston (src/executor.ts).
+8. Aggregate pass/time/memory.
+9. Mark record completed or failed.
+10. Delete SQS message only after successful handling.
 
 Test API flow (src/test-api.ts):
 1. Accept direct execution payload.

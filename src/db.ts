@@ -1,4 +1,4 @@
-import { PrismaClient, type Submission } from "./generated/prisma/client";
+import { PrismaClient, type Submission, type selfSubmission as SelfSubmission } from "./generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { config } from "./config";
 import { logger } from "./logger";
@@ -19,6 +19,10 @@ export async function disconnectDb(): Promise<void> {
 
 export async function getSubmissionById(submissionId: string): Promise<Submission | null> {
   return prisma.submission.findUnique({ where: { id: submissionId } });
+}
+
+export async function getSelfSubmissionById(selfSubmissionId: string): Promise<SelfSubmission | null> {
+  return prisma.selfSubmission.findUnique({ where: { id: selfSubmissionId } });
 }
 
 type RawCaseItem = { input?: unknown; output?: unknown; ouptut?: unknown };
@@ -109,6 +113,57 @@ export async function markSubmissionFailed(
     where: { id: submissionId },
     data: {
       aiStatus: "FAILED",
+      status: "INTERNAL_ERROR",
+      passedTestcases: partial?.passedCount ?? 0,
+      totalTestcases: partial?.totalTestcases ?? 0,
+      executionTime: partial?.executionTimeMs ?? 0,
+      memory: partial?.memoryKb ?? 0
+    }
+  });
+}
+
+export async function markSelfSubmissionProcessing(selfSubmissionId: string): Promise<void> {
+  await prisma.selfSubmission.update({
+    where: { id: selfSubmissionId },
+    data: {
+      status: "RUNNING"
+    }
+  });
+}
+
+export async function markSelfSubmissionCompleted(
+  selfSubmissionId: string,
+  execution: ExecutionResult
+): Promise<void> {
+  const allPassed = execution.passedCount === execution.totalTestcases;
+  const status = allPassed
+    ? "ACCEPTED"
+    : execution.passedCount > 0
+      ? "PARTIAL"
+      : "WRONG_ANSWER";
+
+  await prisma.selfSubmission.update({
+    where: { id: selfSubmissionId },
+    data: {
+      status,
+      passedTestcases: execution.passedCount,
+      totalTestcases: execution.totalTestcases,
+      executionTime: execution.executionTimeMs,
+      memory: execution.memoryKb
+    }
+  });
+}
+
+export async function markSelfSubmissionFailed(
+  selfSubmissionId: string,
+  error: string,
+  partial?: Partial<Pick<ExecutionResult, "passedCount" | "totalTestcases" | "executionTimeMs" | "memoryKb">>
+): Promise<void> {
+  logger.error(`Self submission ${selfSubmissionId} failed`, { error });
+
+  await prisma.selfSubmission.update({
+    where: { id: selfSubmissionId },
+    data: {
       status: "INTERNAL_ERROR",
       passedTestcases: partial?.passedCount ?? 0,
       totalTestcases: partial?.totalTestcases ?? 0,

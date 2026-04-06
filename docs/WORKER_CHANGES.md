@@ -32,6 +32,31 @@
   - No pass: aiStatus=COMPLETED, status=WRONG_ANSWER
   - Runtime/internal failure: aiStatus=FAILED, status=INTERNAL_ERROR
 
+## Dual Queue + Unified Status Changes (Latest)
+- Worker now polls two queues with strict priority:
+  - Exam queue first
+  - Practice queue only when exam queue is empty
+- Added queue-specific payload support:
+  - Exam queue payload: `{ submissionId: string }`
+  - Practice queue payload: `{ selfSubmissionId: string }`
+- Practice queue execution now updates `selfSubmission` records.
+- Exam queue execution continues to update `Submission` records.
+- Both `Submission.status` and `selfSubmission.status` now use one shared enum: `ExecutionStatus`.
+- Legacy enums were removed:
+  - `SubmissionStatus`
+  - `submissionStatus`
+- Added `BAD_SCALING` to the shared enum for future complexity checks.
+- `Submission.aiStatus` remains unchanged for exam processing lifecycle.
+
+### Data Migration Mapping
+- Existing `selfSubmission` values map to the new enum as follows:
+  - `ACCEPTED` -> `ACCEPTED`
+  - `BAD_SCALING` -> `BAD_SCALING`
+  - `BAD_ALGORITHM` -> `WRONG_ANSWER`
+
+Migration SQL for this is in:
+- `prisma/migrations/20260406_unify_execution_status/migration.sql`
+
 ## Testing API Clarification Applied
 You requested a simple in-project endpoint only to verify execution.
 

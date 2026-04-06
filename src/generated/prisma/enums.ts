@@ -40,15 +40,6 @@ export const ProgrammingLanguage = {
 export type ProgrammingLanguage = (typeof ProgrammingLanguage)[keyof typeof ProgrammingLanguage]
 
 
-export const submissionStatus = {
-  ACCEPTED: 'ACCEPTED',
-  BAD_SCALING: 'BAD_SCALING',
-  BAD_ALGORITHM: 'BAD_ALGORITHM'
-} as const
-
-export type submissionStatus = (typeof submissionStatus)[keyof typeof submissionStatus]
-
-
 export const GeneratorType = {
   ARRAY: 'ARRAY',
   STRING: 'STRING',
@@ -89,7 +80,7 @@ export const AiProcessingStatus = {
 export type AiProcessingStatus = (typeof AiProcessingStatus)[keyof typeof AiProcessingStatus]
 
 
-export const SubmissionStatus = {
+export const ExecutionStatus = {
   PENDING: 'PENDING',
   RUNNING: 'RUNNING',
   ACCEPTED: 'ACCEPTED',
@@ -99,10 +90,11 @@ export const SubmissionStatus = {
   MEMORY_LIMIT: 'MEMORY_LIMIT',
   RUNTIME_ERROR: 'RUNTIME_ERROR',
   COMPILE_ERROR: 'COMPILE_ERROR',
-  INTERNAL_ERROR: 'INTERNAL_ERROR'
+  INTERNAL_ERROR: 'INTERNAL_ERROR',
+  BAD_SCALING: 'BAD_SCALING'
 } as const
 
-export type SubmissionStatus = (typeof SubmissionStatus)[keyof typeof SubmissionStatus]
+export type ExecutionStatus = (typeof ExecutionStatus)[keyof typeof ExecutionStatus]
 
 
 export const ExamAttemptStatus = {

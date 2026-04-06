@@ -21,7 +21,8 @@ function parseIntEnv(name: string, defaultValue: number): number {
 export const config = {
   nodeEnv: process.env.NODE_ENV ?? "development",
   awsRegion: requireEnv("AWS_REGION"),
-  sqsQueueUrl: requireEnv("SQS_QUEUE_URL"),
+  examSqsQueueUrl: requireEnv("EXAM_SQS_QUEUE_URL"),
+  practiceSqsQueueUrl: requireEnv("PRACTICE_SQS_QUEUE_URL"),
   databaseUrl: requireEnv("DATABASE_URL"),
   pistonUrl: requireEnv("PISTON_URL").replace(/\/$/, ""),
   port: parseIntEnv("PORT", 3000),

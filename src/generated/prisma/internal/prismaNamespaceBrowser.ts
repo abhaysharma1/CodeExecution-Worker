@@ -240,10 +240,12 @@ export type RunTestCaseScalarFieldEnum = (typeof RunTestCaseScalarFieldEnum)[key
 
 export const SelfSubmissionScalarFieldEnum = {
   id: 'id',
-  code: 'code',
+  sourceCode: 'sourceCode',
   language: 'language',
-  noOfPassedCases: 'noOfPassedCases',
-  failedCase: 'failedCase',
+  passedTestcases: 'passedTestcases',
+  totalTestcases: 'totalTestcases',
+  executionTime: 'executionTime',
+  memory: 'memory',
   createdAt: 'createdAt',
   status: 'status',
   userId: 'userId',
@@ -671,14 +673,6 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
-export const NullableJsonNullValueInput = {
-  DbNull: DbNull,
-  JsonNull: JsonNull
-} as const
-
-export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {

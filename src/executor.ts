@@ -6,7 +6,11 @@ import {
   ExecutionResult,
   NormalizedTestcase,
 } from "./types";
-import { type Submission } from "./generated/prisma/client";
+
+interface SubmissionCodeSource {
+  language: string;
+  sourceCode: string;
+}
 
 interface PistonResponse {
   run?: {
@@ -72,7 +76,7 @@ async function runCode(
 }
 
 async function runSingleTestcase(
-  submission: Submission,
+  submission: SubmissionCodeSource,
   testcase: NormalizedTestcase,
 ) {
   const runResult = await runCode({
@@ -103,7 +107,7 @@ async function runSingleTestcase(
 }
 
 export async function executeSubmission(
-  submission: Submission,
+  submission: SubmissionCodeSource,
   testcases: NormalizedTestcase[],
 ): Promise<ExecutionResult> {
   let passedCount = 0;

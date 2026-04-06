@@ -1,5 +1,11 @@
-export interface QueueSubmissionMessage {
+export type QueueType = "exam" | "practice";
+
+export interface ExamQueueSubmissionMessage {
   submissionId: string;
+}
+
+export interface PracticeQueueSubmissionMessage {
+  selfSubmissionId: string;
 }
 
 export interface NormalizedTestcase {

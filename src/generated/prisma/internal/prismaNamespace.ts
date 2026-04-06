@@ -3425,10 +3425,12 @@ export type RunTestCaseScalarFieldEnum = (typeof RunTestCaseScalarFieldEnum)[key
 
 export const SelfSubmissionScalarFieldEnum = {
   id: 'id',
-  code: 'code',
+  sourceCode: 'sourceCode',
   language: 'language',
-  noOfPassedCases: 'noOfPassedCases',
-  failedCase: 'failedCase',
+  passedTestcases: 'passedTestcases',
+  totalTestcases: 'totalTestcases',
+  executionTime: 'executionTime',
+  memory: 'memory',
   createdAt: 'createdAt',
   status: 'status',
   userId: 'userId',
@@ -3858,14 +3860,6 @@ export const JsonNullValueInput = {
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
-export const NullableJsonNullValueInput = {
-  DbNull: DbNull,
-  JsonNull: JsonNull
-} as const
-
-export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
-
-
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -4003,16 +3997,30 @@ export type ListEnumProgrammingLanguageFieldRefInput<$PrismaModel> = FieldRefInp
 
 
 /**
- * Reference to a field of type 'submissionStatus'
+ * Reference to a field of type 'Float'
  */
-export type EnumsubmissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'submissionStatus'>
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
 /**
- * Reference to a field of type 'submissionStatus[]'
+ * Reference to a field of type 'Float[]'
  */
-export type ListEnumsubmissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'submissionStatus[]'>
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ExecutionStatus'
+ */
+export type EnumExecutionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExecutionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ExecutionStatus[]'
+ */
+export type ListEnumExecutionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExecutionStatus[]'>
     
 
 
@@ -4059,20 +4067,6 @@ export type ListEnumExamStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
  * Reference to a field of type 'AiProcessingStatus'
  */
 export type EnumAiProcessingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AiProcessingStatus'>
@@ -4083,20 +4077,6 @@ export type EnumAiProcessingStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'AiProcessingStatus[]'
  */
 export type ListEnumAiProcessingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AiProcessingStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'SubmissionStatus'
- */
-export type EnumSubmissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionStatus'>
-    
-
-
-/**
- * Reference to a field of type 'SubmissionStatus[]'
- */
-export type ListEnumSubmissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubmissionStatus[]'>
     
 
 
