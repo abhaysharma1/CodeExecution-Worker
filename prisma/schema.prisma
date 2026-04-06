@@ -1,0 +1,918 @@
+// ===== Configuration =====
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ===== User & Authentication =====
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  isOnboarded   Boolean  @default(false)
+  emailVerified Boolean  @default(false)
+  image         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  globalRoleId  String?
+
+  // Relations
+  globalRole  Role?            @relation(fields: [globalRoleId], references: [id], onDelete: SetNull)
+  exams       Exam[]           @relation("CreatedExams")
+  submissions Submission[]
+  enrollments ExamEnrollment[]
+  results     ExamResult[]
+  sessions    Session[]
+  accounts    Account[]
+
+  // Relation for Groups
+  createdGroups          Group[]                 @relation("TeacherGroups")
+  memberGroups           GroupMember[]
+  selfSubmissions        selfSubmission[]
+  examAttempts           ExamAttempt[]
+  aiconversations        AIConversation[]
+  airateLimits           AIRateLimit[]
+  studentOverallStats    StudentOverallStats?
+  studentProblemStats    StudentProblemStats[]
+  notifications          Notification[]
+  notificationRecipients NotificationRecipient[]
+
+  @@index([email])
+  @@index([globalRoleId])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([id])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(uuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(uuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("verification")
+}
+
+// ===== Problems & Test Cases =====
+model Problem {
+  id          String            @id @default(uuid())
+  number      Int               @unique
+  title       String
+  description String            @db.Text
+  difficulty  problemDifficulty
+  source      String            @default("Unknown")
+  isPublished Boolean           @default(false)
+
+  examProblems           ExamProblem[]
+  tags                   ProblemTag[]
+  testCase               TestCase? // one-to-one relation
+  runTestCase            RunTestCase? // one-to-one relation
+  selfSubmissions        selfSubmission[]
+  submissions            Submission[]
+  complexityTestingCases complexityTestingCases?
+  driverCode             driverCode[]
+  referenceSolutions     referenceSolution[]
+  problemTestGenerators  ProblemTestGenerator?
+  aiconversations        AIConversation[]
+  airateLimits           AIRateLimit[]
+  groupProblemStats      GroupProblemStats[]
+  studentProblemStats    StudentProblemStats[]
+
+  @@index([id, number, title])
+}
+
+enum expectedComplexity {
+  LOGN
+  N
+  NLOGN
+  N2
+  N3
+  EXP
+}
+
+enum problemDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum ProgrammingLanguage {
+  cpp
+  python
+  java
+  javascript
+}
+
+model TestCase {
+  id        String   @id @default(uuid())
+  cases     Json // Array of {input: string, output: string}
+  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  problemId String   @unique // one-to-one relationship
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([problemId])
+}
+
+model complexityTestingCases {
+  id                 String              @id @default(uuid())
+  cases              Json
+  expectedComplexity expectedComplexity?
+
+  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  problemId String   @unique // one-to-one relationship
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([problemId])
+}
+
+model driverCode {
+  id         String  @id @default(uuid())
+  language   ProgrammingLanguage
+  header     String?
+  template   String?
+  footer     String?
+
+  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  problemId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([language, problemId])
+  @@index([problemId])
+}
+
+model referenceSolution {
+  id         String  @id @default(uuid())
+  language   ProgrammingLanguage
+  code       String
+  problemId  String
+  problem    Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+}
+
+model RunTestCase {
+  id        String   @id @default(uuid())
+  cases     Json // Array of {input: string, output: string}
+  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  problemId String   @unique // one-to-one relationship
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([problemId])
+}
+
+model selfSubmission {
+  id              String           @id @default(uuid())
+  code            String
+  language        String
+  noOfPassedCases Int
+  failedCase      Json?
+  createdAt       DateTime         @default(now())
+  status          submissionStatus
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  problem   Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  problemId String
+
+  @@index([userId])
+}
+
+enum submissionStatus {
+  ACCEPTED
+  BAD_SCALING
+  BAD_ALGORITHM
+}
+
+model ProblemTestGenerator {
+  id String @id @default(uuid())
+
+  problemId String  @unique
+  problem   Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  type    GeneratorType
+  pattern GeneratorPattern
+
+  minValue Int
+  maxValue Int
+
+  expectedComplexity expectedComplexity
+
+  sizes Int[] // e.g. [1000, 2000, 4000, 8000]
+
+  createdAt DateTime @default(now())
+
+  @@index([problemId])
+}
+
+enum GeneratorType {
+  ARRAY
+  STRING
+  MATRIX
+}
+
+enum GeneratorPattern {
+  RANDOM
+  SORTED
+  REVERSE
+  CONSTANT
+}
+
+// ===== Exams & Submissions =====
+model Exam {
+  id          String     @id @default(uuid())
+  title       String
+  description String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  isPublished Boolean    @default(false)
+  durationMin Int
+  sebEnabled  Boolean    @default(false)
+  status      ExamStatus
+
+  creator         User             @relation("CreatedExams", fields: [creatorId], references: [id])
+  creatorId       String
+  problems        ExamProblem[]
+  enrollments     ExamEnrollment[]
+  submissions     Submission[]
+  results         ExamResult[]
+  startDate       DateTime
+  endDate         DateTime
+  examGroups      ExamGroup[]
+  examAttempts    ExamAttempt[]
+  aiEvaluations   AiEvaluation[]
+  aiconversations AIConversation[]
+  examAnalytics   ExamAnalytics?
+
+  @@index([id, creatorId])
+}
+
+enum ExamStatus {
+  scheduled
+  active
+  completed
+  ai_processing
+  finished
+}
+
+model ExamProblem {
+  id        String  @id @default(uuid())
+  order     Int
+  exam      Exam    @relation(fields: [examId], references: [id], onDelete: Cascade)
+  examId    String
+  problem   Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  problemId String
+
+  @@index([examId])
+}
+
+model ExamEnrollment {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  exam   Exam   @relation(fields: [examId], references: [id])
+  examId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@unique([examId, userId])
+}
+
+model Submission {
+  id        String @id @default(uuid())
+  attemptId String
+  problemId String
+
+  language   String
+  sourceCode String
+
+  passedTestcases Int    @default(0)
+  totalTestcases  Int    @default(0)
+  executionTime   Float?
+  memory          Float?
+
+
+  isFinal  Boolean @default(false)
+  aiQueued Boolean @default(false)
+
+  // ✅ ADD THIS
+  aiStatus AiProcessingStatus @default(PENDING)
+  status   SubmissionStatus
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  attempt      ExamAttempt   @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  problem      Problem       @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  user         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String?
+  exam         Exam?         @relation(fields: [examId], references: [id], onDelete: Cascade)
+  examId       String?
+  aiEvaluation AiEvaluation?
+
+  @@index([userId, examId])
+}
+
+enum AiProcessingStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum SubmissionStatus {
+  PENDING // Accepted by backend, not yet sent to judge
+  RUNNING // Being executed by Judge0
+  ACCEPTED // All test cases passed
+  PARTIAL // Some test cases passed
+  WRONG_ANSWER
+  TIME_LIMIT
+  MEMORY_LIMIT
+  RUNTIME_ERROR
+  COMPILE_ERROR
+  INTERNAL_ERROR // Judge failure / unexpected error
+}
+
+model ExamResult {
+  id        String   @id @default(uuid())
+  score     Int
+  createdAt DateTime @default(now())
+
+  exam   Exam   @relation(fields: [examId], references: [id])
+  examId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@index([examId, userId])
+}
+
+model ExamGroup {
+  id      String @id @default(uuid())
+  examId  String
+  groupId String
+
+  exam  Exam  @relation(fields: [examId], references: [id], onDelete: Cascade)
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([examId, groupId])
+}
+
+model ExamAttempt {
+  id        String @id @default(uuid())
+  examId    String
+  studentId String
+
+  status ExamAttemptStatus @default(NOT_STARTED)
+
+  lastHeartbeatAt DateTime // to track disconnections 
+  disconnectCount Int      @default(0)
+
+  startedAt   DateTime
+  expiresAt   DateTime
+  submittedAt DateTime?
+
+  totalScore Int @default(0)
+
+  exam    Exam @relation(fields: [examId], references: [id])
+  student User @relation(fields: [studentId], references: [id])
+
+  submissions Submission[]
+
+  @@unique([examId, studentId])
+  @@index([examId, studentId])
+}
+
+enum ExamAttemptStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  SUBMITTED
+  AUTO_SUBMITTED
+  TERMINATED
+}
+
+model AiEvaluation {
+  id           String @id @default(uuid())
+  submissionId String @unique
+
+  timeComplexity  String?
+  spaceComplexity String?
+  optimal         Boolean?
+
+  qualityScore Int?
+  aiScore      Int?
+
+  feedback String?
+
+  createdAt DateTime @default(now())
+
+  submission Submission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  exam       Exam?      @relation(fields: [examId], references: [id], onDelete: Cascade)
+  examId     String?
+
+  @@index([submissionId])
+}
+
+// ===== Student Groups =====
+model Group {
+  id          String        @id @default(uuid())
+  name        String
+  description String?
+  creator     User          @relation("TeacherGroups", fields: [creatorId], references: [id])
+  creatorId   String
+  members     GroupMember[]
+  noOfMembers Int           @default(0)
+  createdAt   DateTime      @default(now())
+  joinByLink  Boolean       @default(true)
+  examGroups  ExamGroup[]
+  type        groupType     @default(CLASS)
+
+  aiEnabled           Boolean               @default(false)
+  aiMaxMessages       Int? // per student per exam per problem
+  aiMaxTokens         Int? // per student per exam per problem
+  aiconversations     AIConversation[]
+  groupOverallStats   GroupOverallStats?
+  studentOverallStats StudentOverallStats[]
+  groupProblemStats   GroupProblemStats[]
+  studentProblemStats StudentProblemStats[]
+
+  @@index([creatorId])
+}
+
+enum groupType {
+  CLASS
+  LAB
+}
+
+model GroupMember {
+  id String @id @default(uuid())
+
+  groupId String
+  userId  String
+  roleId  String
+
+  addedAt DateTime @default(now())
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  role  Role? @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userId])
+  @@index([groupId, userId])
+  @@index([roleId])
+}
+
+// ===== RBAC System =====
+
+model Role {
+  id String @id @default(cuid())
+
+  name        String // "Teacher", "HOD", "TA", etc
+  description String?
+
+  scope RoleScope
+
+  permissions RolePermission[]
+  members     GroupMember[]
+
+  createdAt DateTime @default(now())
+  users     User[]
+
+  @@index([scope])
+}
+
+model Permission {
+  id          String  @id @default(cuid())
+  key         String  @unique // "CREATE_EXAM", "VIEW_ALL_GROUPS"
+  description String?
+
+  roles RolePermission[]
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@index([permissionId])
+}
+
+enum RoleScope {
+  GROUP
+  DEPARTMENT
+  ORGANIZATION
+  PLATFORM
+}
+
+// ===== Tags System =====
+model Tag {
+  id       String       @id @default(uuid())
+  name     String       @unique
+  problems ProblemTag[]
+}
+
+model ProblemTag {
+  problem   Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  problemId String
+
+  tag   Tag    @relation(fields: [tagId], references: [id])
+  tagId String
+
+  @@id([problemId, tagId])
+}
+
+// AI Tables
+
+model AIConversation {
+  id String @id @default(cuid())
+
+  studentId String
+  groupId   String
+  examId    String
+  problemId String
+
+  messageCount Int @default(0)
+  totalTokens  Int @default(0)
+
+  isClosed Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student User    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  group   Group   @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  exam    Exam    @relation(fields: [examId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  messages AIMessage[]
+
+  @@unique([studentId, examId, problemId])
+}
+
+model AIMessage {
+  id String @id @default(cuid())
+
+  conversationId String
+  role           AIRole
+  content        String
+
+  tokenCount Int?
+  modelUsed  String?
+
+  createdAt DateTime @default(now())
+
+  conversation AIConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+}
+
+enum AIRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+model AIRateLimit {
+  id          String   @id @default(cuid())
+  studentId   String
+  problemId   String
+  lastRequest DateTime
+
+  student User    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, problemId])
+}
+
+// Stats Tables
+
+model GroupOverallStats {
+  id      String @id @default(uuid())
+  groupId String @unique
+
+  totalExams     Int
+  totalStudents  Int
+  activeStudents Int @default(0) // Students with activity in last 7 days
+
+  avgScoreAllExams Float
+  overallPassRate  Float
+  completionRate   Float @default(0) // Percentage of students who've completed >= 1 exam
+
+  highestExamAvg Float
+  lowestExamAvg  Float
+
+  // Problem performance
+  weakestProblemId String?
+  hardestProblemId String?
+
+  // Time tracking
+  avgTimePerStudent Float @default(0) // minutes
+  totalTimeSpent    Float @default(0) // minutes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@index([groupId])
+  @@index([createdAt])
+  @@index([avgScoreAllExams, groupId]) // For sorting by performance
+}
+
+model StudentOverallStats {
+  id        String @id @default(uuid())
+  groupId   String
+  studentId String @unique
+
+  totalScore           Float
+  totalExams           Int
+  avgScore             Float
+  completionPercentage Float @default(0) // 0-100
+
+  totalAttempts         Int
+  avgAttemptsPerProblem Float @default(1)
+
+  // Topic tracking
+  weakTopics   Json @default(dbgenerated("'[]'::jsonb")) // Array of topic strings
+  strongTopics Json @default(dbgenerated("'[]'::jsonb")) // Array of topic strings
+
+  // Activity tracking
+  lastActive DateTime? @default(now())
+
+  // Trend indicators
+  scoreTrend      String @default("stable") // "improving", "declining", "stable"
+  scoreTrendValue Float  @default(0) // percentage change in last 5 attempts
+
+  // Time tracking
+  avgTimePerProblem Float @default(0) // minutes
+  totalTimeSpent    Float @default(0) // minutes
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  group   Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  student User  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, studentId])
+  @@index([groupId])
+  @@index([studentId])
+  @@index([avgScore, groupId]) // For sorting by score
+  @@index([lastActive, groupId]) // For recent activity
+}
+
+model GroupProblemStats {
+  id        String @id @default(uuid())
+  groupId   String
+  problemId String
+
+  totalStudents  Int
+  attemptedCount Int
+  acceptedCount  Int
+  totalAttempts  Int
+
+  successRate Float @default(0) // Percentage (0-100)
+  avgRuntime  Float
+  avgMemory   Float
+  avgTime     Float @default(0) // Time to solve in minutes
+
+  // Difficulty detection
+  difficultyTier String @default("medium") // "easy", "medium", "hard" - Detected from stats, not predefined
+  failureRate    Float  @default(0) // Students who failed this problem
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  group   Group   @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, problemId])
+  @@index([groupId, problemId])
+  @@index([problemId])
+  @@index([groupId])
+  @@index([successRate, groupId]) // For filtering by difficulty
+}
+
+model StudentProblemStats {
+  id        String @id @default(uuid())
+  studentId String
+  groupId   String
+  problemId String
+
+  attempts Int
+  solved   Boolean
+
+  // Weakness tracking
+  isWeak      Boolean @default(false) // Marked as weak topic if <50% pass rate or failed recently
+  successRate Float   @default(0) // Percentage (0-100) - what % of this student's attempts passed
+
+  // Time tracking
+  avgTime   Float @default(0) // Average time to solve in minutes
+  totalTime Float @default(0) // Total time spent on this problem
+
+  // Activity tracking
+  lastAttemptAt  DateTime?
+  firstAttemptAt DateTime  @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  group   Group   @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  student User    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  problem Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, problemId, groupId])
+  @@index([studentId, problemId])
+  @@index([studentId, isWeak]) // For filtering weak topics
+}
+
+// ===== Organization-Level Analytics =====
+
+model OrganizationAnalytics {
+  id String @id @default(uuid())
+
+  // Scope (organization level)
+  // Note: This assumes you have an Organization model or use a root group/department
+  // For now, we'll use a departmentId or organizationId placeholder
+  organizationId String // Links to organization context (implementation-specific)
+
+  // Group-level aggregates
+  totalGroups  Int @default(0)
+  activeGroups Int @default(0) // Groups with activity in last 7 days
+
+  // Student aggregates
+  totalStudents  Int @default(0)
+  activeStudents Int @default(0)
+
+  // Performance aggregates
+  avgScore        Float @default(0)
+  overallPassRate Float @default(0)
+  completionRate  Float @default(0) // Percentage of students with >= 1 completed exam
+
+  // Problem data
+  totalProblems     Int  @default(0)
+  weakestProblemIds Json @default(dbgenerated("'[]'::jsonb")) // Array of top 5 most-failed problem IDs
+  hardestProblemIds Json @default(dbgenerated("'[]'::jsonb")) // Array of top 5 hardest problem IDs
+
+  // Time tracking
+  avgTimePerStudent Float @default(0)
+  totalTimeSpent    Float @default(0)
+
+  // Trend data
+  scoreDistribution Json @default(dbgenerated("'{}'::jsonb")) // { "0-20": 5, "20-40": 10, ... }
+  performanceTrend  Json @default(dbgenerated("'[]'::jsonb")) // [ { week: 1, avgScore: 75 }, ... ]
+
+  // Engagement metrics
+  participationRate        Float @default(0)
+  avgSubmissionsPerStudent Float @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId])
+  @@index([organizationId])
+  @@index([updatedAt])
+}
+
+// ===== Exam-Level Analytics =====
+
+model ExamAnalytics {
+  id String @id @default(uuid())
+
+  examId String @unique
+  exam   Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  // Participant stats
+  totalEnrolled  Int   @default(0)
+  totalAttempted Int   @default(0)
+  totalCompleted Int   @default(0)
+  completionRate Float @default(0)
+
+  // Score stats
+  avgScore     Float @default(0)
+  highestScore Float @default(0)
+  lowestScore  Float @default(0)
+  medianScore  Float @default(0)
+
+  // Distribution
+  scoreDistribution Json @default(dbgenerated("'{}'::jsonb")) // { "0-20": 5, "20-40": 10, ... }
+
+  // Problem-level
+  problemDifficulties Json @default(dbgenerated("'[]'::jsonb")) // Array of { problemId, avgScore, failureRate }
+
+  // Time stats
+  avgTimeToComplete Float @default(0) // minutes
+  avgAttempts       Float @default(1)
+
+  // Submission stats
+  totalSubmissions Int @default(0)
+  acceptedCount    Int @default(0)
+  partialCount     Int @default(0)
+  failedCount      Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([examId])
+  @@index([updatedAt])
+}
+
+// ===== Notification System =====
+
+model Notification {
+  id        String           @id @default(cuid())
+  title     String
+  message   String
+  type      NotificationType
+  createdAt DateTime         @default(now())
+
+  senderId String
+  sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  groupId String?
+  examId  String?
+
+  priority NotificationPriority @default(NORMAL)
+
+  recipients NotificationRecipient[]
+
+  @@index([createdAt])
+  @@index([groupId])
+  @@index([examId])
+}
+
+enum NotificationType {
+  EXAM
+  ANNOUNCEMENT
+  SYSTEM
+  REMINDER
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+model NotificationRecipient {
+  id String @id @default(cuid())
+
+  notificationId String
+  userId         String
+
+  isRead Boolean   @default(false)
+  readAt DateTime?
+
+  createdAt DateTime @default(now())
+
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([notificationId, userId])
+  @@index([userId, isRead])
+}
