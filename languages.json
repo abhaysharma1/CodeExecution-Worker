@@ -1,0 +1,26 @@
+[
+  {
+    "key": "c",
+    "label": "C",
+    "monaco": "c",
+    "runtimeId": 1
+  },
+  {
+    "key": "cpp",
+    "label": "C++",
+    "monaco": "cpp",
+    "runtimeId": 2
+  },
+  {
+    "key": "python",
+    "label": "Python",
+    "monaco": "python",
+    "runtimeId": 3
+  },
+  {
+    "key": "java",
+    "label": "Java",
+    "monaco": "java",
+    "runtimeId": 4
+  }
+]

@@ -16,10 +16,10 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "../models.js"
-import { type PrismaClient } from "./class.js"
+import type * as Prisma from "../models"
+import { type PrismaClient } from "./class"
 
-export type * from '../models.js'
+export type * from '../models'
 
 export type DMMF = typeof runtime.DMMF
 
@@ -3431,6 +3431,7 @@ export const SelfSubmissionScalarFieldEnum = {
   totalTestcases: 'totalTestcases',
   executionTime: 'executionTime',
   memory: 'memory',
+  stderr: 'stderr',
   createdAt: 'createdAt',
   status: 'status',
   userId: 'userId',
@@ -3503,6 +3504,7 @@ export const SubmissionScalarFieldEnum = {
   totalTestcases: 'totalTestcases',
   executionTime: 'executionTime',
   memory: 'memory',
+  stderr: 'stderr',
   isFinal: 'isFinal',
   aiQueued: 'aiQueued',
   aiStatus: 'aiStatus',

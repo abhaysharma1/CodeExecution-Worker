@@ -2,6 +2,7 @@ import { config } from "./config";
 import {
   connectDb,
   disconnectDb,
+  getDriverCodeByProblemIdAndLanguage,
   getSelfSubmissionById,
   getSubmissionById,
   getTestcasesByProblemId,
@@ -12,7 +13,7 @@ import {
   markSubmissionFailed,
   markSubmissionProcessing
 } from "./db";
-import { executeSubmission } from "./executor";
+import { executeSubmission, SubmissionExecutionError } from "./executor";
 import { logger } from "./logger";
 import { deleteMessage, pollMessages, PolledMessage } from "./sqs";
 
@@ -37,7 +38,11 @@ export async function processExamSubmissionById(submissionId: string): Promise<v
   }
 
   try {
-    const execution = await executeSubmission(submission, testcases);
+    const driver = await getDriverCodeByProblemIdAndLanguage(
+      submission.problemId,
+      submission.language,
+    );
+    const execution = await executeSubmission(submission, testcases, driver ?? undefined);
 
     await markSubmissionCompleted(submissionId, execution);
     
@@ -48,6 +53,14 @@ export async function processExamSubmissionById(submissionId: string): Promise<v
       memoryKb: execution.memoryKb
     });
   } catch (error) {
+    if (error instanceof SubmissionExecutionError) {
+      await markSubmissionFailed(submissionId, error.message, {
+        status: error.context.status,
+        stderr: error.context.stderr,
+      });
+      throw error;
+    }
+
     const message = error instanceof Error ? error.message : "Unknown execution error";
     await markSubmissionFailed(submissionId, message);
     throw error;
@@ -71,7 +84,11 @@ export async function processPracticeSubmissionById(selfSubmissionId: string): P
   }
 
   try {
-    const execution = await executeSubmission(selfSubmission, testcases);
+    const driver = await getDriverCodeByProblemIdAndLanguage(
+      selfSubmission.problemId,
+      selfSubmission.language,
+    );
+    const execution = await executeSubmission(selfSubmission, testcases, driver ?? undefined);
 
     await markSelfSubmissionCompleted(selfSubmissionId, execution);
 
@@ -82,6 +99,14 @@ export async function processPracticeSubmissionById(selfSubmissionId: string): P
       memoryKb: execution.memoryKb
     });
   } catch (error) {
+    if (error instanceof SubmissionExecutionError) {
+      await markSelfSubmissionFailed(selfSubmissionId, error.message, {
+        status: error.context.status,
+        stderr: error.context.stderr,
+      });
+      throw error;
+    }
+
     const message = error instanceof Error ? error.message : "Unknown execution error";
     await markSelfSubmissionFailed(selfSubmissionId, message);
     throw error;

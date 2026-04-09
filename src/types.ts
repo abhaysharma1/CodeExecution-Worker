@@ -31,6 +31,11 @@ export interface ExecutionResult {
   }>;
 }
 
+export interface ExecutionFailureContext {
+  status: "COMPILE_ERROR" | "INTERNAL_ERROR";
+  stderr?: string;
+}
+
 export interface ExecuteCodeRequest {
   language: string;
   version?: string;
@@ -44,6 +49,7 @@ export interface ExecuteCodeRequest {
 export interface ExecuteCodeResponse {
   stdout: string;
   stderr?: string;
+  exitCode?: number;
   timeMs: number;
   memoryKb: number;
 }

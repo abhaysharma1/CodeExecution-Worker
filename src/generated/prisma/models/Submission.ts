@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model Submission
@@ -50,6 +50,7 @@ export type SubmissionMinAggregateOutputType = {
   totalTestcases: number | null
   executionTime: number | null
   memory: number | null
+  stderr: string | null
   isFinal: boolean | null
   aiQueued: boolean | null
   aiStatus: $Enums.AiProcessingStatus | null
@@ -70,6 +71,7 @@ export type SubmissionMaxAggregateOutputType = {
   totalTestcases: number | null
   executionTime: number | null
   memory: number | null
+  stderr: string | null
   isFinal: boolean | null
   aiQueued: boolean | null
   aiStatus: $Enums.AiProcessingStatus | null
@@ -90,6 +92,7 @@ export type SubmissionCountAggregateOutputType = {
   totalTestcases: number
   executionTime: number
   memory: number
+  stderr: number
   isFinal: number
   aiQueued: number
   aiStatus: number
@@ -126,6 +129,7 @@ export type SubmissionMinAggregateInputType = {
   totalTestcases?: true
   executionTime?: true
   memory?: true
+  stderr?: true
   isFinal?: true
   aiQueued?: true
   aiStatus?: true
@@ -146,6 +150,7 @@ export type SubmissionMaxAggregateInputType = {
   totalTestcases?: true
   executionTime?: true
   memory?: true
+  stderr?: true
   isFinal?: true
   aiQueued?: true
   aiStatus?: true
@@ -166,6 +171,7 @@ export type SubmissionCountAggregateInputType = {
   totalTestcases?: true
   executionTime?: true
   memory?: true
+  stderr?: true
   isFinal?: true
   aiQueued?: true
   aiStatus?: true
@@ -273,6 +279,7 @@ export type SubmissionGroupByOutputType = {
   totalTestcases: number
   executionTime: number | null
   memory: number | null
+  stderr: string | null
   isFinal: boolean
   aiQueued: boolean
   aiStatus: $Enums.AiProcessingStatus
@@ -316,6 +323,7 @@ export type SubmissionWhereInput = {
   totalTestcases?: Prisma.IntFilter<"Submission"> | number
   executionTime?: Prisma.FloatNullableFilter<"Submission"> | number | null
   memory?: Prisma.FloatNullableFilter<"Submission"> | number | null
+  stderr?: Prisma.StringNullableFilter<"Submission"> | string | null
   isFinal?: Prisma.BoolFilter<"Submission"> | boolean
   aiQueued?: Prisma.BoolFilter<"Submission"> | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFilter<"Submission"> | $Enums.AiProcessingStatus
@@ -341,6 +349,7 @@ export type SubmissionOrderByWithRelationInput = {
   totalTestcases?: Prisma.SortOrder
   executionTime?: Prisma.SortOrderInput | Prisma.SortOrder
   memory?: Prisma.SortOrderInput | Prisma.SortOrder
+  stderr?: Prisma.SortOrderInput | Prisma.SortOrder
   isFinal?: Prisma.SortOrder
   aiQueued?: Prisma.SortOrder
   aiStatus?: Prisma.SortOrder
@@ -369,6 +378,7 @@ export type SubmissionWhereUniqueInput = Prisma.AtLeast<{
   totalTestcases?: Prisma.IntFilter<"Submission"> | number
   executionTime?: Prisma.FloatNullableFilter<"Submission"> | number | null
   memory?: Prisma.FloatNullableFilter<"Submission"> | number | null
+  stderr?: Prisma.StringNullableFilter<"Submission"> | string | null
   isFinal?: Prisma.BoolFilter<"Submission"> | boolean
   aiQueued?: Prisma.BoolFilter<"Submission"> | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFilter<"Submission"> | $Enums.AiProcessingStatus
@@ -394,6 +404,7 @@ export type SubmissionOrderByWithAggregationInput = {
   totalTestcases?: Prisma.SortOrder
   executionTime?: Prisma.SortOrderInput | Prisma.SortOrder
   memory?: Prisma.SortOrderInput | Prisma.SortOrder
+  stderr?: Prisma.SortOrderInput | Prisma.SortOrder
   isFinal?: Prisma.SortOrder
   aiQueued?: Prisma.SortOrder
   aiStatus?: Prisma.SortOrder
@@ -422,6 +433,7 @@ export type SubmissionScalarWhereWithAggregatesInput = {
   totalTestcases?: Prisma.IntWithAggregatesFilter<"Submission"> | number
   executionTime?: Prisma.FloatNullableWithAggregatesFilter<"Submission"> | number | null
   memory?: Prisma.FloatNullableWithAggregatesFilter<"Submission"> | number | null
+  stderr?: Prisma.StringNullableWithAggregatesFilter<"Submission"> | string | null
   isFinal?: Prisma.BoolWithAggregatesFilter<"Submission"> | boolean
   aiQueued?: Prisma.BoolWithAggregatesFilter<"Submission"> | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusWithAggregatesFilter<"Submission"> | $Enums.AiProcessingStatus
@@ -440,6 +452,7 @@ export type SubmissionCreateInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -463,6 +476,7 @@ export type SubmissionUncheckedCreateInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -482,6 +496,7 @@ export type SubmissionUpdateInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -505,6 +520,7 @@ export type SubmissionUncheckedUpdateInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -526,6 +542,7 @@ export type SubmissionCreateManyInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -544,6 +561,7 @@ export type SubmissionUpdateManyMutationInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -562,6 +580,7 @@ export type SubmissionUncheckedUpdateManyInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -592,6 +611,7 @@ export type SubmissionCountOrderByAggregateInput = {
   totalTestcases?: Prisma.SortOrder
   executionTime?: Prisma.SortOrder
   memory?: Prisma.SortOrder
+  stderr?: Prisma.SortOrder
   isFinal?: Prisma.SortOrder
   aiQueued?: Prisma.SortOrder
   aiStatus?: Prisma.SortOrder
@@ -619,6 +639,7 @@ export type SubmissionMaxOrderByAggregateInput = {
   totalTestcases?: Prisma.SortOrder
   executionTime?: Prisma.SortOrder
   memory?: Prisma.SortOrder
+  stderr?: Prisma.SortOrder
   isFinal?: Prisma.SortOrder
   aiQueued?: Prisma.SortOrder
   aiStatus?: Prisma.SortOrder
@@ -639,6 +660,7 @@ export type SubmissionMinOrderByAggregateInput = {
   totalTestcases?: Prisma.SortOrder
   executionTime?: Prisma.SortOrder
   memory?: Prisma.SortOrder
+  stderr?: Prisma.SortOrder
   isFinal?: Prisma.SortOrder
   aiQueued?: Prisma.SortOrder
   aiStatus?: Prisma.SortOrder
@@ -855,6 +877,7 @@ export type SubmissionCreateWithoutUserInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -877,6 +900,7 @@ export type SubmissionUncheckedCreateWithoutUserInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -926,6 +950,7 @@ export type SubmissionScalarWhereInput = {
   totalTestcases?: Prisma.IntFilter<"Submission"> | number
   executionTime?: Prisma.FloatNullableFilter<"Submission"> | number | null
   memory?: Prisma.FloatNullableFilter<"Submission"> | number | null
+  stderr?: Prisma.StringNullableFilter<"Submission"> | string | null
   isFinal?: Prisma.BoolFilter<"Submission"> | boolean
   aiQueued?: Prisma.BoolFilter<"Submission"> | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFilter<"Submission"> | $Enums.AiProcessingStatus
@@ -944,6 +969,7 @@ export type SubmissionCreateWithoutProblemInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -965,6 +991,7 @@ export type SubmissionUncheckedCreateWithoutProblemInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1010,6 +1037,7 @@ export type SubmissionCreateWithoutExamInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1032,6 +1060,7 @@ export type SubmissionUncheckedCreateWithoutExamInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1076,6 +1105,7 @@ export type SubmissionCreateWithoutAttemptInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1097,6 +1127,7 @@ export type SubmissionUncheckedCreateWithoutAttemptInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1142,6 +1173,7 @@ export type SubmissionCreateWithoutAiEvaluationInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1164,6 +1196,7 @@ export type SubmissionUncheckedCreateWithoutAiEvaluationInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1198,6 +1231,7 @@ export type SubmissionUpdateWithoutAiEvaluationInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1220,6 +1254,7 @@ export type SubmissionUncheckedUpdateWithoutAiEvaluationInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1240,6 +1275,7 @@ export type SubmissionCreateManyUserInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1257,6 +1293,7 @@ export type SubmissionUpdateWithoutUserInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1279,6 +1316,7 @@ export type SubmissionUncheckedUpdateWithoutUserInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1299,6 +1337,7 @@ export type SubmissionUncheckedUpdateManyWithoutUserInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1317,6 +1356,7 @@ export type SubmissionCreateManyProblemInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1335,6 +1375,7 @@ export type SubmissionUpdateWithoutProblemInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1356,6 +1397,7 @@ export type SubmissionUncheckedUpdateWithoutProblemInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1376,6 +1418,7 @@ export type SubmissionUncheckedUpdateManyWithoutProblemInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1396,6 +1439,7 @@ export type SubmissionCreateManyExamInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1413,6 +1457,7 @@ export type SubmissionUpdateWithoutExamInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1435,6 +1480,7 @@ export type SubmissionUncheckedUpdateWithoutExamInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1455,6 +1501,7 @@ export type SubmissionUncheckedUpdateManyWithoutExamInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1473,6 +1520,7 @@ export type SubmissionCreateManyAttemptInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: $Enums.AiProcessingStatus
@@ -1491,6 +1539,7 @@ export type SubmissionUpdateWithoutAttemptInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1512,6 +1561,7 @@ export type SubmissionUncheckedUpdateWithoutAttemptInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1532,6 +1582,7 @@ export type SubmissionUncheckedUpdateManyWithoutAttemptInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isFinal?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiQueued?: Prisma.BoolFieldUpdateOperationsInput | boolean
   aiStatus?: Prisma.EnumAiProcessingStatusFieldUpdateOperationsInput | $Enums.AiProcessingStatus
@@ -1554,6 +1605,7 @@ export type SubmissionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   totalTestcases?: boolean
   executionTime?: boolean
   memory?: boolean
+  stderr?: boolean
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: boolean
@@ -1579,6 +1631,7 @@ export type SubmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   totalTestcases?: boolean
   executionTime?: boolean
   memory?: boolean
+  stderr?: boolean
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: boolean
@@ -1603,6 +1656,7 @@ export type SubmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   totalTestcases?: boolean
   executionTime?: boolean
   memory?: boolean
+  stderr?: boolean
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: boolean
@@ -1627,6 +1681,7 @@ export type SubmissionSelectScalar = {
   totalTestcases?: boolean
   executionTime?: boolean
   memory?: boolean
+  stderr?: boolean
   isFinal?: boolean
   aiQueued?: boolean
   aiStatus?: boolean
@@ -1637,7 +1692,7 @@ export type SubmissionSelectScalar = {
   examId?: boolean
 }
 
-export type SubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "attemptId" | "problemId" | "language" | "sourceCode" | "passedTestcases" | "totalTestcases" | "executionTime" | "memory" | "isFinal" | "aiQueued" | "aiStatus" | "status" | "createdAt" | "updatedAt" | "userId" | "examId", ExtArgs["result"]["submission"]>
+export type SubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "attemptId" | "problemId" | "language" | "sourceCode" | "passedTestcases" | "totalTestcases" | "executionTime" | "memory" | "stderr" | "isFinal" | "aiQueued" | "aiStatus" | "status" | "createdAt" | "updatedAt" | "userId" | "examId", ExtArgs["result"]["submission"]>
 export type SubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attempt?: boolean | Prisma.ExamAttemptDefaultArgs<ExtArgs>
   problem?: boolean | Prisma.ProblemDefaultArgs<ExtArgs>
@@ -1677,6 +1732,7 @@ export type $SubmissionPayload<ExtArgs extends runtime.Types.Extensions.Internal
     totalTestcases: number
     executionTime: number | null
     memory: number | null
+    stderr: string | null
     isFinal: boolean
     aiQueued: boolean
     aiStatus: $Enums.AiProcessingStatus
@@ -2122,6 +2178,7 @@ export interface SubmissionFieldRefs {
   readonly totalTestcases: Prisma.FieldRef<"Submission", 'Int'>
   readonly executionTime: Prisma.FieldRef<"Submission", 'Float'>
   readonly memory: Prisma.FieldRef<"Submission", 'Float'>
+  readonly stderr: Prisma.FieldRef<"Submission", 'String'>
   readonly isFinal: Prisma.FieldRef<"Submission", 'Boolean'>
   readonly aiQueued: Prisma.FieldRef<"Submission", 'Boolean'>
   readonly aiStatus: Prisma.FieldRef<"Submission", 'AiProcessingStatus'>

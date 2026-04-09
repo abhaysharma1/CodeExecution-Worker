@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model selfSubmission
@@ -48,6 +48,7 @@ export type SelfSubmissionMinAggregateOutputType = {
   totalTestcases: number | null
   executionTime: number | null
   memory: number | null
+  stderr: string | null
   createdAt: Date | null
   status: $Enums.ExecutionStatus | null
   userId: string | null
@@ -62,6 +63,7 @@ export type SelfSubmissionMaxAggregateOutputType = {
   totalTestcases: number | null
   executionTime: number | null
   memory: number | null
+  stderr: string | null
   createdAt: Date | null
   status: $Enums.ExecutionStatus | null
   userId: string | null
@@ -76,6 +78,7 @@ export type SelfSubmissionCountAggregateOutputType = {
   totalTestcases: number
   executionTime: number
   memory: number
+  stderr: number
   createdAt: number
   status: number
   userId: number
@@ -106,6 +109,7 @@ export type SelfSubmissionMinAggregateInputType = {
   totalTestcases?: true
   executionTime?: true
   memory?: true
+  stderr?: true
   createdAt?: true
   status?: true
   userId?: true
@@ -120,6 +124,7 @@ export type SelfSubmissionMaxAggregateInputType = {
   totalTestcases?: true
   executionTime?: true
   memory?: true
+  stderr?: true
   createdAt?: true
   status?: true
   userId?: true
@@ -134,6 +139,7 @@ export type SelfSubmissionCountAggregateInputType = {
   totalTestcases?: true
   executionTime?: true
   memory?: true
+  stderr?: true
   createdAt?: true
   status?: true
   userId?: true
@@ -235,6 +241,7 @@ export type SelfSubmissionGroupByOutputType = {
   totalTestcases: number
   executionTime: number | null
   memory: number | null
+  stderr: string | null
   createdAt: Date
   status: $Enums.ExecutionStatus
   userId: string
@@ -272,6 +279,7 @@ export type selfSubmissionWhereInput = {
   totalTestcases?: Prisma.IntFilter<"selfSubmission"> | number
   executionTime?: Prisma.FloatNullableFilter<"selfSubmission"> | number | null
   memory?: Prisma.FloatNullableFilter<"selfSubmission"> | number | null
+  stderr?: Prisma.StringNullableFilter<"selfSubmission"> | string | null
   createdAt?: Prisma.DateTimeFilter<"selfSubmission"> | Date | string
   status?: Prisma.EnumExecutionStatusFilter<"selfSubmission"> | $Enums.ExecutionStatus
   userId?: Prisma.StringFilter<"selfSubmission"> | string
@@ -288,6 +296,7 @@ export type selfSubmissionOrderByWithRelationInput = {
   totalTestcases?: Prisma.SortOrder
   executionTime?: Prisma.SortOrderInput | Prisma.SortOrder
   memory?: Prisma.SortOrderInput | Prisma.SortOrder
+  stderr?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -307,6 +316,7 @@ export type selfSubmissionWhereUniqueInput = Prisma.AtLeast<{
   totalTestcases?: Prisma.IntFilter<"selfSubmission"> | number
   executionTime?: Prisma.FloatNullableFilter<"selfSubmission"> | number | null
   memory?: Prisma.FloatNullableFilter<"selfSubmission"> | number | null
+  stderr?: Prisma.StringNullableFilter<"selfSubmission"> | string | null
   createdAt?: Prisma.DateTimeFilter<"selfSubmission"> | Date | string
   status?: Prisma.EnumExecutionStatusFilter<"selfSubmission"> | $Enums.ExecutionStatus
   userId?: Prisma.StringFilter<"selfSubmission"> | string
@@ -323,6 +333,7 @@ export type selfSubmissionOrderByWithAggregationInput = {
   totalTestcases?: Prisma.SortOrder
   executionTime?: Prisma.SortOrderInput | Prisma.SortOrder
   memory?: Prisma.SortOrderInput | Prisma.SortOrder
+  stderr?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -345,6 +356,7 @@ export type selfSubmissionScalarWhereWithAggregatesInput = {
   totalTestcases?: Prisma.IntWithAggregatesFilter<"selfSubmission"> | number
   executionTime?: Prisma.FloatNullableWithAggregatesFilter<"selfSubmission"> | number | null
   memory?: Prisma.FloatNullableWithAggregatesFilter<"selfSubmission"> | number | null
+  stderr?: Prisma.StringNullableWithAggregatesFilter<"selfSubmission"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"selfSubmission"> | Date | string
   status?: Prisma.EnumExecutionStatusWithAggregatesFilter<"selfSubmission"> | $Enums.ExecutionStatus
   userId?: Prisma.StringWithAggregatesFilter<"selfSubmission"> | string
@@ -359,6 +371,7 @@ export type selfSubmissionCreateInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   createdAt?: Date | string
   status: $Enums.ExecutionStatus
   user: Prisma.UserCreateNestedOneWithoutSelfSubmissionsInput
@@ -373,6 +386,7 @@ export type selfSubmissionUncheckedCreateInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   createdAt?: Date | string
   status: $Enums.ExecutionStatus
   userId: string
@@ -387,6 +401,7 @@ export type selfSubmissionUpdateInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumExecutionStatusFieldUpdateOperationsInput | $Enums.ExecutionStatus
   user?: Prisma.UserUpdateOneRequiredWithoutSelfSubmissionsNestedInput
@@ -401,6 +416,7 @@ export type selfSubmissionUncheckedUpdateInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumExecutionStatusFieldUpdateOperationsInput | $Enums.ExecutionStatus
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -415,6 +431,7 @@ export type selfSubmissionCreateManyInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   createdAt?: Date | string
   status: $Enums.ExecutionStatus
   userId: string
@@ -429,6 +446,7 @@ export type selfSubmissionUpdateManyMutationInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumExecutionStatusFieldUpdateOperationsInput | $Enums.ExecutionStatus
 }
@@ -441,6 +459,7 @@ export type selfSubmissionUncheckedUpdateManyInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumExecutionStatusFieldUpdateOperationsInput | $Enums.ExecutionStatus
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -465,6 +484,7 @@ export type selfSubmissionCountOrderByAggregateInput = {
   totalTestcases?: Prisma.SortOrder
   executionTime?: Prisma.SortOrder
   memory?: Prisma.SortOrder
+  stderr?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -486,6 +506,7 @@ export type selfSubmissionMaxOrderByAggregateInput = {
   totalTestcases?: Prisma.SortOrder
   executionTime?: Prisma.SortOrder
   memory?: Prisma.SortOrder
+  stderr?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -500,6 +521,7 @@ export type selfSubmissionMinOrderByAggregateInput = {
   totalTestcases?: Prisma.SortOrder
   executionTime?: Prisma.SortOrder
   memory?: Prisma.SortOrder
+  stderr?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -617,6 +639,7 @@ export type selfSubmissionCreateWithoutUserInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   createdAt?: Date | string
   status: $Enums.ExecutionStatus
   problem: Prisma.ProblemCreateNestedOneWithoutSelfSubmissionsInput
@@ -630,6 +653,7 @@ export type selfSubmissionUncheckedCreateWithoutUserInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   createdAt?: Date | string
   status: $Enums.ExecutionStatus
   problemId: string
@@ -672,6 +696,7 @@ export type selfSubmissionScalarWhereInput = {
   totalTestcases?: Prisma.IntFilter<"selfSubmission"> | number
   executionTime?: Prisma.FloatNullableFilter<"selfSubmission"> | number | null
   memory?: Prisma.FloatNullableFilter<"selfSubmission"> | number | null
+  stderr?: Prisma.StringNullableFilter<"selfSubmission"> | string | null
   createdAt?: Prisma.DateTimeFilter<"selfSubmission"> | Date | string
   status?: Prisma.EnumExecutionStatusFilter<"selfSubmission"> | $Enums.ExecutionStatus
   userId?: Prisma.StringFilter<"selfSubmission"> | string
@@ -686,6 +711,7 @@ export type selfSubmissionCreateWithoutProblemInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   createdAt?: Date | string
   status: $Enums.ExecutionStatus
   user: Prisma.UserCreateNestedOneWithoutSelfSubmissionsInput
@@ -699,6 +725,7 @@ export type selfSubmissionUncheckedCreateWithoutProblemInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   createdAt?: Date | string
   status: $Enums.ExecutionStatus
   userId: string
@@ -738,6 +765,7 @@ export type selfSubmissionCreateManyUserInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   createdAt?: Date | string
   status: $Enums.ExecutionStatus
   problemId: string
@@ -751,6 +779,7 @@ export type selfSubmissionUpdateWithoutUserInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumExecutionStatusFieldUpdateOperationsInput | $Enums.ExecutionStatus
   problem?: Prisma.ProblemUpdateOneRequiredWithoutSelfSubmissionsNestedInput
@@ -764,6 +793,7 @@ export type selfSubmissionUncheckedUpdateWithoutUserInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumExecutionStatusFieldUpdateOperationsInput | $Enums.ExecutionStatus
   problemId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -777,6 +807,7 @@ export type selfSubmissionUncheckedUpdateManyWithoutUserInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumExecutionStatusFieldUpdateOperationsInput | $Enums.ExecutionStatus
   problemId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -790,6 +821,7 @@ export type selfSubmissionCreateManyProblemInput = {
   totalTestcases?: number
   executionTime?: number | null
   memory?: number | null
+  stderr?: string | null
   createdAt?: Date | string
   status: $Enums.ExecutionStatus
   userId: string
@@ -803,6 +835,7 @@ export type selfSubmissionUpdateWithoutProblemInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumExecutionStatusFieldUpdateOperationsInput | $Enums.ExecutionStatus
   user?: Prisma.UserUpdateOneRequiredWithoutSelfSubmissionsNestedInput
@@ -816,6 +849,7 @@ export type selfSubmissionUncheckedUpdateWithoutProblemInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumExecutionStatusFieldUpdateOperationsInput | $Enums.ExecutionStatus
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -829,6 +863,7 @@ export type selfSubmissionUncheckedUpdateManyWithoutProblemInput = {
   totalTestcases?: Prisma.IntFieldUpdateOperationsInput | number
   executionTime?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   memory?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stderr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumExecutionStatusFieldUpdateOperationsInput | $Enums.ExecutionStatus
   userId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -844,6 +879,7 @@ export type selfSubmissionSelect<ExtArgs extends runtime.Types.Extensions.Intern
   totalTestcases?: boolean
   executionTime?: boolean
   memory?: boolean
+  stderr?: boolean
   createdAt?: boolean
   status?: boolean
   userId?: boolean
@@ -860,6 +896,7 @@ export type selfSubmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   totalTestcases?: boolean
   executionTime?: boolean
   memory?: boolean
+  stderr?: boolean
   createdAt?: boolean
   status?: boolean
   userId?: boolean
@@ -876,6 +913,7 @@ export type selfSubmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   totalTestcases?: boolean
   executionTime?: boolean
   memory?: boolean
+  stderr?: boolean
   createdAt?: boolean
   status?: boolean
   userId?: boolean
@@ -892,13 +930,14 @@ export type selfSubmissionSelectScalar = {
   totalTestcases?: boolean
   executionTime?: boolean
   memory?: boolean
+  stderr?: boolean
   createdAt?: boolean
   status?: boolean
   userId?: boolean
   problemId?: boolean
 }
 
-export type selfSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sourceCode" | "language" | "passedTestcases" | "totalTestcases" | "executionTime" | "memory" | "createdAt" | "status" | "userId" | "problemId", ExtArgs["result"]["selfSubmission"]>
+export type selfSubmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sourceCode" | "language" | "passedTestcases" | "totalTestcases" | "executionTime" | "memory" | "stderr" | "createdAt" | "status" | "userId" | "problemId", ExtArgs["result"]["selfSubmission"]>
 export type selfSubmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problem?: boolean | Prisma.ProblemDefaultArgs<ExtArgs>
@@ -926,6 +965,7 @@ export type $selfSubmissionPayload<ExtArgs extends runtime.Types.Extensions.Inte
     totalTestcases: number
     executionTime: number | null
     memory: number | null
+    stderr: string | null
     createdAt: Date
     status: $Enums.ExecutionStatus
     userId: string
@@ -1362,6 +1402,7 @@ export interface selfSubmissionFieldRefs {
   readonly totalTestcases: Prisma.FieldRef<"selfSubmission", 'Int'>
   readonly executionTime: Prisma.FieldRef<"selfSubmission", 'Float'>
   readonly memory: Prisma.FieldRef<"selfSubmission", 'Float'>
+  readonly stderr: Prisma.FieldRef<"selfSubmission", 'String'>
   readonly createdAt: Prisma.FieldRef<"selfSubmission", 'DateTime'>
   readonly status: Prisma.FieldRef<"selfSubmission", 'ExecutionStatus'>
   readonly userId: Prisma.FieldRef<"selfSubmission", 'String'>

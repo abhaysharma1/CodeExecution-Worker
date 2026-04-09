@@ -138,10 +138,10 @@ enum problemDifficulty {
 }
 
 enum ProgrammingLanguage {
+  c
   cpp
   python
   java
-  javascript
 }
 
 model TestCase {
@@ -204,19 +204,21 @@ model RunTestCase {
 }
 
 model selfSubmission {
-  id              String           @id @default(uuid())
+  id String @id @default(uuid())
 
-  sourceCode      String
-  language        String
+  sourceCode String
+  language   String
 
-  passedTestcases Int              @default(0)
-  totalTestcases  Int              @default(0)
+  passedTestcases Int    @default(0)
+  totalTestcases  Int    @default(0)
   executionTime   Float?
   memory          Float?
 
-  createdAt       DateTime         @default(now())
-  
-  status          ExecutionStatus
+  stderr          String?
+
+  createdAt DateTime @default(now())
+
+  status ExecutionStatus
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
@@ -329,10 +331,11 @@ model Submission {
   language   String
   sourceCode String
 
-  passedTestcases Int    @default(0)
-  totalTestcases  Int    @default(0)
+  passedTestcases Int     @default(0)
+  totalTestcases  Int     @default(0)
   executionTime   Float?
   memory          Float?
+  stderr          String?
 
   isFinal  Boolean @default(false)
   aiQueued Boolean @default(false)

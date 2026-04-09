@@ -31,10 +31,10 @@ export type problemDifficulty = (typeof problemDifficulty)[keyof typeof problemD
 
 
 export const ProgrammingLanguage = {
+  c: 'c',
   cpp: 'cpp',
   python: 'python',
-  java: 'java',
-  javascript: 'javascript'
+  java: 'java'
 } as const
 
 export type ProgrammingLanguage = (typeof ProgrammingLanguage)[keyof typeof ProgrammingLanguage]

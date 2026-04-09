@@ -1,4 +1,10 @@
-import { PrismaClient, type Submission, type selfSubmission as SelfSubmission } from "./generated/prisma/client";
+import {
+  PrismaClient,
+  type Submission,
+  type selfSubmission as SelfSubmission,
+  type ExecutionStatus,
+  type ProgrammingLanguage,
+} from "./generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { config } from "./config";
 import { logger } from "./logger";
@@ -26,6 +32,21 @@ export async function getSelfSubmissionById(selfSubmissionId: string): Promise<S
 }
 
 type RawCaseItem = { input?: unknown; output?: unknown; ouptut?: unknown };
+
+const MAX_ERROR_OUTPUT_LENGTH = 500;
+
+function trimErrorOutput(stderr?: string): string | null {
+  if (!stderr) {
+    return null;
+  }
+
+  const normalized = stderr.replace(/\r\n/g, "\n").replace(/\r/g, "\n").trim();
+  if (normalized.length === 0) {
+    return null;
+  }
+
+  return normalized.slice(0, MAX_ERROR_OUTPUT_LENGTH);
+}
 
 function toNormalizedTestcases(cases: unknown): NormalizedTestcase[] {
   if (!Array.isArray(cases)) {
@@ -57,6 +78,14 @@ function toNormalizedTestcases(cases: unknown): NormalizedTestcase[] {
 }
 
 export async function getTestcasesByProblemId(problemId: string): Promise<NormalizedTestcase[]> {
+  const runRecord = await prisma.runTestCase.findUnique({
+    where: { problemId }
+  });
+
+  if (runRecord) {
+    return toNormalizedTestcases(runRecord.cases);
+  }
+
   const record = await prisma.testCase.findUnique({
     where: { problemId }
   });
@@ -97,7 +126,8 @@ export async function markSubmissionCompleted(
       passedTestcases: execution.passedCount,
       totalTestcases: execution.totalTestcases,
       executionTime: execution.executionTimeMs,
-      memory: execution.memoryKb
+      memory: execution.memoryKb,
+      stderr: null
     }
   });
 }
@@ -105,19 +135,25 @@ export async function markSubmissionCompleted(
 export async function markSubmissionFailed(
   submissionId: string,
   error: string,
-  partial?: Partial<Pick<ExecutionResult, "passedCount" | "totalTestcases" | "executionTimeMs" | "memoryKb">>
+  options?: {
+    status?: ExecutionStatus;
+    stderr?: string;
+    partial?: Partial<Pick<ExecutionResult, "passedCount" | "totalTestcases" | "executionTimeMs" | "memoryKb">>;
+  }
 ): Promise<void> {
-  logger.error(`Submission ${submissionId} failed`, { error });
+  const trimmedStderr = trimErrorOutput(options?.stderr ?? error);
+  logger.error(`Submission ${submissionId} failed`, { error, stderr: trimmedStderr });
 
   await prisma.submission.update({
     where: { id: submissionId },
     data: {
       aiStatus: "FAILED",
-      status: "INTERNAL_ERROR",
-      passedTestcases: partial?.passedCount ?? 0,
-      totalTestcases: partial?.totalTestcases ?? 0,
-      executionTime: partial?.executionTimeMs ?? 0,
-      memory: partial?.memoryKb ?? 0
+      status: options?.status ?? "INTERNAL_ERROR",
+      stderr: trimmedStderr,
+      passedTestcases: options?.partial?.passedCount ?? 0,
+      totalTestcases: options?.partial?.totalTestcases ?? 0,
+      executionTime: options?.partial?.executionTimeMs ?? 0,
+      memory: options?.partial?.memoryKb ?? 0
     }
   });
 }
@@ -149,7 +185,8 @@ export async function markSelfSubmissionCompleted(
       passedTestcases: execution.passedCount,
       totalTestcases: execution.totalTestcases,
       executionTime: execution.executionTimeMs,
-      memory: execution.memoryKb
+      memory: execution.memoryKb,
+      stderr: null
     }
   });
 }
@@ -157,18 +194,61 @@ export async function markSelfSubmissionCompleted(
 export async function markSelfSubmissionFailed(
   selfSubmissionId: string,
   error: string,
-  partial?: Partial<Pick<ExecutionResult, "passedCount" | "totalTestcases" | "executionTimeMs" | "memoryKb">>
+  options?: {
+    status?: ExecutionStatus;
+    stderr?: string;
+    partial?: Partial<Pick<ExecutionResult, "passedCount" | "totalTestcases" | "executionTimeMs" | "memoryKb">>;
+  }
 ): Promise<void> {
-  logger.error(`Self submission ${selfSubmissionId} failed`, { error });
+  const trimmedStderr = trimErrorOutput(options?.stderr ?? error);
+  logger.error(`Self submission ${selfSubmissionId} failed`, { error, stderr: trimmedStderr });
 
   await prisma.selfSubmission.update({
     where: { id: selfSubmissionId },
     data: {
-      status: "INTERNAL_ERROR",
-      passedTestcases: partial?.passedCount ?? 0,
-      totalTestcases: partial?.totalTestcases ?? 0,
-      executionTime: partial?.executionTimeMs ?? 0,
-      memory: partial?.memoryKb ?? 0
+      status: options?.status ?? "INTERNAL_ERROR",
+      stderr: trimmedStderr,
+      passedTestcases: options?.partial?.passedCount ?? 0,
+      totalTestcases: options?.partial?.totalTestcases ?? 0,
+      executionTime: options?.partial?.executionTimeMs ?? 0,
+      memory: options?.partial?.memoryKb ?? 0
     }
+  });
+}
+
+type DriverCodePayload = {
+  header: string | null;
+  footer: string | null;
+};
+
+function normalizeDriverLanguage(language: string): ProgrammingLanguage | null {
+  const value = language.trim().toLowerCase();
+  if (value === "c" || value === "cpp" || value === "python" || value === "java") {
+    return value as ProgrammingLanguage;
+  }
+
+  return null;
+}
+
+export async function getDriverCodeByProblemIdAndLanguage(
+  problemId: string,
+  language: string,
+): Promise<DriverCodePayload | null> {
+  const normalizedLanguage = normalizeDriverLanguage(language);
+  if (!normalizedLanguage) {
+    return null;
+  }
+
+  return prisma.driverCode.findUnique({
+    where: {
+      language_problemId: {
+        language: normalizedLanguage,
+        problemId,
+      },
+    },
+    select: {
+      header: true,
+      footer: true,
+    },
   });
 }

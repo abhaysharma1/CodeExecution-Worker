@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.js'
-export type * from './prismaNamespace.js'
+export type * from '../models'
+export type * from './prismaNamespace'
 
 export const Decimal = runtime.Decimal
 
@@ -246,6 +246,7 @@ export const SelfSubmissionScalarFieldEnum = {
   totalTestcases: 'totalTestcases',
   executionTime: 'executionTime',
   memory: 'memory',
+  stderr: 'stderr',
   createdAt: 'createdAt',
   status: 'status',
   userId: 'userId',
@@ -318,6 +319,7 @@ export const SubmissionScalarFieldEnum = {
   totalTestcases: 'totalTestcases',
   executionTime: 'executionTime',
   memory: 'memory',
+  stderr: 'stderr',
   isFinal: 'isFinal',
   aiQueued: 'aiQueued',
   aiStatus: 'aiStatus',
