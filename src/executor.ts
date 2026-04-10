@@ -121,6 +121,14 @@ function splitPlainLines(content: string): string[] {
     .filter((line) => line.length > 0);
 }
 
+function normalizeInputBlock(content: string): string {
+  return stripCaseDelimiters(content ?? "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .join("\n");
+}
+
 function getOutputBlocks(content: string, expectedLineCount?: number | null): string[] {
   const markedBlocks = extractMarkedBlocks(content);
 
@@ -141,14 +149,14 @@ function buildAggregatedInput(cases: NormalizedTestcase[]): string {
   const bodyParts: string[] = [];
 
   for (const testCase of cases) {
-    const input = stripCaseDelimiters(testCase.input ?? "");
+    const input = normalizeInputBlock(testCase.input ?? "");
     const newlineIndex = input.indexOf("\n");
     const head = newlineIndex === -1 ? input : input.slice(0, newlineIndex);
     const body = newlineIndex === -1 ? "" : input.slice(newlineIndex + 1).trim();
     const count = Number.parseInt(head.trim(), 10);
 
     if (!Number.isFinite(count) || count < 0) {
-      return cases.map((entry) => stripCaseDelimiters(entry.input ?? "")).join("\n");
+      return cases.map((entry) => normalizeInputBlock(entry.input ?? "")).join("\n");
     }
 
     totalCaseCount += count;
@@ -199,6 +207,16 @@ function splitAggregatedInputCases(input: string, expectedCount: number): string
   return [];
 }
 
+function getInputBlocks(input: string, expectedCount: number): string[] {
+  const markedBlocks = extractMarkedBlocks(input ?? "");
+
+  if (markedBlocks.length > 0) {
+    return markedBlocks.map(stripBlockMarkers);
+  }
+
+  return splitAggregatedInputCases(input, expectedCount);
+}
+
 function sanitizeSourceCode(code: string): string {
   return code
     .replace(/\u00A0/g, " ")
@@ -227,8 +245,8 @@ export class SubmissionExecutionError extends Error {
   }
 }
 
-function normalizeOutput(output: string): string {
-  return output.replace(/\r\n/g, "\n").trim();
+function normalizeForCompare(value: string): string {
+  return splitPlainLines(value ?? "").join("\n");
 }
 
 function toMs(seconds: number): number {
@@ -322,7 +340,10 @@ export async function executeSubmission(
   const cleanedCases = testcases.map((testcase) => ({
     ...testcase,
     input: stripCaseDelimiters(testcase.input ?? ""),
-    expectedOutput: stripCaseDelimiters(testcase.expectedOutput ?? ""),
+    expectedOutput: (testcase.expectedOutput ?? "")
+      .replace(/\r\n/g, "\n")
+      .replace(/\r/g, "\n")
+      .trim(),
   }));
 
   const expectedLineCountHints =
@@ -338,7 +359,7 @@ export async function executeSubmission(
     cleanedCases.length === 1 && expectedBlocksByCase[0]?.length > 1;
 
   const expandedInputs = shouldExpandAggregatedCase
-    ? splitAggregatedInputCases(cleanedCases[0]?.input ?? "", expectedBlocksByCase[0].length)
+    ? getInputBlocks(cleanedCases[0]?.input ?? "", expectedBlocksByCase[0].length)
     : [];
 
   const normalizedCases = shouldExpandAggregatedCase
@@ -410,7 +431,9 @@ export async function executeSubmission(
     offset += blockCount;
 
     const visibleOutput = hasCompileOrRuntimeError ? cleanedRuntimeOutput : caseBlocks;
-    const passed = normalizeOutput(visibleOutput) === normalizeOutput(testcase.expectedOutput);
+    const passed =
+      !hasCompileOrRuntimeError &&
+      normalizeForCompare(caseBlocks) === normalizeForCompare(testcase.expectedOutput);
 
     if (passed) {
       passedCount += 1;
