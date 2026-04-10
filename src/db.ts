@@ -78,7 +78,7 @@ function toNormalizedTestcases(cases: unknown): NormalizedTestcase[] {
 }
 
 export async function getTestcasesByProblemId(problemId: string): Promise<NormalizedTestcase[]> {
-  const runRecord = await prisma.runTestCase.findUnique({
+  const runRecord = await prisma.testCase.findUnique({
     where: { problemId }
   });
 
