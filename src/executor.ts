@@ -144,6 +144,15 @@ function getOutputBlocks(content: string, expectedLineCount?: number | null): st
   return [lines.join("\n")];
 }
 
+function getMarkedOutputBlocksStrict(content: string): string[] {
+  const markedBlocks = extractMarkedBlocks(content);
+  if (markedBlocks.length === 0) {
+    return [];
+  }
+
+  return markedBlocks.map(stripBlockMarkers);
+}
+
 function buildAggregatedInput(cases: NormalizedTestcase[]): string {
   let totalCaseCount = 0;
   const bodyParts: string[] = [];
@@ -346,6 +355,10 @@ export async function executeSubmission(
       .trim(),
   }));
 
+  const expectedUsesMarkers = cleanedCases.some(
+    (testcase) => extractMarkedBlocks(testcase.expectedOutput ?? "").length > 0,
+  );
+
   const expectedLineCountHints =
     cleanedCases.length === 1
       ? [parseCaseCountFromInput(cleanedCases[0]?.input ?? "")]
@@ -397,7 +410,10 @@ export async function executeSubmission(
     stdin: buildAggregatedInput(cleanedCases),
   });
 
-  const allBlocks = getOutputBlocks(runResult.stdout ?? "", expectedTotalBlocks);
+  const allBlocks = expectedUsesMarkers
+    ? getMarkedOutputBlocksStrict(runResult.stdout ?? "")
+    : getOutputBlocks(runResult.stdout ?? "", expectedTotalBlocks);
+  const missingRequiredMarkers = expectedUsesMarkers && allBlocks.length === 0;
   const reconciledBlocks = [...allBlocks];
 
   if (reconciledBlocks.length === 0) {
@@ -430,9 +446,13 @@ export async function executeSubmission(
     const caseBlocks = reconciledBlocks.slice(offset, offset + blockCount).join("\n");
     offset += blockCount;
 
-    const visibleOutput = hasCompileOrRuntimeError ? cleanedRuntimeOutput : caseBlocks;
+    const visibleOutput =
+      hasCompileOrRuntimeError || missingRequiredMarkers
+        ? cleanedRuntimeOutput
+        : caseBlocks;
     const passed =
       !hasCompileOrRuntimeError &&
+      !missingRequiredMarkers &&
       normalizeForCompare(caseBlocks) === normalizeForCompare(testcase.expectedOutput);
 
     if (passed) {
