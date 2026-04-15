@@ -24,9 +24,13 @@ interface PistonResponse {
     memory?: number;
   };
   compile?: {
+    stdout?: string;
     stderr?: string;
     output?: string;
     code?: number;
+    signal?: string;
+    cpu_time?: number;
+    memory?: number;
   };
 }
 
@@ -129,7 +133,10 @@ function normalizeInputBlock(content: string): string {
     .join("\n");
 }
 
-function getOutputBlocks(content: string, expectedLineCount?: number | null): string[] {
+function getOutputBlocks(
+  content: string,
+  expectedLineCount?: number | null,
+): string[] {
   const markedBlocks = extractMarkedBlocks(content);
 
   if (markedBlocks.length > 0) {
@@ -137,7 +144,11 @@ function getOutputBlocks(content: string, expectedLineCount?: number | null): st
   }
 
   const lines = splitPlainLines(content);
-  if (expectedLineCount && expectedLineCount > 1 && lines.length === expectedLineCount) {
+  if (
+    expectedLineCount &&
+    expectedLineCount > 1 &&
+    lines.length === expectedLineCount
+  ) {
     return lines;
   }
 
@@ -161,11 +172,14 @@ function buildAggregatedInput(cases: NormalizedTestcase[]): string {
     const input = normalizeInputBlock(testCase.input ?? "");
     const newlineIndex = input.indexOf("\n");
     const head = newlineIndex === -1 ? input : input.slice(0, newlineIndex);
-    const body = newlineIndex === -1 ? "" : input.slice(newlineIndex + 1).trim();
+    const body =
+      newlineIndex === -1 ? "" : input.slice(newlineIndex + 1).trim();
     const count = Number.parseInt(head.trim(), 10);
 
     if (!Number.isFinite(count) || count < 0) {
-      return cases.map((entry) => normalizeInputBlock(entry.input ?? "")).join("\n");
+      return cases
+        .map((entry) => normalizeInputBlock(entry.input ?? ""))
+        .join("\n");
     }
 
     totalCaseCount += count;
@@ -181,7 +195,10 @@ function buildAggregatedInput(cases: NormalizedTestcase[]): string {
   return `${totalCaseCount}\n${bodyParts.join("\n")}`.trim();
 }
 
-function splitAggregatedInputCases(input: string, expectedCount: number): string[] {
+function splitAggregatedInputCases(
+  input: string,
+  expectedCount: number,
+): string[] {
   const cleanedInput = stripCaseDelimiters(input ?? "");
   const lines = cleanedInput
     .split("\n")
@@ -194,7 +211,10 @@ function splitAggregatedInputCases(input: string, expectedCount: number): string
 
   const declaredCount = Number.parseInt(lines[0], 10);
   const remaining = lines.slice(1);
-  const targetCount = Number.isFinite(declaredCount) && declaredCount > 0 ? declaredCount : expectedCount;
+  const targetCount =
+    Number.isFinite(declaredCount) && declaredCount > 0
+      ? declaredCount
+      : expectedCount;
 
   if (targetCount <= 0 || remaining.length === 0) {
     return [];
@@ -236,9 +256,16 @@ function sanitizeSourceCode(code: string): string {
     .replace(/\r/g, "\n");
 }
 
-function normalizeLanguage(language: string): "c" | "cpp" | "python" | "java" | null {
+function normalizeLanguage(
+  language: string,
+): "c" | "cpp" | "python" | "java" | null {
   const value = language.trim().toLowerCase();
-  if (value === "c" || value === "cpp" || value === "python" || value === "java") {
+  if (
+    value === "c" ||
+    value === "cpp" ||
+    value === "python" ||
+    value === "java"
+  ) {
     return value;
   }
   return null;
@@ -295,14 +322,21 @@ async function runCode(
       });
     }
 
+    const compile = response.data.compile ?? {};
     const run = response.data.run ?? {};
+
+    const compileCpu = compile.cpu_time ?? 0;
+    const runCpu = run.cpu_time ?? 0;
+
+    const compileMem = compile.memory ?? 0;
+    const runMem = run.memory ?? 0;
 
     return {
       stdout: run.stdout ?? run.output ?? "",
       stderr: run.stderr,
       exitCode: run.code,
-      timeMs: toMs(run.cpu_time ?? 0),
-      memoryKb: toKb(run.memory),
+      timeMs: toMs(compileCpu + runCpu),
+      memoryKb: toKb(Math.max(compileMem, runMem)),
     };
   } catch (error) {
     if (error instanceof SubmissionExecutionError) {
@@ -325,7 +359,8 @@ async function runCode(
 
     throw new SubmissionExecutionError("Execution failed unexpectedly", {
       status: "INTERNAL_ERROR",
-      stderr: error instanceof Error ? error.message : "Unknown execution error",
+      stderr:
+        error instanceof Error ? error.message : "Unknown execution error",
     });
   }
 }
@@ -337,9 +372,12 @@ export async function executeSubmission(
 ): Promise<ExecutionResult> {
   const language = normalizeLanguage(submission.language);
   if (!language) {
-    throw new SubmissionExecutionError(`Unsupported language: ${submission.language}`, {
-      status: "INTERNAL_ERROR",
-    });
+    throw new SubmissionExecutionError(
+      `Unsupported language: ${submission.language}`,
+      {
+        status: "INTERNAL_ERROR",
+      },
+    );
   }
 
   const sourceCode = sanitizeSourceCode(
@@ -365,14 +403,20 @@ export async function executeSubmission(
       : cleanedCases.map(() => null);
 
   const expectedBlocksByCase = cleanedCases.map((testCase, index) =>
-    getOutputBlocks(testCase.expectedOutput ?? "", expectedLineCountHints[index]),
+    getOutputBlocks(
+      testCase.expectedOutput ?? "",
+      expectedLineCountHints[index],
+    ),
   );
 
   const shouldExpandAggregatedCase =
     cleanedCases.length === 1 && expectedBlocksByCase[0]?.length > 1;
 
   const expandedInputs = shouldExpandAggregatedCase
-    ? getInputBlocks(cleanedCases[0]?.input ?? "", expectedBlocksByCase[0].length)
+    ? getInputBlocks(
+        cleanedCases[0]?.input ?? "",
+        expectedBlocksByCase[0].length,
+      )
     : [];
 
   const normalizedCases = shouldExpandAggregatedCase
@@ -437,13 +481,17 @@ export async function executeSubmission(
   const hasCompileOrRuntimeError =
     Boolean(runResult.stderr?.trim()) ||
     (typeof runResult.exitCode === "number" && runResult.exitCode !== 0);
-  const cleanedRuntimeOutput = splitPlainLines(runResult.stdout ?? "").join("\n");
+  const cleanedRuntimeOutput = splitPlainLines(runResult.stdout ?? "").join(
+    "\n",
+  );
   const details: ExecutionResult["details"] = [];
 
   for (let i = 0; i < normalizedCases.length; i += 1) {
     const testcase = normalizedCases[i];
     const blockCount = expectedBlockCounts[i] ?? 1;
-    const caseBlocks = reconciledBlocks.slice(offset, offset + blockCount).join("\n");
+    const caseBlocks = reconciledBlocks
+      .slice(offset, offset + blockCount)
+      .join("\n");
     offset += blockCount;
 
     const visibleOutput =
@@ -453,7 +501,8 @@ export async function executeSubmission(
     const passed =
       !hasCompileOrRuntimeError &&
       !missingRequiredMarkers &&
-      normalizeForCompare(caseBlocks) === normalizeForCompare(testcase.expectedOutput);
+      normalizeForCompare(caseBlocks) ===
+        normalizeForCompare(testcase.expectedOutput);
 
     if (passed) {
       passedCount += 1;

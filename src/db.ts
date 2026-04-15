@@ -23,11 +23,15 @@ export async function disconnectDb(): Promise<void> {
   logger.info("Disconnected from PostgreSQL");
 }
 
-export async function getSubmissionById(submissionId: string): Promise<Submission | null> {
+export async function getSubmissionById(
+  submissionId: string,
+): Promise<Submission | null> {
   return prisma.submission.findUnique({ where: { id: submissionId } });
 }
 
-export async function getSelfSubmissionById(selfSubmissionId: string): Promise<SelfSubmission | null> {
+export async function getSelfSubmissionById(
+  selfSubmissionId: string,
+): Promise<SelfSubmission | null> {
   return prisma.selfSubmission.findUnique({ where: { id: selfSubmissionId } });
 }
 
@@ -71,15 +75,17 @@ function toNormalizedTestcases(cases: unknown): NormalizedTestcase[] {
       return {
         testcaseId: `tc-${index + 1}`,
         input,
-        expectedOutput: output
+        expectedOutput: output,
       } satisfies NormalizedTestcase;
     })
     .filter((item): item is NormalizedTestcase => item !== null);
 }
 
-export async function getTestcasesByProblemId(problemId: string): Promise<NormalizedTestcase[]> {
+export async function getTestcasesByProblemId(
+  problemId: string,
+): Promise<NormalizedTestcase[]> {
   const runRecord = await prisma.testCase.findUnique({
-    where: { problemId }
+    where: { problemId },
   });
 
   if (runRecord) {
@@ -87,7 +93,7 @@ export async function getTestcasesByProblemId(problemId: string): Promise<Normal
   }
 
   const record = await prisma.testCase.findUnique({
-    where: { problemId }
+    where: { problemId },
   });
 
   if (!record) {
@@ -97,38 +103,105 @@ export async function getTestcasesByProblemId(problemId: string): Promise<Normal
   return toNormalizedTestcases(record.cases);
 }
 
-export async function markSubmissionProcessing(submissionId: string): Promise<void> {
+export async function markSubmissionProcessing(
+  submissionId: string,
+): Promise<void> {
   await prisma.submission.update({
     where: { id: submissionId },
     data: {
       aiStatus: "PROCESSING",
-      status: "RUNNING"
-    }
+      status: "RUNNING",
+    },
   });
 }
 
-export async function markSubmissionCompleted(
-  submissionId: string,
-  execution: ExecutionResult
-): Promise<void> {
+function toExecutionStatus(execution: ExecutionResult): ExecutionStatus {
   const allPassed = execution.passedCount === execution.totalTestcases;
-  const status = allPassed
+  return allPassed
     ? "ACCEPTED"
     : execution.passedCount > 0
       ? "PARTIAL"
       : "WRONG_ANSWER";
+}
 
-  await prisma.submission.update({
+// Option A (typical): more passed is better; tie-breaker is lower time, then lower memory.
+function isBetterThanPrevFinal(
+  execution: ExecutionResult,
+  prev: {
+    passedTestcases: number;
+    executionTime: number | null;
+    memory: number | null;
+  },
+): boolean {
+  if (execution.passedCount !== prev.passedTestcases) {
+    return execution.passedCount > prev.passedTestcases;
+  }
+
+  const prevTime = prev.executionTime ?? Number.POSITIVE_INFINITY;
+  if (execution.executionTimeMs !== prevTime) {
+    return execution.executionTimeMs < prevTime;
+  }
+
+  const prevMem = prev.memory ?? Number.POSITIVE_INFINITY;
+  return execution.memoryKb < prevMem;
+}
+
+export async function markSubmissionCompleted(
+  submissionId: string,
+  execution: ExecutionResult,
+): Promise<void> {
+  const status = toExecutionStatus(execution);
+
+  const curr = await prisma.submission.findUnique({
     where: { id: submissionId },
-    data: {
-      aiStatus: "COMPLETED",
-      status,
-      passedTestcases: execution.passedCount,
-      totalTestcases: execution.totalTestcases,
-      executionTime: execution.executionTimeMs,
-      memory: execution.memoryKb,
-      stderr: null
+    select: { id: true, examId: true, userId: true, problemId: true },
+  });
+
+  if (!curr) {
+    throw new Error(`Submission not found: ${submissionId}`);
+  }
+
+  const baseData = {
+    aiStatus: "PENDING" as const,
+    status,
+    passedTestcases: execution.passedCount,
+    totalTestcases: execution.totalTestcases,
+    executionTime: execution.executionTimeMs,
+    memory: execution.memoryKb,
+    stderr: "",
+  };
+
+  const prevFinal = await prisma.submission.findFirst({
+    where: {
+      examId: curr.examId,
+      userId: curr.userId,
+      problemId: curr.problemId,
+      isFinal: true,
+      NOT: { id: submissionId },
+    },
+    select: {
+      id: true,
+      passedTestcases: true,
+      executionTime: true,
+      memory: true,
+    },
+  });
+
+  const shouldBeFinal =
+    !prevFinal || isBetterThanPrevFinal(execution, prevFinal);
+
+  await prisma.$transaction(async (tx) => {
+    if (shouldBeFinal && prevFinal) {
+      await tx.submission.update({
+        where: { id: prevFinal.id },
+        data: { isFinal: false },
+      });
     }
+
+    await tx.submission.update({
+      where: { id: submissionId },
+      data: { ...baseData, isFinal: shouldBeFinal },
+    });
   });
 }
 
@@ -138,11 +211,19 @@ export async function markSubmissionFailed(
   options?: {
     status?: ExecutionStatus;
     stderr?: string;
-    partial?: Partial<Pick<ExecutionResult, "passedCount" | "totalTestcases" | "executionTimeMs" | "memoryKb">>;
-  }
+    partial?: Partial<
+      Pick<
+        ExecutionResult,
+        "passedCount" | "totalTestcases" | "executionTimeMs" | "memoryKb"
+      >
+    >;
+  },
 ): Promise<void> {
   const trimmedStderr = trimErrorOutput(options?.stderr ?? error);
-  logger.error(`Submission ${submissionId} failed`, { error, stderr: trimmedStderr });
+  logger.error(`Submission ${submissionId} failed`, {
+    error,
+    stderr: trimmedStderr,
+  });
 
   await prisma.submission.update({
     where: { id: submissionId },
@@ -153,23 +234,25 @@ export async function markSubmissionFailed(
       passedTestcases: options?.partial?.passedCount ?? 0,
       totalTestcases: options?.partial?.totalTestcases ?? 0,
       executionTime: options?.partial?.executionTimeMs ?? 0,
-      memory: options?.partial?.memoryKb ?? 0
-    }
+      memory: options?.partial?.memoryKb ?? 0,
+    },
   });
 }
 
-export async function markSelfSubmissionProcessing(selfSubmissionId: string): Promise<void> {
+export async function markSelfSubmissionProcessing(
+  selfSubmissionId: string,
+): Promise<void> {
   await prisma.selfSubmission.update({
     where: { id: selfSubmissionId },
     data: {
-      status: "RUNNING"
-    }
+      status: "RUNNING",
+    },
   });
 }
 
 export async function markSelfSubmissionCompleted(
   selfSubmissionId: string,
-  execution: ExecutionResult
+  execution: ExecutionResult,
 ): Promise<void> {
   const allPassed = execution.passedCount === execution.totalTestcases;
   const status = allPassed
@@ -186,8 +269,8 @@ export async function markSelfSubmissionCompleted(
       totalTestcases: execution.totalTestcases,
       executionTime: execution.executionTimeMs,
       memory: execution.memoryKb,
-      stderr: null
-    }
+      stderr: null,
+    },
   });
 }
 
@@ -197,11 +280,19 @@ export async function markSelfSubmissionFailed(
   options?: {
     status?: ExecutionStatus;
     stderr?: string;
-    partial?: Partial<Pick<ExecutionResult, "passedCount" | "totalTestcases" | "executionTimeMs" | "memoryKb">>;
-  }
+    partial?: Partial<
+      Pick<
+        ExecutionResult,
+        "passedCount" | "totalTestcases" | "executionTimeMs" | "memoryKb"
+      >
+    >;
+  },
 ): Promise<void> {
   const trimmedStderr = trimErrorOutput(options?.stderr ?? error);
-  logger.error(`Self submission ${selfSubmissionId} failed`, { error, stderr: trimmedStderr });
+  logger.error(`Self submission ${selfSubmissionId} failed`, {
+    error,
+    stderr: trimmedStderr,
+  });
 
   await prisma.selfSubmission.update({
     where: { id: selfSubmissionId },
@@ -211,8 +302,8 @@ export async function markSelfSubmissionFailed(
       passedTestcases: options?.partial?.passedCount ?? 0,
       totalTestcases: options?.partial?.totalTestcases ?? 0,
       executionTime: options?.partial?.executionTimeMs ?? 0,
-      memory: options?.partial?.memoryKb ?? 0
-    }
+      memory: options?.partial?.memoryKb ?? 0,
+    },
   });
 }
 
@@ -223,7 +314,12 @@ type DriverCodePayload = {
 
 function normalizeDriverLanguage(language: string): ProgrammingLanguage | null {
   const value = language.trim().toLowerCase();
-  if (value === "c" || value === "cpp" || value === "python" || value === "java") {
+  if (
+    value === "c" ||
+    value === "cpp" ||
+    value === "python" ||
+    value === "java"
+  ) {
     return value as ProgrammingLanguage;
   }
 
