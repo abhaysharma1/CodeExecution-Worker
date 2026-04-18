@@ -639,6 +639,113 @@ export async function executeSubmission(
   };
 }
 
+// export async function runComplexityCheck(
+//   submission: SubmissionCodeSource,
+//   generator: ProblemTestGenerator,
+//   driver?: DriverCodeSource,
+// ): Promise<{
+//   status: "ACCEPTED" | "BAD_SCALING";
+//   complexity: expectedComplexity;
+//   expectedComplexity: expectedComplexity;
+//   timings: number[];
+// } | null> {
+//   if (generator.type !== "ARRAY") {
+//     return null;
+//   }
+
+//   const sizes = generator.sizes.filter((size) => size > 0);
+//   if (sizes.length < 3) {
+//     return null;
+//   }
+
+//   const { language, sourceCode } = buildSourceCode(submission, driver);
+//   const inputs = sizes.map((size) => {
+//     const arr = generateArray(
+//       size,
+//       generator.minValue,
+//       generator.maxValue,
+//       generator.pattern,
+//     );
+//     const payload = `${size}\n${arr.join(" ")}`;
+//     return `1\n${payload}`.trim();
+//   });
+
+//   try {
+//     await runCode({
+//       language,
+//       version: "*",
+//       files: [
+//         {
+//           name: language === "java" ? "Main.java" : "main",
+//           content: sourceCode,
+//         },
+//       ],
+//       stdin: inputs[0],
+//     });
+
+//     const timings: number[] = [];
+
+//     for (const input of inputs) {
+//       const result = await runCode({
+//         language,
+//         version: "*",
+//         files: [
+//           {
+//             name: language === "java" ? "Main.java" : "main",
+//             content: sourceCode,
+//           },
+//         ],
+//         stdin: input,
+//       });
+
+//       const time = Number(result.timeMs);
+//       timings.push(Number.isFinite(time) ? time : 0);
+//     }
+
+//     if (timings.some((time) => time <= 0)) {
+//       return null;
+//     }
+
+//     let complexityRanges;
+
+//     if (language == "java") {
+//       complexityRanges = complexityRangesJava;
+//     } else if (language == "cpp") {
+//       complexityRanges = complexityRangesCPP;
+//     } else if (language == "python") {
+//       complexityRanges = complexityRangesPython;
+//     } else {
+//       complexityRanges = complexityRangesC;
+//     }
+
+//     const r1 = timings[1] / timings[0];
+//     const r2 = timings[2] / timings[1];
+//     const complexity = classifyComplexity(r1, r2, language);
+//     const curr = complexityRanges[complexity].idx;
+//     const expectedKey = generator.expectedComplexity ?? "EXP";
+//     const expectedIdx = complexityRanges[expectedKey].idx;
+//     const status = curr > expectedIdx ? "BAD_SCALING" : "ACCEPTED";
+
+//     return {
+//       status,
+//       complexity,
+//       expectedComplexity: expectedKey,
+//       timings,
+//     };
+//   } catch (error) {
+//     if (error instanceof SubmissionExecutionError) {
+//       return null;
+//     }
+
+//     throw error;
+//   }
+// }
+
+
+// this function checkes the 
+
+
+//
 export async function runComplexityCheck(
   submission: SubmissionCodeSource,
   generator: ProblemTestGenerator,
@@ -649,28 +756,28 @@ export async function runComplexityCheck(
   expectedComplexity: expectedComplexity;
   timings: number[];
 } | null> {
-  if (generator.type !== "ARRAY") {
-    return null;
-  }
+  if (generator.type !== "ARRAY") return null;
 
   const sizes = generator.sizes.filter((size) => size > 0);
-  if (sizes.length < 3) {
-    return null;
-  }
+  if (sizes.length < 3) return null;
 
   const { language, sourceCode } = buildSourceCode(submission, driver);
-  const inputs = sizes.map((size) => {
-    const arr = generateArray(
-      size,
+
+  const TARGET_TIME_MS = 80;
+  let K = 1;
+  let timings: number[] = [];
+
+  try {
+    // 🔥 Warmup run (important for Java)
+    const warmupArr = generateArray(
+      sizes[0],
       generator.minValue,
       generator.maxValue,
       generator.pattern,
     );
-    const payload = `${size}\n${arr.join(" ")}`;
-    return `1\n${payload}`.trim();
-  });
 
-  try {
+    const warmupInput = `1\n${sizes[0]}\n${warmupArr.join(" ")}`;
+
     await runCode({
       language,
       version: "*",
@@ -680,51 +787,87 @@ export async function runComplexityCheck(
           content: sourceCode,
         },
       ],
-      stdin: inputs[0],
+      stdin: warmupInput,
     });
 
-    const timings: number[] = [];
+    // 🔥 Amplification loop
+    while (true) {
+      timings = [];
 
-    for (const input of inputs) {
-      const result = await runCode({
-        language,
-        version: "*",
-        files: [
-          {
-            name: language === "java" ? "Main.java" : "main",
-            content: sourceCode,
-          },
-        ],
-        stdin: input,
-      });
+      for (const size of sizes) {
+        // 🔥 generate K independent testcases
+        const repeatedInput = Array.from({ length: K }, () => {
+          const arr = generateArray(
+            size,
+            generator.minValue,
+            generator.maxValue,
+            generator.pattern,
+          );
+          return `${size}\n${arr.join(" ")}`;
+        }).join("\n");
 
-      const time = Number(result.timeMs);
-      timings.push(Number.isFinite(time) ? time : 0);
+        const input = `${K}\n${repeatedInput}`;
+
+        const result = await runCode({
+          language,
+          version: "*",
+          files: [
+            {
+              name: language === "java" ? "Main.java" : "main",
+              content: sourceCode,
+            },
+          ],
+          stdin: input,
+        });
+
+        const time = Number(result.timeMs);
+        timings.push(Number.isFinite(time) ? time : 0);
+      }
+
+      // ❌ invalid measurement
+      if (timings.some((t) => t <= 0)) return null;
+
+      const minTime = Math.min(...timings);
+
+      // ✅ stable enough
+      if (minTime >= TARGET_TIME_MS) break;
+
+      // 🔥 increase workload
+      K *= 4;
+
+      // safety cap (avoid runaway)
+      if (K > 1e5) break;
     }
 
-    if (timings.some((time) => time <= 0)) {
+    // 🔥 compute ratios
+    const r1 = timings[1] / timings[0];
+    const r2 = timings[2] / timings[1];
+    const avgRatio = (r1 + r2) / 2;
+
+    // 🔥 reject unstable signals
+    if (Math.abs(r1 - r2) > 1.5) {
       return null;
     }
 
+    // 🔥 select language-specific ranges
     let complexityRanges;
-
-    if (language == "java") {
+    if (language === "java") {
       complexityRanges = complexityRangesJava;
-    } else if (language == "cpp") {
+    } else if (language === "cpp") {
       complexityRanges = complexityRangesCPP;
-    } else if (language == "python") {
+    } else if (language === "python") {
       complexityRanges = complexityRangesPython;
     } else {
       complexityRanges = complexityRangesC;
     }
 
-    const r1 = timings[1] / timings[0];
-    const r2 = timings[2] / timings[1];
-    const complexity = classifyComplexity(r1, r2, language);
-    const curr = complexityRanges[complexity].idx;
+    const complexity = classifyComplexity(avgRatio, avgRatio, language);
+
+    const currIdx = complexityRanges[complexity].idx;
     const expectedKey = generator.expectedComplexity ?? "EXP";
     const expectedIdx = complexityRanges[expectedKey].idx;
-    const status = curr > expectedIdx ? "BAD_SCALING" : "ACCEPTED";
+
+    const status = currIdx > expectedIdx ? "BAD_SCALING" : "ACCEPTED";
 
     return {
       status,
@@ -736,10 +879,13 @@ export async function runComplexityCheck(
     if (error instanceof SubmissionExecutionError) {
       return null;
     }
-
     throw error;
   }
 }
+
+
+// the above function checks complexity better maybe
+
 
 export async function executeCode(
   request: ExecuteCodeRequest,
