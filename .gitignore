@@ -2,3 +2,8 @@
 /generated
 /dist
 .env
+piston_data
+
+# docker compose (commit templates only)
+docker-compose*.yml
+!docker-compose*.example.yml
