@@ -77,15 +77,68 @@ export async function processExamSubmissionById(submissionId: string): Promise<v
     );
     const execution = await executeSubmission(submission, testcases, driver ?? undefined);
 
-    await markSubmissionCompleted(submissionId, execution);
-    
-    logger.info(`Exam submission finished`, {
+    const allPassed = execution.passedCount === execution.totalTestcases;
+    if (!allPassed) {
+      await markSubmissionCompleted(submissionId, execution);
+      logger.info("Exam submission finished (functional cases only)", {
+        submissionId,
+        passedCount: execution.passedCount,
+        totalTestcases: execution.totalTestcases,
+        executionTimeMs: execution.executionTimeMs,
+        memoryKb: execution.memoryKb,
+        elapsedMs: Date.now() - startedAt,
+      });
+      return;
+    }
+
+    const generator = await getProblemTestGeneratorByProblemId(
+      submission.problemId,
+    );
+
+    if (!generator) {
+      await markSubmissionCompleted(submissionId, execution);
+      logger.info("Exam submission finished (no complexity generator)", {
+        submissionId,
+        passedCount: execution.passedCount,
+        totalTestcases: execution.totalTestcases,
+        executionTimeMs: execution.executionTimeMs,
+        memoryKb: execution.memoryKb,
+        elapsedMs: Date.now() - startedAt,
+      });
+      return;
+    }
+
+    const complexityResult = await runComplexityCheck(
+      submission,
+      generator,
+      driver ?? undefined,
+    );
+
+    if (!complexityResult) {
+      await markSubmissionCompleted(submissionId, execution);
+      logger.warn("Exam submission skipped complexity check", {
+        submissionId,
+        problemId: submission.problemId,
+      });
+      return;
+    }
+
+    await markSubmissionCompleted(
+      submissionId,
+      execution,
+      complexityResult.status,
+    );
+
+    logger.info("Exam submission finished (complexity check)", {
       submissionId,
       passedCount: execution.passedCount,
       totalTestcases: execution.totalTestcases,
       executionTimeMs: execution.executionTimeMs,
       memoryKb: execution.memoryKb,
       elapsedMs: Date.now() - startedAt,
+      complexity: complexityResult.complexity,
+      expectedComplexity: complexityResult.expectedComplexity,
+      complexityStatus: complexityResult.status,
     });
   } catch (error) {
     if (error instanceof SubmissionExecutionError) {

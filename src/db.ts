@@ -156,8 +156,9 @@ function isBetterThanPrevFinal(
 export async function markSubmissionCompleted(
   submissionId: string,
   execution: ExecutionResult,
+  statusOverride?: ExecutionStatus,
 ): Promise<void> {
-  const status = toExecutionStatus(execution);
+  const status = statusOverride ?? toExecutionStatus(execution);
 
   const curr = await prisma.submission.findUnique({
     where: { id: submissionId },
