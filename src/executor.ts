@@ -1,5 +1,10 @@
 import axios from "axios";
 import { config } from "./config";
+import type {
+  GeneratorPattern,
+  ProblemTestGenerator,
+  expectedComplexity,
+} from "./generated/prisma/client";
 import {
   ExecutionFailureContext,
   ExecuteCodeRequest,
@@ -57,6 +62,18 @@ const caseEndMarkers = [
   SINGLE_CASE_END_MARKER,
 ] as const;
 const allCaseMarkers = [...caseStartMarkers, ...caseEndMarkers] as const;
+
+const complexityRanges: Record<
+  expectedComplexity,
+  { min: number; max: number; idx: number }
+> = {
+  LOGN: { min: 0, max: 1.3, idx: 0 },
+  N: { min: 1.3, max: 1.8, idx: 1 },
+  NLOGN: { min: 1.8, max: 2.6, idx: 2 },
+  N2: { min: 2.6, max: 4.5, idx: 3 },
+  N3: { min: 4.5, max: 7.5, idx: 4 },
+  EXP: { min: 7.5, max: Number.POSITIVE_INFINITY, idx: 5 },
+};
 
 const escapeRegex = (value: string): string =>
   value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -285,6 +302,59 @@ function normalizeForCompare(value: string): string {
   return splitPlainLines(value ?? "").join("\n");
 }
 
+function classifyComplexity(r1: number, r2: number): expectedComplexity {
+  if (Math.abs(r1 - r2) / Math.max(r1, r2) > 0.4) {
+    return "EXP";
+  }
+
+  const avg = (r1 + r2) / 2;
+  for (const [key, range] of Object.entries(complexityRanges)) {
+    if (avg >= range.min && avg < range.max) {
+      return key as expectedComplexity;
+    }
+  }
+
+  return "EXP";
+}
+
+function generateArray(
+  size: number,
+  min: number,
+  max: number,
+  pattern: GeneratorPattern,
+): number[] {
+  const arr = Array.from({ length: size }, () =>
+    Math.floor(Math.random() * (max - min + 1)) + min,
+  );
+
+  if (pattern === "SORTED") arr.sort((a, b) => a - b);
+  if (pattern === "REVERSE") arr.sort((a, b) => b - a);
+  if (pattern === "CONSTANT") arr.fill(arr[0]);
+
+  return arr;
+}
+
+function buildSourceCode(
+  submission: SubmissionCodeSource,
+  driver?: DriverCodeSource,
+): { language: "c" | "cpp" | "python" | "java"; sourceCode: string } {
+  const language = normalizeLanguage(submission.language);
+  if (!language) {
+    throw new SubmissionExecutionError(
+      `Unsupported language: ${submission.language}`,
+      {
+        status: "INTERNAL_ERROR",
+      },
+    );
+  }
+
+  const sourceCode = sanitizeSourceCode(
+    `${driver?.header ?? ""}\n${submission.sourceCode}\n${driver?.footer ?? ""}`,
+  );
+
+  return { language, sourceCode };
+}
+
 function toMs(seconds: number): number {
   return seconds;
 }
@@ -322,21 +392,18 @@ async function runCode(
       });
     }
 
-    const compile = response.data.compile ?? {};
     const run = response.data.run ?? {};
 
-    const compileCpu = compile.cpu_time ?? 0;
     const runCpu = run.cpu_time ?? 0;
 
-    const compileMem = compile.memory ?? 0;
     const runMem = run.memory ?? 0;
 
     return {
       stdout: run.stdout ?? run.output ?? "",
       stderr: run.stderr,
       exitCode: run.code,
-      timeMs: toMs(compileCpu + runCpu),
-      memoryKb: toKb(Math.max(compileMem, runMem)),
+      timeMs: toMs(runCpu),
+      memoryKb: toKb(Math.max(runMem)),
     };
   } catch (error) {
     if (error instanceof SubmissionExecutionError) {
@@ -370,19 +437,7 @@ export async function executeSubmission(
   testcases: NormalizedTestcase[],
   driver?: DriverCodeSource,
 ): Promise<ExecutionResult> {
-  const language = normalizeLanguage(submission.language);
-  if (!language) {
-    throw new SubmissionExecutionError(
-      `Unsupported language: ${submission.language}`,
-      {
-        status: "INTERNAL_ERROR",
-      },
-    );
-  }
-
-  const sourceCode = sanitizeSourceCode(
-    `${driver?.header ?? ""}\n${submission.sourceCode}\n${driver?.footer ?? ""}`,
-  );
+  const { language, sourceCode } = buildSourceCode(submission, driver);
 
   const cleanedCases = testcases.map((testcase) => ({
     ...testcase,
@@ -529,6 +584,99 @@ export async function executeSubmission(
     failedCaseIndex,
     details,
   };
+}
+
+export async function runComplexityCheck(
+  submission: SubmissionCodeSource,
+  generator: ProblemTestGenerator,
+  driver?: DriverCodeSource,
+): Promise<
+  | {
+      status: "ACCEPTED" | "BAD_SCALING";
+      complexity: expectedComplexity;
+      expectedComplexity: expectedComplexity;
+      timings: number[];
+    }
+  | null
+> {
+  if (generator.type !== "ARRAY") {
+    return null;
+  }
+
+  const sizes = generator.sizes.filter((size) => size > 0);
+  if (sizes.length < 3) {
+    return null;
+  }
+
+  const { language, sourceCode } = buildSourceCode(submission, driver);
+  const inputs = sizes.map((size) => {
+    const arr = generateArray(
+      size,
+      generator.minValue,
+      generator.maxValue,
+      generator.pattern,
+    );
+    const payload = `${size}\n${arr.join(" ")}`;
+    return `1\n${payload}`.trim();
+  });
+
+  try {
+    await runCode({
+      language,
+      version: "*",
+      files: [
+        {
+          name: language === "java" ? "Main.java" : "main",
+          content: sourceCode,
+        },
+      ],
+      stdin: inputs[0],
+    });
+
+    const timings: number[] = [];
+
+    for (const input of inputs) {
+      const result = await runCode({
+        language,
+        version: "*",
+        files: [
+          {
+            name: language === "java" ? "Main.java" : "main",
+            content: sourceCode,
+          },
+        ],
+        stdin: input,
+      });
+
+      const time = Number(result.timeMs);
+      timings.push(Number.isFinite(time) ? time : 0);
+    }
+
+    if (timings.some((time) => time <= 0)) {
+      return null;
+    }
+
+    const r1 = timings[1] / timings[0];
+    const r2 = timings[2] / timings[1];
+    const complexity = classifyComplexity(r1, r2);
+    const curr = complexityRanges[complexity].idx;
+    const expectedKey = generator.expectedComplexity ?? "EXP";
+    const expectedIdx = complexityRanges[expectedKey].idx;
+    const status = curr > expectedIdx ? "BAD_SCALING" : "ACCEPTED";
+
+    return {
+      status,
+      complexity,
+      expectedComplexity: expectedKey,
+      timings,
+    };
+  } catch (error) {
+    if (error instanceof SubmissionExecutionError) {
+      return null;
+    }
+
+    throw error;
+  }
 }
 
 export async function executeCode(

@@ -3,6 +3,7 @@ import {
   type Submission,
   type selfSubmission as SelfSubmission,
   type ExecutionStatus,
+  type ProblemTestGenerator,
   type ProgrammingLanguage,
 } from "./generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -33,6 +34,12 @@ export async function getSelfSubmissionById(
   selfSubmissionId: string,
 ): Promise<SelfSubmission | null> {
   return prisma.selfSubmission.findUnique({ where: { id: selfSubmissionId } });
+}
+
+export async function getProblemTestGeneratorByProblemId(
+  problemId: string,
+): Promise<ProblemTestGenerator | null> {
+  return prisma.problemTestGenerator.findUnique({ where: { problemId } });
 }
 
 type RawCaseItem = { input?: unknown; output?: unknown; ouptut?: unknown };
@@ -253,13 +260,16 @@ export async function markSelfSubmissionProcessing(
 export async function markSelfSubmissionCompleted(
   selfSubmissionId: string,
   execution: ExecutionResult,
+  statusOverride?: ExecutionStatus,
 ): Promise<void> {
   const allPassed = execution.passedCount === execution.totalTestcases;
-  const status = allPassed
-    ? "ACCEPTED"
-    : execution.passedCount > 0
-      ? "PARTIAL"
-      : "WRONG_ANSWER";
+  const status =
+    statusOverride ??
+    (allPassed
+      ? "ACCEPTED"
+      : execution.passedCount > 0
+        ? "PARTIAL"
+        : "WRONG_ANSWER");
 
   await prisma.selfSubmission.update({
     where: { id: selfSubmissionId },

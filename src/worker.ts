@@ -3,6 +3,7 @@ import {
   connectDb,
   disconnectDb,
   getDriverCodeByProblemIdAndLanguage,
+  getProblemTestGeneratorByProblemId,
   getSelfSubmissionById,
   getSubmissionById,
   getTestcasesByProblemId,
@@ -13,7 +14,11 @@ import {
   markSubmissionFailed,
   markSubmissionProcessing
 } from "./db";
-import { executeSubmission, SubmissionExecutionError } from "./executor";
+import {
+  executeSubmission,
+  runComplexityCheck,
+  SubmissionExecutionError,
+} from "./executor";
 import { logger } from "./logger";
 import { deleteMessage, pollMessages, PolledMessage } from "./sqs";
 
@@ -148,15 +153,68 @@ export async function processPracticeSubmissionById(selfSubmissionId: string): P
     );
     const execution = await executeSubmission(selfSubmission, testcases, driver ?? undefined);
 
-    await markSelfSubmissionCompleted(selfSubmissionId, execution);
+    const allPassed = execution.passedCount === execution.totalTestcases;
+    if (!allPassed) {
+      await markSelfSubmissionCompleted(selfSubmissionId, execution);
+      logger.info("Practice submission finished (functional cases only)", {
+        selfSubmissionId,
+        passedCount: execution.passedCount,
+        totalTestcases: execution.totalTestcases,
+        executionTimeMs: execution.executionTimeMs,
+        memoryKb: execution.memoryKb,
+        elapsedMs: Date.now() - startedAt,
+      });
+      return;
+    }
 
-    logger.info("Practice submission finished", {
+    const generator = await getProblemTestGeneratorByProblemId(
+      selfSubmission.problemId,
+    );
+
+    if (!generator) {
+      await markSelfSubmissionCompleted(selfSubmissionId, execution);
+      logger.info("Practice submission finished (no complexity generator)", {
+        selfSubmissionId,
+        passedCount: execution.passedCount,
+        totalTestcases: execution.totalTestcases,
+        executionTimeMs: execution.executionTimeMs,
+        memoryKb: execution.memoryKb,
+        elapsedMs: Date.now() - startedAt,
+      });
+      return;
+    }
+
+    const complexityResult = await runComplexityCheck(
+      selfSubmission,
+      generator,
+      driver ?? undefined,
+    );
+
+    if (!complexityResult) {
+      await markSelfSubmissionCompleted(selfSubmissionId, execution);
+      logger.warn("Practice submission skipped complexity check", {
+        selfSubmissionId,
+        problemId: selfSubmission.problemId,
+      });
+      return;
+    }
+
+    await markSelfSubmissionCompleted(
+      selfSubmissionId,
+      execution,
+      complexityResult.status,
+    );
+
+    logger.info("Practice submission finished (complexity check)", {
       selfSubmissionId,
       passedCount: execution.passedCount,
       totalTestcases: execution.totalTestcases,
       executionTimeMs: execution.executionTimeMs,
       memoryKb: execution.memoryKb,
       elapsedMs: Date.now() - startedAt,
+      complexity: complexityResult.complexity,
+      expectedComplexity: complexityResult.expectedComplexity,
+      complexityStatus: complexityResult.status,
     });
   } catch (error) {
     if (error instanceof SubmissionExecutionError) {
