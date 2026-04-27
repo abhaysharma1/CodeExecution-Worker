@@ -325,69 +325,116 @@ async function processQueueMessage(message: PolledMessage): Promise<void> {
   }
 }
 
+// export async function startWorker(): Promise<void> {
+//   logger.info("Worker startup initiated", {
+//     nodeEnv: config.nodeEnv,
+//     awsRegion: config.awsRegion,
+//     sqsWaitTimeSeconds: config.sqsWaitTimeSeconds,
+//     workerIdleSleepMs: config.workerIdleSleepMs,
+//     examQueueConfigured: Boolean(config.examSqsQueueUrl),
+//     practiceQueueConfigured: Boolean(config.practiceSqsQueueUrl),
+//     pistonUrl: config.pistonUrl,
+//     logLevel: process.env.LOG_LEVEL ?? "info",
+//     pid: process.pid,
+//   });
+
+//   await connectDb();
+//   logger.info("Worker started and polling SQS");
+
+//   let loopCount = 0;
+
+//   while (true) {
+//     loopCount += 1;
+
+//     try {
+//       const examPollStartedAt = Date.now();
+//       const examMessages = await pollMessages("exam", 5);
+//       logger.info("Exam queue poll completed", {
+//         loopCount,
+//         count: examMessages.length,
+//         elapsedMs: Date.now() - examPollStartedAt,
+//       });
+
+//       const practicePollStartedAt = Date.now();
+//       const messages = examMessages.length > 0 ? examMessages : await pollMessages("practice", 5);
+//       if (examMessages.length === 0) {
+//         logger.info("Practice queue poll completed", {
+//           loopCount,
+//           count: messages.length,
+//           elapsedMs: Date.now() - practicePollStartedAt,
+//         });
+//       }
+
+//       if (messages.length === 0) {
+//         if (loopCount % 10 === 0) {
+//           logger.info("Worker idle heartbeat", {
+//             loopCount,
+//             sleepMs: config.workerIdleSleepMs,
+//           });
+//         }
+//         await sleep(config.workerIdleSleepMs);
+//         continue;
+//       }
+
+//       for (const message of messages) {
+//         await processQueueMessage(message);
+//       }
+//     } catch (error) {
+//       logger.error("Worker loop error", {
+//         loopCount,
+//         ...errorToLog(error),
+//       });
+//       await sleep(config.workerIdleSleepMs);
+//     }
+//   }
+// }
+
+
+const CONCURRENCY = 10; // tune based on CPU + Piston capacity
+
 export async function startWorker(): Promise<void> {
-  logger.info("Worker startup initiated", {
-    nodeEnv: config.nodeEnv,
-    awsRegion: config.awsRegion,
-    sqsWaitTimeSeconds: config.sqsWaitTimeSeconds,
-    workerIdleSleepMs: config.workerIdleSleepMs,
-    examQueueConfigured: Boolean(config.examSqsQueueUrl),
-    practiceQueueConfigured: Boolean(config.practiceSqsQueueUrl),
-    pistonUrl: config.pistonUrl,
-    logLevel: process.env.LOG_LEVEL ?? "info",
-    pid: process.pid,
-  });
-
   await connectDb();
-  logger.info("Worker started and polling SQS");
 
-  let loopCount = 0;
+  const inFlight = new Set<Promise<void>>();
 
   while (true) {
-    loopCount += 1;
-
     try {
-      const examPollStartedAt = Date.now();
-      const examMessages = await pollMessages("exam", 5);
-      logger.info("Exam queue poll completed", {
-        loopCount,
-        count: examMessages.length,
-        elapsedMs: Date.now() - examPollStartedAt,
-      });
+      // 🔹 Poll BOTH queues in parallel
+      const [examMessages, practiceMessages] = await Promise.all([
+        pollMessages("exam", 5),
+        pollMessages("practice", 5),
+      ]);
 
-      const practicePollStartedAt = Date.now();
-      const messages = examMessages.length > 0 ? examMessages : await pollMessages("practice", 5);
-      if (examMessages.length === 0) {
-        logger.info("Practice queue poll completed", {
-          loopCount,
-          count: messages.length,
-          elapsedMs: Date.now() - practicePollStartedAt,
-        });
-      }
+      const messages = [...examMessages, ...practiceMessages];
 
       if (messages.length === 0) {
-        if (loopCount % 10 === 0) {
-          logger.info("Worker idle heartbeat", {
-            loopCount,
-            sleepMs: config.workerIdleSleepMs,
-          });
-        }
         await sleep(config.workerIdleSleepMs);
         continue;
       }
 
       for (const message of messages) {
-        await processQueueMessage(message);
+        // 🔹 If at concurrency limit → wait for one to finish
+        if (inFlight.size >= CONCURRENCY) {
+          await Promise.race(inFlight);
+        }
+
+        const task = processQueueMessage(message)
+          .catch((err) => {
+            logger.error("Message processing failed", errorToLog(err));
+          })
+          .finally(() => {
+            inFlight.delete(task);
+          });
+
+        inFlight.add(task);
       }
     } catch (error) {
-      logger.error("Worker loop error", {
-        loopCount,
-        ...errorToLog(error),
-      });
+      logger.error("Worker loop error", errorToLog(error));
       await sleep(config.workerIdleSleepMs);
     }
   }
 }
+
 
 async function shutdown(signal: string): Promise<void> {
   logger.info("Shutdown signal received", { signal, pid: process.pid });
