@@ -3,7 +3,6 @@ import { config } from "./config";
 import type {
   GeneratorPattern,
   ProblemTestGenerator,
-  expectedComplexity,
 } from "./generated/prisma/client";
 import {
   ExecutionFailureContext,
@@ -63,52 +62,12 @@ const caseEndMarkers = [
 ] as const;
 const allCaseMarkers = [...caseStartMarkers, ...caseEndMarkers] as const;
 
-// const complexityRanges: Record<
-//   expectedComplexity,
-//   { min: number; max: number; idx: number }
-// > = {
-//   LOGN: { min: 0, max: 1.3, idx: 0 },
-//   N: { min: 1.3, max: 1.8, idx: 1 },
-//   NLOGN: { min: 1.8, max: 2.6, idx: 2 },
-//   N2: { min: 2.6, max: 4.5, idx: 3 },
-//   N3: { min: 4.5, max: 7.5, idx: 4 },
-//   EXP: { min: 7.5, max: Number.POSITIVE_INFINITY, idx: 5 },
-// };
-
-const complexityRangesC = {
-  LOGN: { min: 0, max: 1.2, idx: 0 },
-  N: { min: 1.2, max: 1.9, idx: 1 },
-  NLOGN: { min: 1.9, max: 2.7, idx: 2 },
-  N2: { min: 2.7, max: 4.2, idx: 3 },
-  N3: { min: 4.2, max: 7.0, idx: 4 },
-  EXP: { min: 7.0, max: Infinity, idx: 5 },
-};
-
-const complexityRangesCPP = {
-  LOGN: { min: 0, max: 1.25, idx: 0 },
-  N: { min: 1.25, max: 2.0, idx: 1 },
-  NLOGN: { min: 2.0, max: 2.9, idx: 2 },
-  N2: { min: 2.9, max: 4.8, idx: 3 },
-  N3: { min: 4.8, max: 8.0, idx: 4 },
-  EXP: { min: 8.0, max: Infinity, idx: 5 },
-};
-
-const complexityRangesJava = {
-  LOGN: { min: 0, max: 1.6, idx: 0 },
-  N: { min: 1.6, max: 2.6, idx: 1 },
-  NLOGN: { min: 2.6, max: 3.6, idx: 2 },
-  N2: { min: 3.6, max: 6.2, idx: 3 },
-  N3: { min: 6.2, max: 10.0, idx: 4 },
-  EXP: { min: 10.0, max: Infinity, idx: 5 },
-};
-
-const complexityRangesPython = {
-  LOGN: { min: 0, max: 1.4, idx: 0 },
-  N: { min: 1.4, max: 2.3, idx: 1 },
-  NLOGN: { min: 2.3, max: 3.4, idx: 2 },
-  N2: { min: 3.4, max: 6.5, idx: 3 },
-  N3: { min: 6.5, max: 11.0, idx: 4 },
-  EXP: { min: 11.0, max: Infinity, idx: 5 },
+const LANGUAGE_MULTIPLIERS: Record<string, number> = {
+  cpp: 1.0,
+  c: 1.0,
+  java: 2.0,
+  python: 4.0,
+  javascript: 3.0,
 };
 
 const escapeRegex = (value: string): string =>
@@ -336,37 +295,6 @@ export class SubmissionExecutionError extends Error {
 
 function normalizeForCompare(value: string): string {
   return splitPlainLines(value ?? "").join("\n");
-}
-
-function classifyComplexity(
-  r1: number,
-  r2: number,
-  language: "c" | "cpp" | "python" | "java",
-): expectedComplexity {
-  if (Math.abs(r1 - r2) / Math.max(r1, r2) > 0.4) {
-    return "EXP";
-  }
-
-  let complexityRanges;
-
-  if (language == "java") {
-    complexityRanges = complexityRangesJava;
-  } else if (language == "cpp") {
-    complexityRanges = complexityRangesCPP;
-  } else if (language == "python") {
-    complexityRanges = complexityRangesPython;
-  } else {
-    complexityRanges = complexityRangesC;
-  }
-
-  const avg = (r1 + r2) / 2;
-  for (const [key, range] of Object.entries(complexityRanges)) {
-    if (avg >= range.min && avg < range.max) {
-      return key as expectedComplexity;
-    }
-  }
-
-  return "EXP";
 }
 
 function generateArray(
@@ -639,14 +567,12 @@ export async function executeSubmission(
   };
 }
 
-export async function runComplexityCheck(
+export async function runStressCheck(
   submission: SubmissionCodeSource,
   generator: ProblemTestGenerator,
   driver?: DriverCodeSource,
 ): Promise<{
-  status: "ACCEPTED" | "BAD_SCALING";
-  complexity: expectedComplexity;
-  expectedComplexity: expectedComplexity;
+  status: "ACCEPTED" | "TIME_LIMIT_EXCEEDED";
   timings: number[];
 } | null> {
   if (generator.type !== "ARRAY") {
@@ -654,38 +580,27 @@ export async function runComplexityCheck(
   }
 
   const sizes = generator.sizes.filter((size) => size > 0);
-  if (sizes.length < 3) {
+  if (sizes.length === 0) {
     return null;
   }
 
   const { language, sourceCode } = buildSourceCode(submission, driver);
-  const inputs = sizes.map((size) => {
-    const arr = generateArray(
-      size,
-      generator.minValue,
-      generator.maxValue,
-      generator.pattern,
-    );
-    const payload = `${size}\n${arr.join(" ")}`;
-    return `1\n${payload}`.trim();
-  });
+
+  const effectiveTimeLimit =
+    generator.timeLimitMs * (LANGUAGE_MULTIPLIERS[language] ?? 1.0);
+
+  const timings: number[] = [];
 
   try {
-    await runCode({
-      language,
-      version: "*",
-      files: [
-        {
-          name: language === "java" ? "Main.java" : "main",
-          content: sourceCode,
-        },
-      ],
-      stdin: inputs[0],
-    });
+    for (const size of sizes) {
+      const arr = generateArray(
+        size,
+        generator.minValue,
+        generator.maxValue,
+        generator.pattern,
+      );
+      const input = `${size}\n${arr.join(" ")}`;
 
-    const timings: number[] = [];
-
-    for (const input of inputs) {
       const result = await runCode({
         language,
         version: "*",
@@ -695,41 +610,23 @@ export async function runComplexityCheck(
             content: sourceCode,
           },
         ],
-        stdin: input,
+        stdin: `1\n${input}`.trim(),
       });
 
       const time = Number(result.timeMs);
-      timings.push(Number.isFinite(time) ? time : 0);
+      const runtime = Number.isFinite(time) ? time : 0;
+      timings.push(runtime);
+
+      if (runtime > effectiveTimeLimit) {
+        return {
+          status: "TIME_LIMIT_EXCEEDED",
+          timings,
+        };
+      }
     }
-
-    if (timings.some((time) => time <= 0)) {
-      return null;
-    }
-
-    let complexityRanges;
-
-    if (language == "java") {
-      complexityRanges = complexityRangesJava;
-    } else if (language == "cpp") {
-      complexityRanges = complexityRangesCPP;
-    } else if (language == "python") {
-      complexityRanges = complexityRangesPython;
-    } else {
-      complexityRanges = complexityRangesC;
-    }
-
-    const r1 = timings[1] / timings[0];
-    const r2 = timings[2] / timings[1];
-    const complexity = classifyComplexity(r1, r2, language);
-    const curr = complexityRanges[complexity].idx;
-    const expectedKey = generator.expectedComplexity ?? "EXP";
-    const expectedIdx = complexityRanges[expectedKey].idx;
-    const status = curr > expectedIdx ? "BAD_SCALING" : "ACCEPTED";
 
     return {
-      status,
-      complexity,
-      expectedComplexity: expectedKey,
+      status: "ACCEPTED",
       timings,
     };
   } catch (error) {
@@ -740,6 +637,8 @@ export async function runComplexityCheck(
     throw error;
   }
 }
+
+
 
 export async function executeCode(
   request: ExecuteCodeRequest,

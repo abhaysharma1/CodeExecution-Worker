@@ -16,7 +16,7 @@ import {
 } from "./db";
 import {
   executeSubmission,
-  runComplexityCheck,
+  runStressCheck,
   SubmissionExecutionError,
 } from "./executor";
 import { logger } from "./logger";
@@ -97,7 +97,7 @@ export async function processExamSubmissionById(submissionId: string): Promise<v
 
     if (!generator) {
       await markSubmissionCompleted(submissionId, execution);
-      logger.info("Exam submission finished (no complexity generator)", {
+      logger.info("Exam submission finished (no stress generator)", {
         submissionId,
         passedCount: execution.passedCount,
         totalTestcases: execution.totalTestcases,
@@ -108,37 +108,38 @@ export async function processExamSubmissionById(submissionId: string): Promise<v
       return;
     }
 
-    const complexityResult = await runComplexityCheck(
+    const stressResult = await runStressCheck(
       submission,
       generator,
       driver ?? undefined,
     );
 
-    if (!complexityResult) {
+    if (!stressResult) {
       await markSubmissionCompleted(submissionId, execution);
-      logger.warn("Exam submission skipped complexity check", {
+      logger.warn("Exam submission skipped stress check", {
         submissionId,
         problemId: submission.problemId,
       });
       return;
     }
 
+    const stressStatus = stressResult.status === "TIME_LIMIT_EXCEEDED" ? "BAD_SCALING" : "ACCEPTED";
+
     await markSubmissionCompleted(
       submissionId,
       execution,
-      complexityResult.status,
+      stressStatus,
     );
 
-    logger.info("Exam submission finished (complexity check)", {
+    logger.info("Exam submission finished (stress check)", {
       submissionId,
       passedCount: execution.passedCount,
       totalTestcases: execution.totalTestcases,
       executionTimeMs: execution.executionTimeMs,
       memoryKb: execution.memoryKb,
       elapsedMs: Date.now() - startedAt,
-      complexity: complexityResult.complexity,
-      expectedComplexity: complexityResult.expectedComplexity,
-      complexityStatus: complexityResult.status,
+      stressStatus: stressResult.status,
+      sizesTested: stressResult.timings.length,
     });
   } catch (error) {
     if (error instanceof SubmissionExecutionError) {
@@ -226,7 +227,7 @@ export async function processPracticeSubmissionById(selfSubmissionId: string): P
 
     if (!generator) {
       await markSelfSubmissionCompleted(selfSubmissionId, execution);
-      logger.info("Practice submission finished (no complexity generator)", {
+      logger.info("Practice submission finished (no stress generator)", {
         selfSubmissionId,
         passedCount: execution.passedCount,
         totalTestcases: execution.totalTestcases,
@@ -237,37 +238,38 @@ export async function processPracticeSubmissionById(selfSubmissionId: string): P
       return;
     }
 
-    const complexityResult = await runComplexityCheck(
+    const stressResult = await runStressCheck(
       selfSubmission,
       generator,
       driver ?? undefined,
     );
 
-    if (!complexityResult) {
+    if (!stressResult) {
       await markSelfSubmissionCompleted(selfSubmissionId, execution);
-      logger.warn("Practice submission skipped complexity check", {
+      logger.warn("Practice submission skipped stress check", {
         selfSubmissionId,
         problemId: selfSubmission.problemId,
       });
       return;
     }
 
+    const stressStatus = stressResult.status === "TIME_LIMIT_EXCEEDED" ? "BAD_SCALING" : "ACCEPTED";
+
     await markSelfSubmissionCompleted(
       selfSubmissionId,
       execution,
-      complexityResult.status,
+      stressStatus,
     );
 
-    logger.info("Practice submission finished (complexity check)", {
+    logger.info("Practice submission finished (stress check)", {
       selfSubmissionId,
       passedCount: execution.passedCount,
       totalTestcases: execution.totalTestcases,
       executionTimeMs: execution.executionTimeMs,
       memoryKb: execution.memoryKb,
       elapsedMs: Date.now() - startedAt,
-      complexity: complexityResult.complexity,
-      expectedComplexity: complexityResult.expectedComplexity,
-      complexityStatus: complexityResult.status,
+      stressStatus: stressResult.status,
+      sizesTested: stressResult.timings.length,
     });
   } catch (error) {
     if (error instanceof SubmissionExecutionError) {

@@ -404,6 +404,7 @@ export const ModelName = {
   ExamGroup: 'ExamGroup',
   ExamAttempt: 'ExamAttempt',
   AiEvaluation: 'AiEvaluation',
+  ExamSession: 'ExamSession',
   Group: 'Group',
   GroupMember: 'GroupMember',
   Role: 'Role',
@@ -420,6 +421,7 @@ export const ModelName = {
   StudentProblemStats: 'StudentProblemStats',
   OrganizationAnalytics: 'OrganizationAnalytics',
   ExamAnalytics: 'ExamAnalytics',
+  GroupExamAnalytics: 'GroupExamAnalytics',
   Notification: 'Notification',
   NotificationRecipient: 'NotificationRecipient'
 } as const
@@ -437,7 +439,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "problem" | "testCase" | "complexityTestingCases" | "driverCode" | "referenceSolution" | "runTestCase" | "selfSubmission" | "problemTestGenerator" | "exam" | "examProblem" | "examEnrollment" | "submission" | "examResult" | "examGroup" | "examAttempt" | "aiEvaluation" | "group" | "groupMember" | "role" | "permission" | "rolePermission" | "tag" | "problemTag" | "aIConversation" | "aIMessage" | "aIRateLimit" | "groupOverallStats" | "studentOverallStats" | "groupProblemStats" | "studentProblemStats" | "organizationAnalytics" | "examAnalytics" | "notification" | "notificationRecipient"
+    modelProps: "user" | "session" | "account" | "verification" | "problem" | "testCase" | "complexityTestingCases" | "driverCode" | "referenceSolution" | "runTestCase" | "selfSubmission" | "problemTestGenerator" | "exam" | "examProblem" | "examEnrollment" | "submission" | "examResult" | "examGroup" | "examAttempt" | "aiEvaluation" | "examSession" | "group" | "groupMember" | "role" | "permission" | "rolePermission" | "tag" | "problemTag" | "aIConversation" | "aIMessage" | "aIRateLimit" | "groupOverallStats" | "studentOverallStats" | "groupProblemStats" | "studentProblemStats" | "organizationAnalytics" | "examAnalytics" | "groupExamAnalytics" | "notification" | "notificationRecipient"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1921,6 +1923,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ExamSession: {
+      payload: Prisma.$ExamSessionPayload<ExtArgs>
+      fields: Prisma.ExamSessionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExamSessionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExamSessionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload>
+        }
+        findFirst: {
+          args: Prisma.ExamSessionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExamSessionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload>
+        }
+        findMany: {
+          args: Prisma.ExamSessionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload>[]
+        }
+        create: {
+          args: Prisma.ExamSessionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload>
+        }
+        createMany: {
+          args: Prisma.ExamSessionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ExamSessionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload>[]
+        }
+        delete: {
+          args: Prisma.ExamSessionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload>
+        }
+        update: {
+          args: Prisma.ExamSessionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ExamSessionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExamSessionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ExamSessionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ExamSessionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExamSessionPayload>
+        }
+        aggregate: {
+          args: Prisma.ExamSessionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExamSession>
+        }
+        groupBy: {
+          args: Prisma.ExamSessionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExamSessionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExamSessionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExamSessionCountAggregateOutputType> | number
+        }
+      }
+    }
     Group: {
       payload: Prisma.$GroupPayload<ExtArgs>
       fields: Prisma.GroupFieldRefs
@@ -3105,6 +3181,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    GroupExamAnalytics: {
+      payload: Prisma.$GroupExamAnalyticsPayload<ExtArgs>
+      fields: Prisma.GroupExamAnalyticsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GroupExamAnalyticsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GroupExamAnalyticsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload>
+        }
+        findFirst: {
+          args: Prisma.GroupExamAnalyticsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GroupExamAnalyticsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload>
+        }
+        findMany: {
+          args: Prisma.GroupExamAnalyticsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload>[]
+        }
+        create: {
+          args: Prisma.GroupExamAnalyticsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload>
+        }
+        createMany: {
+          args: Prisma.GroupExamAnalyticsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GroupExamAnalyticsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload>[]
+        }
+        delete: {
+          args: Prisma.GroupExamAnalyticsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload>
+        }
+        update: {
+          args: Prisma.GroupExamAnalyticsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload>
+        }
+        deleteMany: {
+          args: Prisma.GroupExamAnalyticsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GroupExamAnalyticsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GroupExamAnalyticsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload>[]
+        }
+        upsert: {
+          args: Prisma.GroupExamAnalyticsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GroupExamAnalyticsPayload>
+        }
+        aggregate: {
+          args: Prisma.GroupExamAnalyticsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGroupExamAnalytics>
+        }
+        groupBy: {
+          args: Prisma.GroupExamAnalyticsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GroupExamAnalyticsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GroupExamAnalyticsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GroupExamAnalyticsCountAggregateOutputType> | number
+        }
+      }
+    }
     Notification: {
       payload: Prisma.$NotificationPayload<ExtArgs>
       fields: Prisma.NotificationFieldRefs
@@ -3379,7 +3529,6 @@ export type TestCaseScalarFieldEnum = (typeof TestCaseScalarFieldEnum)[keyof typ
 export const ComplexityTestingCasesScalarFieldEnum = {
   id: 'id',
   cases: 'cases',
-  expectedComplexity: 'expectedComplexity',
   problemId: 'problemId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -3448,7 +3597,8 @@ export const ProblemTestGeneratorScalarFieldEnum = {
   pattern: 'pattern',
   minValue: 'minValue',
   maxValue: 'maxValue',
-  expectedComplexity: 'expectedComplexity',
+  timeLimitMs: 'timeLimitMs',
+  memoryLimitMB: 'memoryLimitMB',
   sizes: 'sizes',
   createdAt: 'createdAt'
 } as const
@@ -3568,6 +3718,20 @@ export const AiEvaluationScalarFieldEnum = {
 } as const
 
 export type AiEvaluationScalarFieldEnum = (typeof AiEvaluationScalarFieldEnum)[keyof typeof AiEvaluationScalarFieldEnum]
+
+
+export const ExamSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  examId: 'examId',
+  sebVerified: 'sebVerified',
+  sebHash: 'sebHash',
+  token: 'token',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ExamSessionScalarFieldEnum = (typeof ExamSessionScalarFieldEnum)[keyof typeof ExamSessionScalarFieldEnum]
 
 
 export const GroupScalarFieldEnum = {
@@ -3820,6 +3984,33 @@ export const ExamAnalyticsScalarFieldEnum = {
 export type ExamAnalyticsScalarFieldEnum = (typeof ExamAnalyticsScalarFieldEnum)[keyof typeof ExamAnalyticsScalarFieldEnum]
 
 
+export const GroupExamAnalyticsScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  examId: 'examId',
+  totalEnrolled: 'totalEnrolled',
+  totalAttempted: 'totalAttempted',
+  totalCompleted: 'totalCompleted',
+  completionRate: 'completionRate',
+  avgScore: 'avgScore',
+  highestScore: 'highestScore',
+  lowestScore: 'lowestScore',
+  medianScore: 'medianScore',
+  scoreDistribution: 'scoreDistribution',
+  problemDifficulties: 'problemDifficulties',
+  avgTimeToComplete: 'avgTimeToComplete',
+  avgAttempts: 'avgAttempts',
+  totalSubmissions: 'totalSubmissions',
+  acceptedCount: 'acceptedCount',
+  partialCount: 'partialCount',
+  failedCount: 'failedCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GroupExamAnalyticsScalarFieldEnum = (typeof GroupExamAnalyticsScalarFieldEnum)[keyof typeof GroupExamAnalyticsScalarFieldEnum]
+
+
 export const NotificationScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -3967,20 +4158,6 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
- * Reference to a field of type 'expectedComplexity'
- */
-export type EnumexpectedComplexityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'expectedComplexity'>
-    
-
-
-/**
- * Reference to a field of type 'expectedComplexity[]'
- */
-export type ListEnumexpectedComplexityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'expectedComplexity[]'>
     
 
 
@@ -4280,6 +4457,7 @@ export type GlobalOmitConfig = {
   examGroup?: Prisma.ExamGroupOmit
   examAttempt?: Prisma.ExamAttemptOmit
   aiEvaluation?: Prisma.AiEvaluationOmit
+  examSession?: Prisma.ExamSessionOmit
   group?: Prisma.GroupOmit
   groupMember?: Prisma.GroupMemberOmit
   role?: Prisma.RoleOmit
@@ -4296,6 +4474,7 @@ export type GlobalOmitConfig = {
   studentProblemStats?: Prisma.StudentProblemStatsOmit
   organizationAnalytics?: Prisma.OrganizationAnalyticsOmit
   examAnalytics?: Prisma.ExamAnalyticsOmit
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsOmit
   notification?: Prisma.NotificationOmit
   notificationRecipient?: Prisma.NotificationRecipientOmit
 }

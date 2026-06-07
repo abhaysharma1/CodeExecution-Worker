@@ -71,6 +71,7 @@ export const ModelName = {
   ExamGroup: 'ExamGroup',
   ExamAttempt: 'ExamAttempt',
   AiEvaluation: 'AiEvaluation',
+  ExamSession: 'ExamSession',
   Group: 'Group',
   GroupMember: 'GroupMember',
   Role: 'Role',
@@ -87,6 +88,7 @@ export const ModelName = {
   StudentProblemStats: 'StudentProblemStats',
   OrganizationAnalytics: 'OrganizationAnalytics',
   ExamAnalytics: 'ExamAnalytics',
+  GroupExamAnalytics: 'GroupExamAnalytics',
   Notification: 'Notification',
   NotificationRecipient: 'NotificationRecipient'
 } as const
@@ -194,7 +196,6 @@ export type TestCaseScalarFieldEnum = (typeof TestCaseScalarFieldEnum)[keyof typ
 export const ComplexityTestingCasesScalarFieldEnum = {
   id: 'id',
   cases: 'cases',
-  expectedComplexity: 'expectedComplexity',
   problemId: 'problemId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -263,7 +264,8 @@ export const ProblemTestGeneratorScalarFieldEnum = {
   pattern: 'pattern',
   minValue: 'minValue',
   maxValue: 'maxValue',
-  expectedComplexity: 'expectedComplexity',
+  timeLimitMs: 'timeLimitMs',
+  memoryLimitMB: 'memoryLimitMB',
   sizes: 'sizes',
   createdAt: 'createdAt'
 } as const
@@ -383,6 +385,20 @@ export const AiEvaluationScalarFieldEnum = {
 } as const
 
 export type AiEvaluationScalarFieldEnum = (typeof AiEvaluationScalarFieldEnum)[keyof typeof AiEvaluationScalarFieldEnum]
+
+
+export const ExamSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  examId: 'examId',
+  sebVerified: 'sebVerified',
+  sebHash: 'sebHash',
+  token: 'token',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ExamSessionScalarFieldEnum = (typeof ExamSessionScalarFieldEnum)[keyof typeof ExamSessionScalarFieldEnum]
 
 
 export const GroupScalarFieldEnum = {
@@ -633,6 +649,33 @@ export const ExamAnalyticsScalarFieldEnum = {
 } as const
 
 export type ExamAnalyticsScalarFieldEnum = (typeof ExamAnalyticsScalarFieldEnum)[keyof typeof ExamAnalyticsScalarFieldEnum]
+
+
+export const GroupExamAnalyticsScalarFieldEnum = {
+  id: 'id',
+  groupId: 'groupId',
+  examId: 'examId',
+  totalEnrolled: 'totalEnrolled',
+  totalAttempted: 'totalAttempted',
+  totalCompleted: 'totalCompleted',
+  completionRate: 'completionRate',
+  avgScore: 'avgScore',
+  highestScore: 'highestScore',
+  lowestScore: 'lowestScore',
+  medianScore: 'medianScore',
+  scoreDistribution: 'scoreDistribution',
+  problemDifficulties: 'problemDifficulties',
+  avgTimeToComplete: 'avgTimeToComplete',
+  avgAttempts: 'avgAttempts',
+  totalSubmissions: 'totalSubmissions',
+  acceptedCount: 'acceptedCount',
+  partialCount: 'partialCount',
+  failedCount: 'failedCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GroupExamAnalyticsScalarFieldEnum = (typeof GroupExamAnalyticsScalarFieldEnum)[keyof typeof GroupExamAnalyticsScalarFieldEnum]
 
 
 export const NotificationScalarFieldEnum = {

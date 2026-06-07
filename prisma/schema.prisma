@@ -40,6 +40,7 @@ model User {
   studentProblemStats    StudentProblemStats[]
   notifications          Notification[]
   notificationRecipients NotificationRecipient[]
+  examSessions           ExamSession[]
 
   @@index([email])
   @@index([globalRoleId])
@@ -122,15 +123,6 @@ model Problem {
   @@index([id, number, title])
 }
 
-enum expectedComplexity {
-  LOGN
-  N
-  NLOGN
-  N2
-  N3
-  EXP
-}
-
 enum problemDifficulty {
   EASY
   MEDIUM
@@ -158,7 +150,6 @@ model TestCase {
 model complexityTestingCases {
   id                 String              @id @default(uuid())
   cases              Json
-  expectedComplexity expectedComplexity?
 
   problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
   problemId String   @unique // one-to-one relationship
@@ -214,7 +205,7 @@ model selfSubmission {
   executionTime   Float?
   memory          Float?
 
-  stderr          String?
+  stderr String?
 
   createdAt DateTime @default(now())
 
@@ -241,9 +232,10 @@ model ProblemTestGenerator {
   minValue Int
   maxValue Int
 
-  expectedComplexity expectedComplexity
+  timeLimitMs   Int @default(1000)
+  memoryLimitMB Int @default(256)
 
-  sizes Int[] // e.g. [1000, 2000, 4000, 8000]
+  sizes Int[] // e.g. [1000, 10000, 100000]
 
   createdAt DateTime @default(now())
 
@@ -288,6 +280,7 @@ model Exam {
   aiEvaluations   AiEvaluation[]
   aiconversations AIConversation[]
   examAnalytics   ExamAnalytics?
+  groupExamAnalytics GroupExamAnalytics[]
 
   @@index([id, creatorId])
 }
@@ -458,6 +451,21 @@ model AiEvaluation {
   @@index([submissionId])
 }
 
+model ExamSession {
+  id          String   @id @default(cuid())
+  userId      String
+  examId      String
+  sebVerified Boolean  @default(false)
+  sebHash     String
+  token       String   @unique
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+}
+
 // ===== Student Groups =====
 model Group {
   id          String        @id @default(uuid())
@@ -480,6 +488,7 @@ model Group {
   studentOverallStats StudentOverallStats[]
   groupProblemStats   GroupProblemStats[]
   studentProblemStats StudentProblemStats[]
+  groupExamAnalytics  GroupExamAnalytics[]
 
   @@index([creatorId])
 }
@@ -862,6 +871,53 @@ model ExamAnalytics {
 
   @@index([examId])
   @@index([updatedAt])
+}
+
+model GroupExamAnalytics {
+  id String @id @default(uuid())
+
+  groupId String
+  examId  String
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  exam  Exam  @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  // Participant stats
+  totalEnrolled  Int   @default(0)
+  totalAttempted Int   @default(0)
+  totalCompleted Int   @default(0)
+  completionRate Float @default(0)
+
+  // Score stats
+  avgScore     Float @default(0)
+  highestScore Float @default(0)
+  lowestScore  Float @default(0)
+  medianScore  Float @default(0)
+
+  // Distribution
+  scoreDistribution Json @default(dbgenerated("'{}'::jsonb")) // { "0-20": 5, "20-40": 10, ... }
+
+  // Problem-level
+  problemDifficulties Json @default(dbgenerated("'[]'::jsonb")) // Array of { problemId, avgScore, failureRate }
+
+  // Time stats
+  avgTimeToComplete Float @default(0) // minutes
+  avgAttempts       Float @default(1)
+
+  // Submission stats
+  totalSubmissions Int @default(0)
+  acceptedCount    Int @default(0)
+  partialCount     Int @default(0)
+  failedCount      Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([groupId, examId])
+  @@index([groupId])
+  @@index([examId])
+  @@index([updatedAt])
+  @@index([groupId, updatedAt])
 }
 
 // ===== Notification System =====

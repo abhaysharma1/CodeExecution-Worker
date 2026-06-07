@@ -280,6 +280,7 @@ export type GroupWhereInput = {
   studentOverallStats?: Prisma.StudentOverallStatsListRelationFilter
   groupProblemStats?: Prisma.GroupProblemStatsListRelationFilter
   studentProblemStats?: Prisma.StudentProblemStatsListRelationFilter
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsListRelationFilter
 }
 
 export type GroupOrderByWithRelationInput = {
@@ -302,6 +303,7 @@ export type GroupOrderByWithRelationInput = {
   studentOverallStats?: Prisma.StudentOverallStatsOrderByRelationAggregateInput
   groupProblemStats?: Prisma.GroupProblemStatsOrderByRelationAggregateInput
   studentProblemStats?: Prisma.StudentProblemStatsOrderByRelationAggregateInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsOrderByRelationAggregateInput
 }
 
 export type GroupWhereUniqueInput = Prisma.AtLeast<{
@@ -327,6 +329,7 @@ export type GroupWhereUniqueInput = Prisma.AtLeast<{
   studentOverallStats?: Prisma.StudentOverallStatsListRelationFilter
   groupProblemStats?: Prisma.GroupProblemStatsListRelationFilter
   studentProblemStats?: Prisma.StudentProblemStatsListRelationFilter
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsListRelationFilter
 }, "id">
 
 export type GroupOrderByWithAggregationInput = {
@@ -384,6 +387,7 @@ export type GroupCreateInput = {
   studentOverallStats?: Prisma.StudentOverallStatsCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateInput = {
@@ -405,6 +409,7 @@ export type GroupUncheckedCreateInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUpdateInput = {
@@ -426,6 +431,7 @@ export type GroupUpdateInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateInput = {
@@ -447,6 +453,7 @@ export type GroupUncheckedUpdateInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupCreateManyInput = {
@@ -703,6 +710,20 @@ export type GroupUpdateOneRequiredWithoutStudentProblemStatsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.GroupUpdateToOneWithWhereWithoutStudentProblemStatsInput, Prisma.GroupUpdateWithoutStudentProblemStatsInput>, Prisma.GroupUncheckedUpdateWithoutStudentProblemStatsInput>
 }
 
+export type GroupCreateNestedOneWithoutGroupExamAnalyticsInput = {
+  create?: Prisma.XOR<Prisma.GroupCreateWithoutGroupExamAnalyticsInput, Prisma.GroupUncheckedCreateWithoutGroupExamAnalyticsInput>
+  connectOrCreate?: Prisma.GroupCreateOrConnectWithoutGroupExamAnalyticsInput
+  connect?: Prisma.GroupWhereUniqueInput
+}
+
+export type GroupUpdateOneRequiredWithoutGroupExamAnalyticsNestedInput = {
+  create?: Prisma.XOR<Prisma.GroupCreateWithoutGroupExamAnalyticsInput, Prisma.GroupUncheckedCreateWithoutGroupExamAnalyticsInput>
+  connectOrCreate?: Prisma.GroupCreateOrConnectWithoutGroupExamAnalyticsInput
+  upsert?: Prisma.GroupUpsertWithoutGroupExamAnalyticsInput
+  connect?: Prisma.GroupWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.GroupUpdateToOneWithWhereWithoutGroupExamAnalyticsInput, Prisma.GroupUpdateWithoutGroupExamAnalyticsInput>, Prisma.GroupUncheckedUpdateWithoutGroupExamAnalyticsInput>
+}
+
 export type GroupCreateWithoutCreatorInput = {
   id?: string
   name: string
@@ -721,6 +742,7 @@ export type GroupCreateWithoutCreatorInput = {
   studentOverallStats?: Prisma.StudentOverallStatsCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateWithoutCreatorInput = {
@@ -741,6 +763,7 @@ export type GroupUncheckedCreateWithoutCreatorInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupCreateOrConnectWithoutCreatorInput = {
@@ -804,6 +827,7 @@ export type GroupCreateWithoutExamGroupsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateWithoutExamGroupsInput = {
@@ -824,6 +848,7 @@ export type GroupUncheckedCreateWithoutExamGroupsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupCreateOrConnectWithoutExamGroupsInput = {
@@ -860,6 +885,7 @@ export type GroupUpdateWithoutExamGroupsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateWithoutExamGroupsInput = {
@@ -880,6 +906,7 @@ export type GroupUncheckedUpdateWithoutExamGroupsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupCreateWithoutMembersInput = {
@@ -900,6 +927,7 @@ export type GroupCreateWithoutMembersInput = {
   studentOverallStats?: Prisma.StudentOverallStatsCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateWithoutMembersInput = {
@@ -920,6 +948,7 @@ export type GroupUncheckedCreateWithoutMembersInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupCreateOrConnectWithoutMembersInput = {
@@ -956,6 +985,7 @@ export type GroupUpdateWithoutMembersInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateWithoutMembersInput = {
@@ -976,6 +1006,7 @@ export type GroupUncheckedUpdateWithoutMembersInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupCreateWithoutAiconversationsInput = {
@@ -996,6 +1027,7 @@ export type GroupCreateWithoutAiconversationsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateWithoutAiconversationsInput = {
@@ -1016,6 +1048,7 @@ export type GroupUncheckedCreateWithoutAiconversationsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupCreateOrConnectWithoutAiconversationsInput = {
@@ -1052,6 +1085,7 @@ export type GroupUpdateWithoutAiconversationsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateWithoutAiconversationsInput = {
@@ -1072,6 +1106,7 @@ export type GroupUncheckedUpdateWithoutAiconversationsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupCreateWithoutGroupOverallStatsInput = {
@@ -1092,6 +1127,7 @@ export type GroupCreateWithoutGroupOverallStatsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateWithoutGroupOverallStatsInput = {
@@ -1112,6 +1148,7 @@ export type GroupUncheckedCreateWithoutGroupOverallStatsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupCreateOrConnectWithoutGroupOverallStatsInput = {
@@ -1148,6 +1185,7 @@ export type GroupUpdateWithoutGroupOverallStatsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateWithoutGroupOverallStatsInput = {
@@ -1168,6 +1206,7 @@ export type GroupUncheckedUpdateWithoutGroupOverallStatsInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupCreateWithoutStudentOverallStatsInput = {
@@ -1188,6 +1227,7 @@ export type GroupCreateWithoutStudentOverallStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsCreateNestedOneWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateWithoutStudentOverallStatsInput = {
@@ -1208,6 +1248,7 @@ export type GroupUncheckedCreateWithoutStudentOverallStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsUncheckedCreateNestedOneWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupCreateOrConnectWithoutStudentOverallStatsInput = {
@@ -1244,6 +1285,7 @@ export type GroupUpdateWithoutStudentOverallStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsUpdateOneWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateWithoutStudentOverallStatsInput = {
@@ -1264,6 +1306,7 @@ export type GroupUncheckedUpdateWithoutStudentOverallStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsUncheckedUpdateOneWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupCreateWithoutGroupProblemStatsInput = {
@@ -1284,6 +1327,7 @@ export type GroupCreateWithoutGroupProblemStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsCreateNestedOneWithoutGroupInput
   studentOverallStats?: Prisma.StudentOverallStatsCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateWithoutGroupProblemStatsInput = {
@@ -1304,6 +1348,7 @@ export type GroupUncheckedCreateWithoutGroupProblemStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsUncheckedCreateNestedOneWithoutGroupInput
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedCreateNestedManyWithoutGroupInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupCreateOrConnectWithoutGroupProblemStatsInput = {
@@ -1340,6 +1385,7 @@ export type GroupUpdateWithoutGroupProblemStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsUpdateOneWithoutGroupNestedInput
   studentOverallStats?: Prisma.StudentOverallStatsUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateWithoutGroupProblemStatsInput = {
@@ -1360,6 +1406,7 @@ export type GroupUncheckedUpdateWithoutGroupProblemStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsUncheckedUpdateOneWithoutGroupNestedInput
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupCreateWithoutStudentProblemStatsInput = {
@@ -1380,6 +1427,7 @@ export type GroupCreateWithoutStudentProblemStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsCreateNestedOneWithoutGroupInput
   studentOverallStats?: Prisma.StudentOverallStatsCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateWithoutStudentProblemStatsInput = {
@@ -1400,6 +1448,7 @@ export type GroupUncheckedCreateWithoutStudentProblemStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsUncheckedCreateNestedOneWithoutGroupInput
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedCreateNestedManyWithoutGroupInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupCreateOrConnectWithoutStudentProblemStatsInput = {
@@ -1436,6 +1485,7 @@ export type GroupUpdateWithoutStudentProblemStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsUpdateOneWithoutGroupNestedInput
   studentOverallStats?: Prisma.StudentOverallStatsUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateWithoutStudentProblemStatsInput = {
@@ -1456,6 +1506,107 @@ export type GroupUncheckedUpdateWithoutStudentProblemStatsInput = {
   groupOverallStats?: Prisma.GroupOverallStatsUncheckedUpdateOneWithoutGroupNestedInput
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedUpdateManyWithoutGroupNestedInput
+}
+
+export type GroupCreateWithoutGroupExamAnalyticsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  noOfMembers?: number
+  createdAt?: Date | string
+  joinByLink?: boolean
+  type?: $Enums.groupType
+  aiEnabled?: boolean
+  aiMaxMessages?: number | null
+  aiMaxTokens?: number | null
+  creator: Prisma.UserCreateNestedOneWithoutCreatedGroupsInput
+  members?: Prisma.GroupMemberCreateNestedManyWithoutGroupInput
+  examGroups?: Prisma.ExamGroupCreateNestedManyWithoutGroupInput
+  aiconversations?: Prisma.AIConversationCreateNestedManyWithoutGroupInput
+  groupOverallStats?: Prisma.GroupOverallStatsCreateNestedOneWithoutGroupInput
+  studentOverallStats?: Prisma.StudentOverallStatsCreateNestedManyWithoutGroupInput
+  groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutGroupInput
+  studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutGroupInput
+}
+
+export type GroupUncheckedCreateWithoutGroupExamAnalyticsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  creatorId: string
+  noOfMembers?: number
+  createdAt?: Date | string
+  joinByLink?: boolean
+  type?: $Enums.groupType
+  aiEnabled?: boolean
+  aiMaxMessages?: number | null
+  aiMaxTokens?: number | null
+  members?: Prisma.GroupMemberUncheckedCreateNestedManyWithoutGroupInput
+  examGroups?: Prisma.ExamGroupUncheckedCreateNestedManyWithoutGroupInput
+  aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutGroupInput
+  groupOverallStats?: Prisma.GroupOverallStatsUncheckedCreateNestedOneWithoutGroupInput
+  studentOverallStats?: Prisma.StudentOverallStatsUncheckedCreateNestedManyWithoutGroupInput
+  groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+  studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutGroupInput
+}
+
+export type GroupCreateOrConnectWithoutGroupExamAnalyticsInput = {
+  where: Prisma.GroupWhereUniqueInput
+  create: Prisma.XOR<Prisma.GroupCreateWithoutGroupExamAnalyticsInput, Prisma.GroupUncheckedCreateWithoutGroupExamAnalyticsInput>
+}
+
+export type GroupUpsertWithoutGroupExamAnalyticsInput = {
+  update: Prisma.XOR<Prisma.GroupUpdateWithoutGroupExamAnalyticsInput, Prisma.GroupUncheckedUpdateWithoutGroupExamAnalyticsInput>
+  create: Prisma.XOR<Prisma.GroupCreateWithoutGroupExamAnalyticsInput, Prisma.GroupUncheckedCreateWithoutGroupExamAnalyticsInput>
+  where?: Prisma.GroupWhereInput
+}
+
+export type GroupUpdateToOneWithWhereWithoutGroupExamAnalyticsInput = {
+  where?: Prisma.GroupWhereInput
+  data: Prisma.XOR<Prisma.GroupUpdateWithoutGroupExamAnalyticsInput, Prisma.GroupUncheckedUpdateWithoutGroupExamAnalyticsInput>
+}
+
+export type GroupUpdateWithoutGroupExamAnalyticsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  noOfMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinByLink?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumgroupTypeFieldUpdateOperationsInput | $Enums.groupType
+  aiEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiMaxMessages?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  aiMaxTokens?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  creator?: Prisma.UserUpdateOneRequiredWithoutCreatedGroupsNestedInput
+  members?: Prisma.GroupMemberUpdateManyWithoutGroupNestedInput
+  examGroups?: Prisma.ExamGroupUpdateManyWithoutGroupNestedInput
+  aiconversations?: Prisma.AIConversationUpdateManyWithoutGroupNestedInput
+  groupOverallStats?: Prisma.GroupOverallStatsUpdateOneWithoutGroupNestedInput
+  studentOverallStats?: Prisma.StudentOverallStatsUpdateManyWithoutGroupNestedInput
+  groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutGroupNestedInput
+  studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutGroupNestedInput
+}
+
+export type GroupUncheckedUpdateWithoutGroupExamAnalyticsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creatorId?: Prisma.StringFieldUpdateOperationsInput | string
+  noOfMembers?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  joinByLink?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.EnumgroupTypeFieldUpdateOperationsInput | $Enums.groupType
+  aiEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiMaxMessages?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  aiMaxTokens?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  members?: Prisma.GroupMemberUncheckedUpdateManyWithoutGroupNestedInput
+  examGroups?: Prisma.ExamGroupUncheckedUpdateManyWithoutGroupNestedInput
+  aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutGroupNestedInput
+  groupOverallStats?: Prisma.GroupOverallStatsUncheckedUpdateOneWithoutGroupNestedInput
+  studentOverallStats?: Prisma.StudentOverallStatsUncheckedUpdateManyWithoutGroupNestedInput
+  groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
+  studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupCreateManyCreatorInput = {
@@ -1489,6 +1640,7 @@ export type GroupUpdateWithoutCreatorInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateWithoutCreatorInput = {
@@ -1509,6 +1661,7 @@ export type GroupUncheckedUpdateWithoutCreatorInput = {
   studentOverallStats?: Prisma.StudentOverallStatsUncheckedUpdateManyWithoutGroupNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutGroupNestedInput
+  groupExamAnalytics?: Prisma.GroupExamAnalyticsUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateManyWithoutCreatorInput = {
@@ -1536,6 +1689,7 @@ export type GroupCountOutputType = {
   studentOverallStats: number
   groupProblemStats: number
   studentProblemStats: number
+  groupExamAnalytics: number
 }
 
 export type GroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1545,6 +1699,7 @@ export type GroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   studentOverallStats?: boolean | GroupCountOutputTypeCountStudentOverallStatsArgs
   groupProblemStats?: boolean | GroupCountOutputTypeCountGroupProblemStatsArgs
   studentProblemStats?: boolean | GroupCountOutputTypeCountStudentProblemStatsArgs
+  groupExamAnalytics?: boolean | GroupCountOutputTypeCountGroupExamAnalyticsArgs
 }
 
 /**
@@ -1599,6 +1754,13 @@ export type GroupCountOutputTypeCountStudentProblemStatsArgs<ExtArgs extends run
   where?: Prisma.StudentProblemStatsWhereInput
 }
 
+/**
+ * GroupCountOutputType without action
+ */
+export type GroupCountOutputTypeCountGroupExamAnalyticsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GroupExamAnalyticsWhereInput
+}
+
 
 export type GroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1620,6 +1782,7 @@ export type GroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   studentOverallStats?: boolean | Prisma.Group$studentOverallStatsArgs<ExtArgs>
   groupProblemStats?: boolean | Prisma.Group$groupProblemStatsArgs<ExtArgs>
   studentProblemStats?: boolean | Prisma.Group$studentProblemStatsArgs<ExtArgs>
+  groupExamAnalytics?: boolean | Prisma.Group$groupExamAnalyticsArgs<ExtArgs>
   _count?: boolean | Prisma.GroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["group"]>
 
@@ -1677,6 +1840,7 @@ export type GroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   studentOverallStats?: boolean | Prisma.Group$studentOverallStatsArgs<ExtArgs>
   groupProblemStats?: boolean | Prisma.Group$groupProblemStatsArgs<ExtArgs>
   studentProblemStats?: boolean | Prisma.Group$studentProblemStatsArgs<ExtArgs>
+  groupExamAnalytics?: boolean | Prisma.Group$groupExamAnalyticsArgs<ExtArgs>
   _count?: boolean | Prisma.GroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type GroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1697,6 +1861,7 @@ export type $GroupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     studentOverallStats: Prisma.$StudentOverallStatsPayload<ExtArgs>[]
     groupProblemStats: Prisma.$GroupProblemStatsPayload<ExtArgs>[]
     studentProblemStats: Prisma.$StudentProblemStatsPayload<ExtArgs>[]
+    groupExamAnalytics: Prisma.$GroupExamAnalyticsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2112,6 +2277,7 @@ export interface Prisma__GroupClient<T, Null = never, ExtArgs extends runtime.Ty
   studentOverallStats<T extends Prisma.Group$studentOverallStatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$studentOverallStatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentOverallStatsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   groupProblemStats<T extends Prisma.Group$groupProblemStatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$groupProblemStatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupProblemStatsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   studentProblemStats<T extends Prisma.Group$studentProblemStatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$studentProblemStatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentProblemStatsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  groupExamAnalytics<T extends Prisma.Group$groupExamAnalyticsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$groupExamAnalyticsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupExamAnalyticsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2713,6 +2879,30 @@ export type Group$studentProblemStatsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.StudentProblemStatsScalarFieldEnum | Prisma.StudentProblemStatsScalarFieldEnum[]
+}
+
+/**
+ * Group.groupExamAnalytics
+ */
+export type Group$groupExamAnalyticsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GroupExamAnalytics
+   */
+  select?: Prisma.GroupExamAnalyticsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GroupExamAnalytics
+   */
+  omit?: Prisma.GroupExamAnalyticsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GroupExamAnalyticsInclude<ExtArgs> | null
+  where?: Prisma.GroupExamAnalyticsWhereInput
+  orderBy?: Prisma.GroupExamAnalyticsOrderByWithRelationInput | Prisma.GroupExamAnalyticsOrderByWithRelationInput[]
+  cursor?: Prisma.GroupExamAnalyticsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GroupExamAnalyticsScalarFieldEnum | Prisma.GroupExamAnalyticsScalarFieldEnum[]
 }
 
 /**

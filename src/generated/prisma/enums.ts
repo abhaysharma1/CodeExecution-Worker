@@ -9,18 +9,6 @@
 * 🟢 You can import this file directly.
 */
 
-export const expectedComplexity = {
-  LOGN: 'LOGN',
-  N: 'N',
-  NLOGN: 'NLOGN',
-  N2: 'N2',
-  N3: 'N3',
-  EXP: 'EXP'
-} as const
-
-export type expectedComplexity = (typeof expectedComplexity)[keyof typeof expectedComplexity]
-
-
 export const problemDifficulty = {
   EASY: 'EASY',
   MEDIUM: 'MEDIUM',

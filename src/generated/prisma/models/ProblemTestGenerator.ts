@@ -29,12 +29,16 @@ export type AggregateProblemTestGenerator = {
 export type ProblemTestGeneratorAvgAggregateOutputType = {
   minValue: number | null
   maxValue: number | null
+  timeLimitMs: number | null
+  memoryLimitMB: number | null
   sizes: number | null
 }
 
 export type ProblemTestGeneratorSumAggregateOutputType = {
   minValue: number | null
   maxValue: number | null
+  timeLimitMs: number | null
+  memoryLimitMB: number | null
   sizes: number[]
 }
 
@@ -45,7 +49,8 @@ export type ProblemTestGeneratorMinAggregateOutputType = {
   pattern: $Enums.GeneratorPattern | null
   minValue: number | null
   maxValue: number | null
-  expectedComplexity: $Enums.expectedComplexity | null
+  timeLimitMs: number | null
+  memoryLimitMB: number | null
   createdAt: Date | null
 }
 
@@ -56,7 +61,8 @@ export type ProblemTestGeneratorMaxAggregateOutputType = {
   pattern: $Enums.GeneratorPattern | null
   minValue: number | null
   maxValue: number | null
-  expectedComplexity: $Enums.expectedComplexity | null
+  timeLimitMs: number | null
+  memoryLimitMB: number | null
   createdAt: Date | null
 }
 
@@ -67,7 +73,8 @@ export type ProblemTestGeneratorCountAggregateOutputType = {
   pattern: number
   minValue: number
   maxValue: number
-  expectedComplexity: number
+  timeLimitMs: number
+  memoryLimitMB: number
   sizes: number
   createdAt: number
   _all: number
@@ -77,12 +84,16 @@ export type ProblemTestGeneratorCountAggregateOutputType = {
 export type ProblemTestGeneratorAvgAggregateInputType = {
   minValue?: true
   maxValue?: true
+  timeLimitMs?: true
+  memoryLimitMB?: true
   sizes?: true
 }
 
 export type ProblemTestGeneratorSumAggregateInputType = {
   minValue?: true
   maxValue?: true
+  timeLimitMs?: true
+  memoryLimitMB?: true
   sizes?: true
 }
 
@@ -93,7 +104,8 @@ export type ProblemTestGeneratorMinAggregateInputType = {
   pattern?: true
   minValue?: true
   maxValue?: true
-  expectedComplexity?: true
+  timeLimitMs?: true
+  memoryLimitMB?: true
   createdAt?: true
 }
 
@@ -104,7 +116,8 @@ export type ProblemTestGeneratorMaxAggregateInputType = {
   pattern?: true
   minValue?: true
   maxValue?: true
-  expectedComplexity?: true
+  timeLimitMs?: true
+  memoryLimitMB?: true
   createdAt?: true
 }
 
@@ -115,7 +128,8 @@ export type ProblemTestGeneratorCountAggregateInputType = {
   pattern?: true
   minValue?: true
   maxValue?: true
-  expectedComplexity?: true
+  timeLimitMs?: true
+  memoryLimitMB?: true
   sizes?: true
   createdAt?: true
   _all?: true
@@ -214,7 +228,8 @@ export type ProblemTestGeneratorGroupByOutputType = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  expectedComplexity: $Enums.expectedComplexity
+  timeLimitMs: number
+  memoryLimitMB: number
   sizes: number[]
   createdAt: Date
   _count: ProblemTestGeneratorCountAggregateOutputType | null
@@ -249,7 +264,8 @@ export type ProblemTestGeneratorWhereInput = {
   pattern?: Prisma.EnumGeneratorPatternFilter<"ProblemTestGenerator"> | $Enums.GeneratorPattern
   minValue?: Prisma.IntFilter<"ProblemTestGenerator"> | number
   maxValue?: Prisma.IntFilter<"ProblemTestGenerator"> | number
-  expectedComplexity?: Prisma.EnumexpectedComplexityFilter<"ProblemTestGenerator"> | $Enums.expectedComplexity
+  timeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
+  memoryLimitMB?: Prisma.IntFilter<"ProblemTestGenerator"> | number
   sizes?: Prisma.IntNullableListFilter<"ProblemTestGenerator">
   createdAt?: Prisma.DateTimeFilter<"ProblemTestGenerator"> | Date | string
   problem?: Prisma.XOR<Prisma.ProblemScalarRelationFilter, Prisma.ProblemWhereInput>
@@ -262,7 +278,8 @@ export type ProblemTestGeneratorOrderByWithRelationInput = {
   pattern?: Prisma.SortOrder
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  expectedComplexity?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitMB?: Prisma.SortOrder
   sizes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   problem?: Prisma.ProblemOrderByWithRelationInput
@@ -278,7 +295,8 @@ export type ProblemTestGeneratorWhereUniqueInput = Prisma.AtLeast<{
   pattern?: Prisma.EnumGeneratorPatternFilter<"ProblemTestGenerator"> | $Enums.GeneratorPattern
   minValue?: Prisma.IntFilter<"ProblemTestGenerator"> | number
   maxValue?: Prisma.IntFilter<"ProblemTestGenerator"> | number
-  expectedComplexity?: Prisma.EnumexpectedComplexityFilter<"ProblemTestGenerator"> | $Enums.expectedComplexity
+  timeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
+  memoryLimitMB?: Prisma.IntFilter<"ProblemTestGenerator"> | number
   sizes?: Prisma.IntNullableListFilter<"ProblemTestGenerator">
   createdAt?: Prisma.DateTimeFilter<"ProblemTestGenerator"> | Date | string
   problem?: Prisma.XOR<Prisma.ProblemScalarRelationFilter, Prisma.ProblemWhereInput>
@@ -291,7 +309,8 @@ export type ProblemTestGeneratorOrderByWithAggregationInput = {
   pattern?: Prisma.SortOrder
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  expectedComplexity?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitMB?: Prisma.SortOrder
   sizes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ProblemTestGeneratorCountOrderByAggregateInput
@@ -311,7 +330,8 @@ export type ProblemTestGeneratorScalarWhereWithAggregatesInput = {
   pattern?: Prisma.EnumGeneratorPatternWithAggregatesFilter<"ProblemTestGenerator"> | $Enums.GeneratorPattern
   minValue?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
   maxValue?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
-  expectedComplexity?: Prisma.EnumexpectedComplexityWithAggregatesFilter<"ProblemTestGenerator"> | $Enums.expectedComplexity
+  timeLimitMs?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
+  memoryLimitMB?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
   sizes?: Prisma.IntNullableListFilter<"ProblemTestGenerator">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProblemTestGenerator"> | Date | string
 }
@@ -322,7 +342,8 @@ export type ProblemTestGeneratorCreateInput = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  expectedComplexity: $Enums.expectedComplexity
+  timeLimitMs?: number
+  memoryLimitMB?: number
   sizes?: Prisma.ProblemTestGeneratorCreatesizesInput | number[]
   createdAt?: Date | string
   problem: Prisma.ProblemCreateNestedOneWithoutProblemTestGeneratorsInput
@@ -335,7 +356,8 @@ export type ProblemTestGeneratorUncheckedCreateInput = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  expectedComplexity: $Enums.expectedComplexity
+  timeLimitMs?: number
+  memoryLimitMB?: number
   sizes?: Prisma.ProblemTestGeneratorCreatesizesInput | number[]
   createdAt?: Date | string
 }
@@ -346,7 +368,8 @@ export type ProblemTestGeneratorUpdateInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  expectedComplexity?: Prisma.EnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   problem?: Prisma.ProblemUpdateOneRequiredWithoutProblemTestGeneratorsNestedInput
@@ -359,7 +382,8 @@ export type ProblemTestGeneratorUncheckedUpdateInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  expectedComplexity?: Prisma.EnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -371,7 +395,8 @@ export type ProblemTestGeneratorCreateManyInput = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  expectedComplexity: $Enums.expectedComplexity
+  timeLimitMs?: number
+  memoryLimitMB?: number
   sizes?: Prisma.ProblemTestGeneratorCreatesizesInput | number[]
   createdAt?: Date | string
 }
@@ -382,7 +407,8 @@ export type ProblemTestGeneratorUpdateManyMutationInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  expectedComplexity?: Prisma.EnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -394,7 +420,8 @@ export type ProblemTestGeneratorUncheckedUpdateManyInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  expectedComplexity?: Prisma.EnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -419,7 +446,8 @@ export type ProblemTestGeneratorCountOrderByAggregateInput = {
   pattern?: Prisma.SortOrder
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  expectedComplexity?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitMB?: Prisma.SortOrder
   sizes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -427,6 +455,8 @@ export type ProblemTestGeneratorCountOrderByAggregateInput = {
 export type ProblemTestGeneratorAvgOrderByAggregateInput = {
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitMB?: Prisma.SortOrder
   sizes?: Prisma.SortOrder
 }
 
@@ -437,7 +467,8 @@ export type ProblemTestGeneratorMaxOrderByAggregateInput = {
   pattern?: Prisma.SortOrder
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  expectedComplexity?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitMB?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -448,13 +479,16 @@ export type ProblemTestGeneratorMinOrderByAggregateInput = {
   pattern?: Prisma.SortOrder
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  expectedComplexity?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitMB?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type ProblemTestGeneratorSumOrderByAggregateInput = {
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
+  timeLimitMs?: Prisma.SortOrder
+  memoryLimitMB?: Prisma.SortOrder
   sizes?: Prisma.SortOrder
 }
 
@@ -502,10 +536,6 @@ export type EnumGeneratorPatternFieldUpdateOperationsInput = {
   set?: $Enums.GeneratorPattern
 }
 
-export type EnumexpectedComplexityFieldUpdateOperationsInput = {
-  set?: $Enums.expectedComplexity
-}
-
 export type ProblemTestGeneratorUpdatesizesInput = {
   set?: number[]
   push?: number | number[]
@@ -517,7 +547,8 @@ export type ProblemTestGeneratorCreateWithoutProblemInput = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  expectedComplexity: $Enums.expectedComplexity
+  timeLimitMs?: number
+  memoryLimitMB?: number
   sizes?: Prisma.ProblemTestGeneratorCreatesizesInput | number[]
   createdAt?: Date | string
 }
@@ -528,7 +559,8 @@ export type ProblemTestGeneratorUncheckedCreateWithoutProblemInput = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  expectedComplexity: $Enums.expectedComplexity
+  timeLimitMs?: number
+  memoryLimitMB?: number
   sizes?: Prisma.ProblemTestGeneratorCreatesizesInput | number[]
   createdAt?: Date | string
 }
@@ -555,7 +587,8 @@ export type ProblemTestGeneratorUpdateWithoutProblemInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  expectedComplexity?: Prisma.EnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -566,7 +599,8 @@ export type ProblemTestGeneratorUncheckedUpdateWithoutProblemInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  expectedComplexity?: Prisma.EnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity
+  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -580,7 +614,8 @@ export type ProblemTestGeneratorSelect<ExtArgs extends runtime.Types.Extensions.
   pattern?: boolean
   minValue?: boolean
   maxValue?: boolean
-  expectedComplexity?: boolean
+  timeLimitMs?: boolean
+  memoryLimitMB?: boolean
   sizes?: boolean
   createdAt?: boolean
   problem?: boolean | Prisma.ProblemDefaultArgs<ExtArgs>
@@ -593,7 +628,8 @@ export type ProblemTestGeneratorSelectCreateManyAndReturn<ExtArgs extends runtim
   pattern?: boolean
   minValue?: boolean
   maxValue?: boolean
-  expectedComplexity?: boolean
+  timeLimitMs?: boolean
+  memoryLimitMB?: boolean
   sizes?: boolean
   createdAt?: boolean
   problem?: boolean | Prisma.ProblemDefaultArgs<ExtArgs>
@@ -606,7 +642,8 @@ export type ProblemTestGeneratorSelectUpdateManyAndReturn<ExtArgs extends runtim
   pattern?: boolean
   minValue?: boolean
   maxValue?: boolean
-  expectedComplexity?: boolean
+  timeLimitMs?: boolean
+  memoryLimitMB?: boolean
   sizes?: boolean
   createdAt?: boolean
   problem?: boolean | Prisma.ProblemDefaultArgs<ExtArgs>
@@ -619,12 +656,13 @@ export type ProblemTestGeneratorSelectScalar = {
   pattern?: boolean
   minValue?: boolean
   maxValue?: boolean
-  expectedComplexity?: boolean
+  timeLimitMs?: boolean
+  memoryLimitMB?: boolean
   sizes?: boolean
   createdAt?: boolean
 }
 
-export type ProblemTestGeneratorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "problemId" | "type" | "pattern" | "minValue" | "maxValue" | "expectedComplexity" | "sizes" | "createdAt", ExtArgs["result"]["problemTestGenerator"]>
+export type ProblemTestGeneratorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "problemId" | "type" | "pattern" | "minValue" | "maxValue" | "timeLimitMs" | "memoryLimitMB" | "sizes" | "createdAt", ExtArgs["result"]["problemTestGenerator"]>
 export type ProblemTestGeneratorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   problem?: boolean | Prisma.ProblemDefaultArgs<ExtArgs>
 }
@@ -647,7 +685,8 @@ export type $ProblemTestGeneratorPayload<ExtArgs extends runtime.Types.Extension
     pattern: $Enums.GeneratorPattern
     minValue: number
     maxValue: number
-    expectedComplexity: $Enums.expectedComplexity
+    timeLimitMs: number
+    memoryLimitMB: number
     sizes: number[]
     createdAt: Date
   }, ExtArgs["result"]["problemTestGenerator"]>
@@ -1080,7 +1119,8 @@ export interface ProblemTestGeneratorFieldRefs {
   readonly pattern: Prisma.FieldRef<"ProblemTestGenerator", 'GeneratorPattern'>
   readonly minValue: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
   readonly maxValue: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
-  readonly expectedComplexity: Prisma.FieldRef<"ProblemTestGenerator", 'expectedComplexity'>
+  readonly timeLimitMs: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
+  readonly memoryLimitMB: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
   readonly sizes: Prisma.FieldRef<"ProblemTestGenerator", 'Int[]'>
   readonly createdAt: Prisma.FieldRef<"ProblemTestGenerator", 'DateTime'>
 }

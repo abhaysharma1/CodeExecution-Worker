@@ -118,6 +118,11 @@ export type ExamAttempt = Prisma.ExamAttemptModel
  */
 export type AiEvaluation = Prisma.AiEvaluationModel
 /**
+ * Model ExamSession
+ * 
+ */
+export type ExamSession = Prisma.ExamSessionModel
+/**
  * Model Group
  * 
  */
@@ -197,6 +202,11 @@ export type OrganizationAnalytics = Prisma.OrganizationAnalyticsModel
  * 
  */
 export type ExamAnalytics = Prisma.ExamAnalyticsModel
+/**
+ * Model GroupExamAnalytics
+ * 
+ */
+export type GroupExamAnalytics = Prisma.GroupExamAnalyticsModel
 /**
  * Model Notification
  * 

@@ -243,23 +243,6 @@ export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonFilter<$PrismaModel>
 }
 
-export type EnumexpectedComplexityNullableFilter<$PrismaModel = never> = {
-  equals?: $Enums.expectedComplexity | Prisma.EnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  in?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  notIn?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedEnumexpectedComplexityNullableFilter<$PrismaModel> | $Enums.expectedComplexity | null
-}
-
-export type EnumexpectedComplexityNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.expectedComplexity | Prisma.EnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  in?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  notIn?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedEnumexpectedComplexityNullableWithAggregatesFilter<$PrismaModel> | $Enums.expectedComplexity | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumexpectedComplexityNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumexpectedComplexityNullableFilter<$PrismaModel>
-}
-
 export type EnumProgrammingLanguageFilter<$PrismaModel = never> = {
   equals?: $Enums.ProgrammingLanguage | Prisma.EnumProgrammingLanguageFieldRefInput<$PrismaModel>
   in?: $Enums.ProgrammingLanguage[] | Prisma.ListEnumProgrammingLanguageFieldRefInput<$PrismaModel>
@@ -335,13 +318,6 @@ export type EnumGeneratorPatternFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel> | $Enums.GeneratorPattern
 }
 
-export type EnumexpectedComplexityFilter<$PrismaModel = never> = {
-  equals?: $Enums.expectedComplexity | Prisma.EnumexpectedComplexityFieldRefInput<$PrismaModel>
-  in?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel>
-  notIn?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumexpectedComplexityFilter<$PrismaModel> | $Enums.expectedComplexity
-}
-
 export type EnumGeneratorTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.GeneratorType | Prisma.EnumGeneratorTypeFieldRefInput<$PrismaModel>
   in?: $Enums.GeneratorType[] | Prisma.ListEnumGeneratorTypeFieldRefInput<$PrismaModel>
@@ -360,16 +336,6 @@ export type EnumGeneratorPatternWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel>
   _max?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel>
-}
-
-export type EnumexpectedComplexityWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.expectedComplexity | Prisma.EnumexpectedComplexityFieldRefInput<$PrismaModel>
-  in?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel>
-  notIn?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumexpectedComplexityWithAggregatesFilter<$PrismaModel> | $Enums.expectedComplexity
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumexpectedComplexityFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumexpectedComplexityFilter<$PrismaModel>
 }
 
 export type EnumExamStatusFilter<$PrismaModel = never> = {
@@ -790,23 +756,6 @@ export type NestedJsonFilterBase<$PrismaModel = never> = {
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
 }
 
-export type NestedEnumexpectedComplexityNullableFilter<$PrismaModel = never> = {
-  equals?: $Enums.expectedComplexity | Prisma.EnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  in?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  notIn?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedEnumexpectedComplexityNullableFilter<$PrismaModel> | $Enums.expectedComplexity | null
-}
-
-export type NestedEnumexpectedComplexityNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.expectedComplexity | Prisma.EnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  in?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  notIn?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedEnumexpectedComplexityNullableWithAggregatesFilter<$PrismaModel> | $Enums.expectedComplexity | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumexpectedComplexityNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumexpectedComplexityNullableFilter<$PrismaModel>
-}
-
 export type NestedEnumProgrammingLanguageFilter<$PrismaModel = never> = {
   equals?: $Enums.ProgrammingLanguage | Prisma.EnumProgrammingLanguageFieldRefInput<$PrismaModel>
   in?: $Enums.ProgrammingLanguage[] | Prisma.ListEnumProgrammingLanguageFieldRefInput<$PrismaModel>
@@ -882,13 +831,6 @@ export type NestedEnumGeneratorPatternFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel> | $Enums.GeneratorPattern
 }
 
-export type NestedEnumexpectedComplexityFilter<$PrismaModel = never> = {
-  equals?: $Enums.expectedComplexity | Prisma.EnumexpectedComplexityFieldRefInput<$PrismaModel>
-  in?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel>
-  notIn?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumexpectedComplexityFilter<$PrismaModel> | $Enums.expectedComplexity
-}
-
 export type NestedEnumGeneratorTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.GeneratorType | Prisma.EnumGeneratorTypeFieldRefInput<$PrismaModel>
   in?: $Enums.GeneratorType[] | Prisma.ListEnumGeneratorTypeFieldRefInput<$PrismaModel>
@@ -907,16 +849,6 @@ export type NestedEnumGeneratorPatternWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel>
   _max?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel>
-}
-
-export type NestedEnumexpectedComplexityWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.expectedComplexity | Prisma.EnumexpectedComplexityFieldRefInput<$PrismaModel>
-  in?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel>
-  notIn?: $Enums.expectedComplexity[] | Prisma.ListEnumexpectedComplexityFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumexpectedComplexityWithAggregatesFilter<$PrismaModel> | $Enums.expectedComplexity
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumexpectedComplexityFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumexpectedComplexityFilter<$PrismaModel>
 }
 
 export type NestedEnumExamStatusFilter<$PrismaModel = never> = {

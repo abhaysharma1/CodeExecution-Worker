@@ -26,7 +26,6 @@ export type AggregateComplexityTestingCases = {
 
 export type ComplexityTestingCasesMinAggregateOutputType = {
   id: string | null
-  expectedComplexity: $Enums.expectedComplexity | null
   problemId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -34,7 +33,6 @@ export type ComplexityTestingCasesMinAggregateOutputType = {
 
 export type ComplexityTestingCasesMaxAggregateOutputType = {
   id: string | null
-  expectedComplexity: $Enums.expectedComplexity | null
   problemId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -43,7 +41,6 @@ export type ComplexityTestingCasesMaxAggregateOutputType = {
 export type ComplexityTestingCasesCountAggregateOutputType = {
   id: number
   cases: number
-  expectedComplexity: number
   problemId: number
   createdAt: number
   updatedAt: number
@@ -53,7 +50,6 @@ export type ComplexityTestingCasesCountAggregateOutputType = {
 
 export type ComplexityTestingCasesMinAggregateInputType = {
   id?: true
-  expectedComplexity?: true
   problemId?: true
   createdAt?: true
   updatedAt?: true
@@ -61,7 +57,6 @@ export type ComplexityTestingCasesMinAggregateInputType = {
 
 export type ComplexityTestingCasesMaxAggregateInputType = {
   id?: true
-  expectedComplexity?: true
   problemId?: true
   createdAt?: true
   updatedAt?: true
@@ -70,7 +65,6 @@ export type ComplexityTestingCasesMaxAggregateInputType = {
 export type ComplexityTestingCasesCountAggregateInputType = {
   id?: true
   cases?: true
-  expectedComplexity?: true
   problemId?: true
   createdAt?: true
   updatedAt?: true
@@ -152,7 +146,6 @@ export type complexityTestingCasesGroupByArgs<ExtArgs extends runtime.Types.Exte
 export type ComplexityTestingCasesGroupByOutputType = {
   id: string
   cases: runtime.JsonValue
-  expectedComplexity: $Enums.expectedComplexity | null
   problemId: string
   createdAt: Date
   updatedAt: Date
@@ -182,7 +175,6 @@ export type complexityTestingCasesWhereInput = {
   NOT?: Prisma.complexityTestingCasesWhereInput | Prisma.complexityTestingCasesWhereInput[]
   id?: Prisma.StringFilter<"complexityTestingCases"> | string
   cases?: Prisma.JsonFilter<"complexityTestingCases">
-  expectedComplexity?: Prisma.EnumexpectedComplexityNullableFilter<"complexityTestingCases"> | $Enums.expectedComplexity | null
   problemId?: Prisma.StringFilter<"complexityTestingCases"> | string
   createdAt?: Prisma.DateTimeFilter<"complexityTestingCases"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"complexityTestingCases"> | Date | string
@@ -192,7 +184,6 @@ export type complexityTestingCasesWhereInput = {
 export type complexityTestingCasesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   cases?: Prisma.SortOrder
-  expectedComplexity?: Prisma.SortOrderInput | Prisma.SortOrder
   problemId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -206,7 +197,6 @@ export type complexityTestingCasesWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.complexityTestingCasesWhereInput[]
   NOT?: Prisma.complexityTestingCasesWhereInput | Prisma.complexityTestingCasesWhereInput[]
   cases?: Prisma.JsonFilter<"complexityTestingCases">
-  expectedComplexity?: Prisma.EnumexpectedComplexityNullableFilter<"complexityTestingCases"> | $Enums.expectedComplexity | null
   createdAt?: Prisma.DateTimeFilter<"complexityTestingCases"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"complexityTestingCases"> | Date | string
   problem?: Prisma.XOR<Prisma.ProblemScalarRelationFilter, Prisma.ProblemWhereInput>
@@ -215,7 +205,6 @@ export type complexityTestingCasesWhereUniqueInput = Prisma.AtLeast<{
 export type complexityTestingCasesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   cases?: Prisma.SortOrder
-  expectedComplexity?: Prisma.SortOrderInput | Prisma.SortOrder
   problemId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -230,7 +219,6 @@ export type complexityTestingCasesScalarWhereWithAggregatesInput = {
   NOT?: Prisma.complexityTestingCasesScalarWhereWithAggregatesInput | Prisma.complexityTestingCasesScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"complexityTestingCases"> | string
   cases?: Prisma.JsonWithAggregatesFilter<"complexityTestingCases">
-  expectedComplexity?: Prisma.EnumexpectedComplexityNullableWithAggregatesFilter<"complexityTestingCases"> | $Enums.expectedComplexity | null
   problemId?: Prisma.StringWithAggregatesFilter<"complexityTestingCases"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"complexityTestingCases"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"complexityTestingCases"> | Date | string
@@ -239,7 +227,6 @@ export type complexityTestingCasesScalarWhereWithAggregatesInput = {
 export type complexityTestingCasesCreateInput = {
   id?: string
   cases: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: $Enums.expectedComplexity | null
   createdAt?: Date | string
   updatedAt?: Date | string
   problem: Prisma.ProblemCreateNestedOneWithoutComplexityTestingCasesInput
@@ -248,7 +235,6 @@ export type complexityTestingCasesCreateInput = {
 export type complexityTestingCasesUncheckedCreateInput = {
   id?: string
   cases: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: $Enums.expectedComplexity | null
   problemId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -257,7 +243,6 @@ export type complexityTestingCasesUncheckedCreateInput = {
 export type complexityTestingCasesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: Prisma.NullableEnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   problem?: Prisma.ProblemUpdateOneRequiredWithoutComplexityTestingCasesNestedInput
@@ -266,7 +251,6 @@ export type complexityTestingCasesUpdateInput = {
 export type complexityTestingCasesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: Prisma.NullableEnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity | null
   problemId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -275,7 +259,6 @@ export type complexityTestingCasesUncheckedUpdateInput = {
 export type complexityTestingCasesCreateManyInput = {
   id?: string
   cases: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: $Enums.expectedComplexity | null
   problemId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -284,7 +267,6 @@ export type complexityTestingCasesCreateManyInput = {
 export type complexityTestingCasesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: Prisma.NullableEnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -292,7 +274,6 @@ export type complexityTestingCasesUpdateManyMutationInput = {
 export type complexityTestingCasesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: Prisma.NullableEnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity | null
   problemId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -306,7 +287,6 @@ export type ComplexityTestingCasesNullableScalarRelationFilter = {
 export type complexityTestingCasesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   cases?: Prisma.SortOrder
-  expectedComplexity?: Prisma.SortOrder
   problemId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -314,7 +294,6 @@ export type complexityTestingCasesCountOrderByAggregateInput = {
 
 export type complexityTestingCasesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  expectedComplexity?: Prisma.SortOrder
   problemId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -322,7 +301,6 @@ export type complexityTestingCasesMaxOrderByAggregateInput = {
 
 export type complexityTestingCasesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  expectedComplexity?: Prisma.SortOrder
   problemId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -360,14 +338,9 @@ export type complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.complexityTestingCasesUpdateToOneWithWhereWithoutProblemInput, Prisma.complexityTestingCasesUpdateWithoutProblemInput>, Prisma.complexityTestingCasesUncheckedUpdateWithoutProblemInput>
 }
 
-export type NullableEnumexpectedComplexityFieldUpdateOperationsInput = {
-  set?: $Enums.expectedComplexity | null
-}
-
 export type complexityTestingCasesCreateWithoutProblemInput = {
   id?: string
   cases: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: $Enums.expectedComplexity | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -375,7 +348,6 @@ export type complexityTestingCasesCreateWithoutProblemInput = {
 export type complexityTestingCasesUncheckedCreateWithoutProblemInput = {
   id?: string
   cases: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: $Enums.expectedComplexity | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -399,7 +371,6 @@ export type complexityTestingCasesUpdateToOneWithWhereWithoutProblemInput = {
 export type complexityTestingCasesUpdateWithoutProblemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: Prisma.NullableEnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -407,7 +378,6 @@ export type complexityTestingCasesUpdateWithoutProblemInput = {
 export type complexityTestingCasesUncheckedUpdateWithoutProblemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cases?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  expectedComplexity?: Prisma.NullableEnumexpectedComplexityFieldUpdateOperationsInput | $Enums.expectedComplexity | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -417,7 +387,6 @@ export type complexityTestingCasesUncheckedUpdateWithoutProblemInput = {
 export type complexityTestingCasesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   cases?: boolean
-  expectedComplexity?: boolean
   problemId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -427,7 +396,6 @@ export type complexityTestingCasesSelect<ExtArgs extends runtime.Types.Extension
 export type complexityTestingCasesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   cases?: boolean
-  expectedComplexity?: boolean
   problemId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -437,7 +405,6 @@ export type complexityTestingCasesSelectCreateManyAndReturn<ExtArgs extends runt
 export type complexityTestingCasesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   cases?: boolean
-  expectedComplexity?: boolean
   problemId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -447,13 +414,12 @@ export type complexityTestingCasesSelectUpdateManyAndReturn<ExtArgs extends runt
 export type complexityTestingCasesSelectScalar = {
   id?: boolean
   cases?: boolean
-  expectedComplexity?: boolean
   problemId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type complexityTestingCasesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cases" | "expectedComplexity" | "problemId" | "createdAt" | "updatedAt", ExtArgs["result"]["complexityTestingCases"]>
+export type complexityTestingCasesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cases" | "problemId" | "createdAt" | "updatedAt", ExtArgs["result"]["complexityTestingCases"]>
 export type complexityTestingCasesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   problem?: boolean | Prisma.ProblemDefaultArgs<ExtArgs>
 }
@@ -472,7 +438,6 @@ export type $complexityTestingCasesPayload<ExtArgs extends runtime.Types.Extensi
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     cases: runtime.JsonValue
-    expectedComplexity: $Enums.expectedComplexity | null
     problemId: string
     createdAt: Date
     updatedAt: Date
@@ -902,7 +867,6 @@ export interface Prisma__complexityTestingCasesClient<T, Null = never, ExtArgs e
 export interface complexityTestingCasesFieldRefs {
   readonly id: Prisma.FieldRef<"complexityTestingCases", 'String'>
   readonly cases: Prisma.FieldRef<"complexityTestingCases", 'Json'>
-  readonly expectedComplexity: Prisma.FieldRef<"complexityTestingCases", 'expectedComplexity'>
   readonly problemId: Prisma.FieldRef<"complexityTestingCases", 'String'>
   readonly createdAt: Prisma.FieldRef<"complexityTestingCases", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"complexityTestingCases", 'DateTime'>
