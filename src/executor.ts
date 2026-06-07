@@ -593,6 +593,8 @@ export async function runStressCheck(
 
   try {
     const size = sizes[0];
+
+    console.log("Size: ", size, "\n");
     const arr = generateArray(
       size,
       generator.minValue,
@@ -601,7 +603,7 @@ export async function runStressCheck(
     );
     const input = `${size}\n${arr.join(" ")}`;
 
-    console.log("Generator: \n " + generator + "\n");
+    console.log("Generator:", JSON.stringify(generator, null, 2) + "\n");
 
     const result = await runCode({
       language,
@@ -615,7 +617,7 @@ export async function runStressCheck(
       stdin: `1\n${input}`.trim(),
     });
 
-    console.log("Result: " + result + "\n");
+    console.log("Result: " + JSON.stringify(result, null, 2) + "\n");
 
     const time = Number(result.timeMs);
     const runtime = Number.isFinite(time) ? time : 0;
