@@ -602,38 +602,42 @@ export async function runStressCheck(
       generator.pattern,
     );
     const input = `${size}\n${arr.join(" ")}`;
+    try {
+      console.log("Generator:", JSON.stringify(generator, null, 2) + "\n");
 
-    console.log("Generator:", JSON.stringify(generator, null, 2) + "\n");
+      const result = await runCode({
+        language,
+        version: "*",
+        files: [
+          {
+            name: language === "java" ? "Main.java" : "main",
+            content: sourceCode,
+          },
+        ],
+        stdin: `1\n${input}`.trim(),
+      });
 
-    const result = await runCode({
-      language,
-      version: "*",
-      files: [
-        {
-          name: language === "java" ? "Main.java" : "main",
-          content: sourceCode,
-        },
-      ],
-      stdin: `1\n${input}`.trim(),
-    });
+      console.log("Result: " + JSON.stringify(result, null, 2) + "\n");
 
-    console.log("Result: " + JSON.stringify(result, null, 2) + "\n");
+      const time = Number(result.timeMs);
+      const runtime = Number.isFinite(time) ? time : 0;
+      timings.push(runtime);
 
-    const time = Number(result.timeMs);
-    const runtime = Number.isFinite(time) ? time : 0;
-    timings.push(runtime);
+      if (runtime > effectiveTimeLimit) {
+        return {
+          status: "TIME_LIMIT_EXCEEDED",
+          timings,
+        };
+      }
 
-    if (runtime > effectiveTimeLimit) {
       return {
-        status: "TIME_LIMIT_EXCEEDED",
+        status: "ACCEPTED",
         timings,
       };
+    } catch (error) {
+      console.log("RunCode Error: \n", error);
+      throw error;
     }
-
-    return {
-      status: "ACCEPTED",
-      timings,
-    };
   } catch (error) {
     if (error instanceof SubmissionExecutionError) {
       return null;
