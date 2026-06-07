@@ -601,6 +601,8 @@ export async function runStressCheck(
     );
     const input = `${size}\n${arr.join(" ")}`;
 
+    console.log("Generator: \n " + generator + "\n");
+
     const result = await runCode({
       language,
       version: "*",
@@ -612,6 +614,8 @@ export async function runStressCheck(
       ],
       stdin: `1\n${input}`.trim(),
     });
+
+    console.log("Result: " + result + "\n");
 
     const time = Number(result.timeMs);
     const runtime = Number.isFinite(time) ? time : 0;
