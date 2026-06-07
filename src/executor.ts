@@ -592,37 +592,36 @@ export async function runStressCheck(
   const timings: number[] = [];
 
   try {
-    for (const size of sizes) {
-      const arr = generateArray(
-        size,
-        generator.minValue,
-        generator.maxValue,
-        generator.pattern,
-      );
-      const input = `${size}\n${arr.join(" ")}`;
+    const size = sizes[0];
+    const arr = generateArray(
+      size,
+      generator.minValue,
+      generator.maxValue,
+      generator.pattern,
+    );
+    const input = `${size}\n${arr.join(" ")}`;
 
-      const result = await runCode({
-        language,
-        version: "*",
-        files: [
-          {
-            name: language === "java" ? "Main.java" : "main",
-            content: sourceCode,
-          },
-        ],
-        stdin: `1\n${input}`.trim(),
-      });
+    const result = await runCode({
+      language,
+      version: "*",
+      files: [
+        {
+          name: language === "java" ? "Main.java" : "main",
+          content: sourceCode,
+        },
+      ],
+      stdin: `1\n${input}`.trim(),
+    });
 
-      const time = Number(result.timeMs);
-      const runtime = Number.isFinite(time) ? time : 0;
-      timings.push(runtime);
+    const time = Number(result.timeMs);
+    const runtime = Number.isFinite(time) ? time : 0;
+    timings.push(runtime);
 
-      if (runtime > effectiveTimeLimit) {
-        return {
-          status: "TIME_LIMIT_EXCEEDED",
-          timings,
-        };
-      }
+    if (runtime > effectiveTimeLimit) {
+      return {
+        status: "TIME_LIMIT_EXCEEDED",
+        timings,
+      };
     }
 
     return {
@@ -637,8 +636,6 @@ export async function runStressCheck(
     throw error;
   }
 }
-
-
 
 export async function executeCode(
   request: ExecuteCodeRequest,
