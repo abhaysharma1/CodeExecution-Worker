@@ -1,7 +1,7 @@
 // ===== Configuration =====
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -148,8 +148,8 @@ model TestCase {
 }
 
 model complexityTestingCases {
-  id                 String              @id @default(uuid())
-  cases              Json
+  id    String @id @default(uuid())
+  cases Json
 
   problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
   problemId String   @unique // one-to-one relationship
@@ -232,7 +232,11 @@ model ProblemTestGenerator {
   minValue Int
   maxValue Int
 
-  timeLimitMs   Int @default(1000)
+  cppTimeLimitMs    Int @default(1000)
+  javaTimeLimitMs   Int @default(2000)
+  pythonTimeLimitMs Int @default(4000)
+  jsTimeLimitMs     Int @default(3000)
+
   memoryLimitMB Int @default(256)
 
   sizes Int[] // e.g. [1000, 10000, 100000]
@@ -267,19 +271,19 @@ model Exam {
   sebEnabled  Boolean    @default(false)
   status      ExamStatus
 
-  creator         User             @relation("CreatedExams", fields: [creatorId], references: [id])
-  creatorId       String
-  problems        ExamProblem[]
-  enrollments     ExamEnrollment[]
-  submissions     Submission[]
-  results         ExamResult[]
-  startDate       DateTime
-  endDate         DateTime
-  examGroups      ExamGroup[]
-  examAttempts    ExamAttempt[]
-  aiEvaluations   AiEvaluation[]
-  aiconversations AIConversation[]
-  examAnalytics   ExamAnalytics?
+  creator            User                 @relation("CreatedExams", fields: [creatorId], references: [id])
+  creatorId          String
+  problems           ExamProblem[]
+  enrollments        ExamEnrollment[]
+  submissions        Submission[]
+  results            ExamResult[]
+  startDate          DateTime
+  endDate            DateTime
+  examGroups         ExamGroup[]
+  examAttempts       ExamAttempt[]
+  aiEvaluations      AiEvaluation[]
+  aiconversations    AIConversation[]
+  examAnalytics      ExamAnalytics?
   groupExamAnalytics GroupExamAnalytics[]
 
   @@index([id, creatorId])

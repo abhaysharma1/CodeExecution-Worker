@@ -264,7 +264,10 @@ export const ProblemTestGeneratorScalarFieldEnum = {
   pattern: 'pattern',
   minValue: 'minValue',
   maxValue: 'maxValue',
-  timeLimitMs: 'timeLimitMs',
+  cppTimeLimitMs: 'cppTimeLimitMs',
+  javaTimeLimitMs: 'javaTimeLimitMs',
+  pythonTimeLimitMs: 'pythonTimeLimitMs',
+  jsTimeLimitMs: 'jsTimeLimitMs',
   memoryLimitMB: 'memoryLimitMB',
   sizes: 'sizes',
   createdAt: 'createdAt'

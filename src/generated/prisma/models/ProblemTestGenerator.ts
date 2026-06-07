@@ -29,7 +29,10 @@ export type AggregateProblemTestGenerator = {
 export type ProblemTestGeneratorAvgAggregateOutputType = {
   minValue: number | null
   maxValue: number | null
-  timeLimitMs: number | null
+  cppTimeLimitMs: number | null
+  javaTimeLimitMs: number | null
+  pythonTimeLimitMs: number | null
+  jsTimeLimitMs: number | null
   memoryLimitMB: number | null
   sizes: number | null
 }
@@ -37,7 +40,10 @@ export type ProblemTestGeneratorAvgAggregateOutputType = {
 export type ProblemTestGeneratorSumAggregateOutputType = {
   minValue: number | null
   maxValue: number | null
-  timeLimitMs: number | null
+  cppTimeLimitMs: number | null
+  javaTimeLimitMs: number | null
+  pythonTimeLimitMs: number | null
+  jsTimeLimitMs: number | null
   memoryLimitMB: number | null
   sizes: number[]
 }
@@ -49,7 +55,10 @@ export type ProblemTestGeneratorMinAggregateOutputType = {
   pattern: $Enums.GeneratorPattern | null
   minValue: number | null
   maxValue: number | null
-  timeLimitMs: number | null
+  cppTimeLimitMs: number | null
+  javaTimeLimitMs: number | null
+  pythonTimeLimitMs: number | null
+  jsTimeLimitMs: number | null
   memoryLimitMB: number | null
   createdAt: Date | null
 }
@@ -61,7 +70,10 @@ export type ProblemTestGeneratorMaxAggregateOutputType = {
   pattern: $Enums.GeneratorPattern | null
   minValue: number | null
   maxValue: number | null
-  timeLimitMs: number | null
+  cppTimeLimitMs: number | null
+  javaTimeLimitMs: number | null
+  pythonTimeLimitMs: number | null
+  jsTimeLimitMs: number | null
   memoryLimitMB: number | null
   createdAt: Date | null
 }
@@ -73,7 +85,10 @@ export type ProblemTestGeneratorCountAggregateOutputType = {
   pattern: number
   minValue: number
   maxValue: number
-  timeLimitMs: number
+  cppTimeLimitMs: number
+  javaTimeLimitMs: number
+  pythonTimeLimitMs: number
+  jsTimeLimitMs: number
   memoryLimitMB: number
   sizes: number
   createdAt: number
@@ -84,7 +99,10 @@ export type ProblemTestGeneratorCountAggregateOutputType = {
 export type ProblemTestGeneratorAvgAggregateInputType = {
   minValue?: true
   maxValue?: true
-  timeLimitMs?: true
+  cppTimeLimitMs?: true
+  javaTimeLimitMs?: true
+  pythonTimeLimitMs?: true
+  jsTimeLimitMs?: true
   memoryLimitMB?: true
   sizes?: true
 }
@@ -92,7 +110,10 @@ export type ProblemTestGeneratorAvgAggregateInputType = {
 export type ProblemTestGeneratorSumAggregateInputType = {
   minValue?: true
   maxValue?: true
-  timeLimitMs?: true
+  cppTimeLimitMs?: true
+  javaTimeLimitMs?: true
+  pythonTimeLimitMs?: true
+  jsTimeLimitMs?: true
   memoryLimitMB?: true
   sizes?: true
 }
@@ -104,7 +125,10 @@ export type ProblemTestGeneratorMinAggregateInputType = {
   pattern?: true
   minValue?: true
   maxValue?: true
-  timeLimitMs?: true
+  cppTimeLimitMs?: true
+  javaTimeLimitMs?: true
+  pythonTimeLimitMs?: true
+  jsTimeLimitMs?: true
   memoryLimitMB?: true
   createdAt?: true
 }
@@ -116,7 +140,10 @@ export type ProblemTestGeneratorMaxAggregateInputType = {
   pattern?: true
   minValue?: true
   maxValue?: true
-  timeLimitMs?: true
+  cppTimeLimitMs?: true
+  javaTimeLimitMs?: true
+  pythonTimeLimitMs?: true
+  jsTimeLimitMs?: true
   memoryLimitMB?: true
   createdAt?: true
 }
@@ -128,7 +155,10 @@ export type ProblemTestGeneratorCountAggregateInputType = {
   pattern?: true
   minValue?: true
   maxValue?: true
-  timeLimitMs?: true
+  cppTimeLimitMs?: true
+  javaTimeLimitMs?: true
+  pythonTimeLimitMs?: true
+  jsTimeLimitMs?: true
   memoryLimitMB?: true
   sizes?: true
   createdAt?: true
@@ -228,7 +258,10 @@ export type ProblemTestGeneratorGroupByOutputType = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  timeLimitMs: number
+  cppTimeLimitMs: number
+  javaTimeLimitMs: number
+  pythonTimeLimitMs: number
+  jsTimeLimitMs: number
   memoryLimitMB: number
   sizes: number[]
   createdAt: Date
@@ -264,7 +297,10 @@ export type ProblemTestGeneratorWhereInput = {
   pattern?: Prisma.EnumGeneratorPatternFilter<"ProblemTestGenerator"> | $Enums.GeneratorPattern
   minValue?: Prisma.IntFilter<"ProblemTestGenerator"> | number
   maxValue?: Prisma.IntFilter<"ProblemTestGenerator"> | number
-  timeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
+  cppTimeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
+  javaTimeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
+  pythonTimeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
+  jsTimeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
   memoryLimitMB?: Prisma.IntFilter<"ProblemTestGenerator"> | number
   sizes?: Prisma.IntNullableListFilter<"ProblemTestGenerator">
   createdAt?: Prisma.DateTimeFilter<"ProblemTestGenerator"> | Date | string
@@ -278,7 +314,10 @@ export type ProblemTestGeneratorOrderByWithRelationInput = {
   pattern?: Prisma.SortOrder
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  timeLimitMs?: Prisma.SortOrder
+  cppTimeLimitMs?: Prisma.SortOrder
+  javaTimeLimitMs?: Prisma.SortOrder
+  pythonTimeLimitMs?: Prisma.SortOrder
+  jsTimeLimitMs?: Prisma.SortOrder
   memoryLimitMB?: Prisma.SortOrder
   sizes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -295,7 +334,10 @@ export type ProblemTestGeneratorWhereUniqueInput = Prisma.AtLeast<{
   pattern?: Prisma.EnumGeneratorPatternFilter<"ProblemTestGenerator"> | $Enums.GeneratorPattern
   minValue?: Prisma.IntFilter<"ProblemTestGenerator"> | number
   maxValue?: Prisma.IntFilter<"ProblemTestGenerator"> | number
-  timeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
+  cppTimeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
+  javaTimeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
+  pythonTimeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
+  jsTimeLimitMs?: Prisma.IntFilter<"ProblemTestGenerator"> | number
   memoryLimitMB?: Prisma.IntFilter<"ProblemTestGenerator"> | number
   sizes?: Prisma.IntNullableListFilter<"ProblemTestGenerator">
   createdAt?: Prisma.DateTimeFilter<"ProblemTestGenerator"> | Date | string
@@ -309,7 +351,10 @@ export type ProblemTestGeneratorOrderByWithAggregationInput = {
   pattern?: Prisma.SortOrder
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  timeLimitMs?: Prisma.SortOrder
+  cppTimeLimitMs?: Prisma.SortOrder
+  javaTimeLimitMs?: Prisma.SortOrder
+  pythonTimeLimitMs?: Prisma.SortOrder
+  jsTimeLimitMs?: Prisma.SortOrder
   memoryLimitMB?: Prisma.SortOrder
   sizes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -330,7 +375,10 @@ export type ProblemTestGeneratorScalarWhereWithAggregatesInput = {
   pattern?: Prisma.EnumGeneratorPatternWithAggregatesFilter<"ProblemTestGenerator"> | $Enums.GeneratorPattern
   minValue?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
   maxValue?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
-  timeLimitMs?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
+  cppTimeLimitMs?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
+  javaTimeLimitMs?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
+  pythonTimeLimitMs?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
+  jsTimeLimitMs?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
   memoryLimitMB?: Prisma.IntWithAggregatesFilter<"ProblemTestGenerator"> | number
   sizes?: Prisma.IntNullableListFilter<"ProblemTestGenerator">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProblemTestGenerator"> | Date | string
@@ -342,7 +390,10 @@ export type ProblemTestGeneratorCreateInput = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  timeLimitMs?: number
+  cppTimeLimitMs?: number
+  javaTimeLimitMs?: number
+  pythonTimeLimitMs?: number
+  jsTimeLimitMs?: number
   memoryLimitMB?: number
   sizes?: Prisma.ProblemTestGeneratorCreatesizesInput | number[]
   createdAt?: Date | string
@@ -356,7 +407,10 @@ export type ProblemTestGeneratorUncheckedCreateInput = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  timeLimitMs?: number
+  cppTimeLimitMs?: number
+  javaTimeLimitMs?: number
+  pythonTimeLimitMs?: number
+  jsTimeLimitMs?: number
   memoryLimitMB?: number
   sizes?: Prisma.ProblemTestGeneratorCreatesizesInput | number[]
   createdAt?: Date | string
@@ -368,7 +422,10 @@ export type ProblemTestGeneratorUpdateInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  cppTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  javaTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  pythonTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  jsTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
   memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -382,7 +439,10 @@ export type ProblemTestGeneratorUncheckedUpdateInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  cppTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  javaTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  pythonTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  jsTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
   memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -395,7 +455,10 @@ export type ProblemTestGeneratorCreateManyInput = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  timeLimitMs?: number
+  cppTimeLimitMs?: number
+  javaTimeLimitMs?: number
+  pythonTimeLimitMs?: number
+  jsTimeLimitMs?: number
   memoryLimitMB?: number
   sizes?: Prisma.ProblemTestGeneratorCreatesizesInput | number[]
   createdAt?: Date | string
@@ -407,7 +470,10 @@ export type ProblemTestGeneratorUpdateManyMutationInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  cppTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  javaTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  pythonTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  jsTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
   memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -420,7 +486,10 @@ export type ProblemTestGeneratorUncheckedUpdateManyInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  cppTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  javaTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  pythonTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  jsTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
   memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -446,7 +515,10 @@ export type ProblemTestGeneratorCountOrderByAggregateInput = {
   pattern?: Prisma.SortOrder
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  timeLimitMs?: Prisma.SortOrder
+  cppTimeLimitMs?: Prisma.SortOrder
+  javaTimeLimitMs?: Prisma.SortOrder
+  pythonTimeLimitMs?: Prisma.SortOrder
+  jsTimeLimitMs?: Prisma.SortOrder
   memoryLimitMB?: Prisma.SortOrder
   sizes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -455,7 +527,10 @@ export type ProblemTestGeneratorCountOrderByAggregateInput = {
 export type ProblemTestGeneratorAvgOrderByAggregateInput = {
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  timeLimitMs?: Prisma.SortOrder
+  cppTimeLimitMs?: Prisma.SortOrder
+  javaTimeLimitMs?: Prisma.SortOrder
+  pythonTimeLimitMs?: Prisma.SortOrder
+  jsTimeLimitMs?: Prisma.SortOrder
   memoryLimitMB?: Prisma.SortOrder
   sizes?: Prisma.SortOrder
 }
@@ -467,7 +542,10 @@ export type ProblemTestGeneratorMaxOrderByAggregateInput = {
   pattern?: Prisma.SortOrder
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  timeLimitMs?: Prisma.SortOrder
+  cppTimeLimitMs?: Prisma.SortOrder
+  javaTimeLimitMs?: Prisma.SortOrder
+  pythonTimeLimitMs?: Prisma.SortOrder
+  jsTimeLimitMs?: Prisma.SortOrder
   memoryLimitMB?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -479,7 +557,10 @@ export type ProblemTestGeneratorMinOrderByAggregateInput = {
   pattern?: Prisma.SortOrder
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  timeLimitMs?: Prisma.SortOrder
+  cppTimeLimitMs?: Prisma.SortOrder
+  javaTimeLimitMs?: Prisma.SortOrder
+  pythonTimeLimitMs?: Prisma.SortOrder
+  jsTimeLimitMs?: Prisma.SortOrder
   memoryLimitMB?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -487,7 +568,10 @@ export type ProblemTestGeneratorMinOrderByAggregateInput = {
 export type ProblemTestGeneratorSumOrderByAggregateInput = {
   minValue?: Prisma.SortOrder
   maxValue?: Prisma.SortOrder
-  timeLimitMs?: Prisma.SortOrder
+  cppTimeLimitMs?: Prisma.SortOrder
+  javaTimeLimitMs?: Prisma.SortOrder
+  pythonTimeLimitMs?: Prisma.SortOrder
+  jsTimeLimitMs?: Prisma.SortOrder
   memoryLimitMB?: Prisma.SortOrder
   sizes?: Prisma.SortOrder
 }
@@ -547,7 +631,10 @@ export type ProblemTestGeneratorCreateWithoutProblemInput = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  timeLimitMs?: number
+  cppTimeLimitMs?: number
+  javaTimeLimitMs?: number
+  pythonTimeLimitMs?: number
+  jsTimeLimitMs?: number
   memoryLimitMB?: number
   sizes?: Prisma.ProblemTestGeneratorCreatesizesInput | number[]
   createdAt?: Date | string
@@ -559,7 +646,10 @@ export type ProblemTestGeneratorUncheckedCreateWithoutProblemInput = {
   pattern: $Enums.GeneratorPattern
   minValue: number
   maxValue: number
-  timeLimitMs?: number
+  cppTimeLimitMs?: number
+  javaTimeLimitMs?: number
+  pythonTimeLimitMs?: number
+  jsTimeLimitMs?: number
   memoryLimitMB?: number
   sizes?: Prisma.ProblemTestGeneratorCreatesizesInput | number[]
   createdAt?: Date | string
@@ -587,7 +677,10 @@ export type ProblemTestGeneratorUpdateWithoutProblemInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  cppTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  javaTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  pythonTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  jsTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
   memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -599,7 +692,10 @@ export type ProblemTestGeneratorUncheckedUpdateWithoutProblemInput = {
   pattern?: Prisma.EnumGeneratorPatternFieldUpdateOperationsInput | $Enums.GeneratorPattern
   minValue?: Prisma.IntFieldUpdateOperationsInput | number
   maxValue?: Prisma.IntFieldUpdateOperationsInput | number
-  timeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  cppTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  javaTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  pythonTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
+  jsTimeLimitMs?: Prisma.IntFieldUpdateOperationsInput | number
   memoryLimitMB?: Prisma.IntFieldUpdateOperationsInput | number
   sizes?: Prisma.ProblemTestGeneratorUpdatesizesInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -614,7 +710,10 @@ export type ProblemTestGeneratorSelect<ExtArgs extends runtime.Types.Extensions.
   pattern?: boolean
   minValue?: boolean
   maxValue?: boolean
-  timeLimitMs?: boolean
+  cppTimeLimitMs?: boolean
+  javaTimeLimitMs?: boolean
+  pythonTimeLimitMs?: boolean
+  jsTimeLimitMs?: boolean
   memoryLimitMB?: boolean
   sizes?: boolean
   createdAt?: boolean
@@ -628,7 +727,10 @@ export type ProblemTestGeneratorSelectCreateManyAndReturn<ExtArgs extends runtim
   pattern?: boolean
   minValue?: boolean
   maxValue?: boolean
-  timeLimitMs?: boolean
+  cppTimeLimitMs?: boolean
+  javaTimeLimitMs?: boolean
+  pythonTimeLimitMs?: boolean
+  jsTimeLimitMs?: boolean
   memoryLimitMB?: boolean
   sizes?: boolean
   createdAt?: boolean
@@ -642,7 +744,10 @@ export type ProblemTestGeneratorSelectUpdateManyAndReturn<ExtArgs extends runtim
   pattern?: boolean
   minValue?: boolean
   maxValue?: boolean
-  timeLimitMs?: boolean
+  cppTimeLimitMs?: boolean
+  javaTimeLimitMs?: boolean
+  pythonTimeLimitMs?: boolean
+  jsTimeLimitMs?: boolean
   memoryLimitMB?: boolean
   sizes?: boolean
   createdAt?: boolean
@@ -656,13 +761,16 @@ export type ProblemTestGeneratorSelectScalar = {
   pattern?: boolean
   minValue?: boolean
   maxValue?: boolean
-  timeLimitMs?: boolean
+  cppTimeLimitMs?: boolean
+  javaTimeLimitMs?: boolean
+  pythonTimeLimitMs?: boolean
+  jsTimeLimitMs?: boolean
   memoryLimitMB?: boolean
   sizes?: boolean
   createdAt?: boolean
 }
 
-export type ProblemTestGeneratorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "problemId" | "type" | "pattern" | "minValue" | "maxValue" | "timeLimitMs" | "memoryLimitMB" | "sizes" | "createdAt", ExtArgs["result"]["problemTestGenerator"]>
+export type ProblemTestGeneratorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "problemId" | "type" | "pattern" | "minValue" | "maxValue" | "cppTimeLimitMs" | "javaTimeLimitMs" | "pythonTimeLimitMs" | "jsTimeLimitMs" | "memoryLimitMB" | "sizes" | "createdAt", ExtArgs["result"]["problemTestGenerator"]>
 export type ProblemTestGeneratorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   problem?: boolean | Prisma.ProblemDefaultArgs<ExtArgs>
 }
@@ -685,7 +793,10 @@ export type $ProblemTestGeneratorPayload<ExtArgs extends runtime.Types.Extension
     pattern: $Enums.GeneratorPattern
     minValue: number
     maxValue: number
-    timeLimitMs: number
+    cppTimeLimitMs: number
+    javaTimeLimitMs: number
+    pythonTimeLimitMs: number
+    jsTimeLimitMs: number
     memoryLimitMB: number
     sizes: number[]
     createdAt: Date
@@ -1119,7 +1230,10 @@ export interface ProblemTestGeneratorFieldRefs {
   readonly pattern: Prisma.FieldRef<"ProblemTestGenerator", 'GeneratorPattern'>
   readonly minValue: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
   readonly maxValue: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
-  readonly timeLimitMs: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
+  readonly cppTimeLimitMs: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
+  readonly javaTimeLimitMs: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
+  readonly pythonTimeLimitMs: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
+  readonly jsTimeLimitMs: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
   readonly memoryLimitMB: Prisma.FieldRef<"ProblemTestGenerator", 'Int'>
   readonly sizes: Prisma.FieldRef<"ProblemTestGenerator", 'Int[]'>
   readonly createdAt: Prisma.FieldRef<"ProblemTestGenerator", 'DateTime'>

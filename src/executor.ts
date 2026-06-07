@@ -62,14 +62,6 @@ const caseEndMarkers = [
 ] as const;
 const allCaseMarkers = [...caseStartMarkers, ...caseEndMarkers] as const;
 
-const LANGUAGE_MULTIPLIERS: Record<string, number> = {
-  cpp: 1.0,
-  c: 1.0,
-  java: 2.0,
-  python: 4.0,
-  javascript: 3.0,
-};
-
 const escapeRegex = (value: string): string =>
   value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -586,8 +578,13 @@ export async function runStressCheck(
 
   const { language, sourceCode } = buildSourceCode(submission, driver);
 
-  const effectiveTimeLimit =
-    generator.timeLimitMs * (LANGUAGE_MULTIPLIERS[language] ?? 1.0);
+  const timeLimitMap: Record<string, number> = {
+    c: generator.cppTimeLimitMs,
+    cpp: generator.cppTimeLimitMs,
+    java: generator.javaTimeLimitMs,
+    python: generator.pythonTimeLimitMs,
+  };
+  const effectiveTimeLimit = timeLimitMap[language] ?? generator.cppTimeLimitMs;
 
   const timings: number[] = [];
 
