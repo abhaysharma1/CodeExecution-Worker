@@ -59,4 +59,6 @@ export interface PerformanceTestResult {
   executionTimeMs: number;
   memoryKb: number;
   failedCaseName?: string;
+  passedCount: number;
+  totalTestcases: number;
 }

@@ -561,7 +561,8 @@ export async function runPerformanceTests(
   let lastExecutionTimeMs = 0;
   let lastMemoryKb = 0;
 
-  for (const perfCase of perfTestCases) {
+  for (let i = 0; i < perfTestCases.length; i += 1) {
+    const perfCase = perfTestCases[i];
     const inputContent = await downloadFromS3(perfCase.inputFileKey);
     const expectedOutput = await downloadFromS3(perfCase.outputFileKey);
 
@@ -589,6 +590,8 @@ export async function runPerformanceTests(
         executionTimeMs: lastExecutionTimeMs,
         memoryKb: lastMemoryKb,
         failedCaseName: perfCase.name,
+        passedCount: i,
+        totalTestcases: perfTestCases.length,
       };
     }
 
@@ -598,6 +601,8 @@ export async function runPerformanceTests(
         executionTimeMs: lastExecutionTimeMs,
         memoryKb: lastMemoryKb,
         failedCaseName: perfCase.name,
+        passedCount: i,
+        totalTestcases: perfTestCases.length,
       };
     }
   }
@@ -606,6 +611,8 @@ export async function runPerformanceTests(
     status: "ACCEPTED",
     executionTimeMs: lastExecutionTimeMs,
     memoryKb: lastMemoryKb,
+    passedCount: perfTestCases.length,
+    totalTestcases: perfTestCases.length,
   };
 }
 

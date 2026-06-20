@@ -21,6 +21,7 @@ import {
   SubmissionExecutionError,
 } from "./executor";
 import { logger } from "./logger";
+import type { ExecutionResult } from "./types";
 import { deleteMessage, pollMessages, PolledMessage } from "./sqs";
 
 function errorToLog(error: unknown): Record<string, unknown> {
@@ -122,16 +123,24 @@ export async function processExamSubmissionById(submissionId: string): Promise<v
 
     const statusOverride = perfResult.status === "ACCEPTED" ? "ACCEPTED" : perfResult.status;
 
+    const combinedExecution: ExecutionResult = {
+      ...execution,
+      passedCount: execution.passedCount + perfResult.passedCount,
+      totalTestcases: execution.totalTestcases + perfResult.totalTestcases,
+      executionTimeMs: perfResult.executionTimeMs,
+      memoryKb: perfResult.memoryKb,
+    };
+
     await markSubmissionCompleted(
       submissionId,
-      execution,
+      combinedExecution,
       statusOverride,
     );
 
     logger.info("Exam submission finished (performance tests)", {
       submissionId,
-      passedCount: execution.passedCount,
-      totalTestcases: execution.totalTestcases,
+      passedCount: combinedExecution.passedCount,
+      totalTestcases: combinedExecution.totalTestcases,
       executionTimeMs: perfResult.executionTimeMs,
       memoryKb: perfResult.memoryKb,
       elapsedMs: Date.now() - startedAt,
@@ -248,16 +257,24 @@ export async function processPracticeSubmissionById(selfSubmissionId: string): P
 
     const statusOverride = perfResult.status === "ACCEPTED" ? "ACCEPTED" : perfResult.status;
 
+    const combinedExecution: ExecutionResult = {
+      ...execution,
+      passedCount: execution.passedCount + perfResult.passedCount,
+      totalTestcases: execution.totalTestcases + perfResult.totalTestcases,
+      executionTimeMs: perfResult.executionTimeMs,
+      memoryKb: perfResult.memoryKb,
+    };
+
     await markSelfSubmissionCompleted(
       selfSubmissionId,
-      execution,
+      combinedExecution,
       statusOverride,
     );
 
     logger.info("Practice submission finished (performance tests)", {
       selfSubmissionId,
-      passedCount: execution.passedCount,
-      totalTestcases: execution.totalTestcases,
+      passedCount: combinedExecution.passedCount,
+      totalTestcases: combinedExecution.totalTestcases,
       executionTimeMs: perfResult.executionTimeMs,
       memoryKb: perfResult.memoryKb,
       elapsedMs: Date.now() - startedAt,
