@@ -73,10 +73,15 @@ export type RunTestCase = Prisma.RunTestCaseModel
  */
 export type selfSubmission = Prisma.selfSubmissionModel
 /**
- * Model ProblemTestGenerator
+ * Model PerformanceConstraints
  * 
  */
-export type ProblemTestGenerator = Prisma.ProblemTestGeneratorModel
+export type PerformanceConstraints = Prisma.PerformanceConstraintsModel
+/**
+ * Model PerformanceTestCase
+ * 
+ */
+export type PerformanceTestCase = Prisma.PerformanceTestCaseModel
 /**
  * Model Exam
  * 

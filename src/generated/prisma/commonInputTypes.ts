@@ -304,40 +304,6 @@ export type EnumExecutionStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumExecutionStatusFilter<$PrismaModel>
 }
 
-export type EnumGeneratorTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.GeneratorType | Prisma.EnumGeneratorTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.GeneratorType[] | Prisma.ListEnumGeneratorTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.GeneratorType[] | Prisma.ListEnumGeneratorTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumGeneratorTypeFilter<$PrismaModel> | $Enums.GeneratorType
-}
-
-export type EnumGeneratorPatternFilter<$PrismaModel = never> = {
-  equals?: $Enums.GeneratorPattern | Prisma.EnumGeneratorPatternFieldRefInput<$PrismaModel>
-  in?: $Enums.GeneratorPattern[] | Prisma.ListEnumGeneratorPatternFieldRefInput<$PrismaModel>
-  notIn?: $Enums.GeneratorPattern[] | Prisma.ListEnumGeneratorPatternFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel> | $Enums.GeneratorPattern
-}
-
-export type EnumGeneratorTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.GeneratorType | Prisma.EnumGeneratorTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.GeneratorType[] | Prisma.ListEnumGeneratorTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.GeneratorType[] | Prisma.ListEnumGeneratorTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumGeneratorTypeWithAggregatesFilter<$PrismaModel> | $Enums.GeneratorType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumGeneratorTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumGeneratorTypeFilter<$PrismaModel>
-}
-
-export type EnumGeneratorPatternWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.GeneratorPattern | Prisma.EnumGeneratorPatternFieldRefInput<$PrismaModel>
-  in?: $Enums.GeneratorPattern[] | Prisma.ListEnumGeneratorPatternFieldRefInput<$PrismaModel>
-  notIn?: $Enums.GeneratorPattern[] | Prisma.ListEnumGeneratorPatternFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumGeneratorPatternWithAggregatesFilter<$PrismaModel> | $Enums.GeneratorPattern
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel>
-}
-
 export type EnumExamStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.ExamStatus | Prisma.EnumExamStatusFieldRefInput<$PrismaModel>
   in?: $Enums.ExamStatus[] | Prisma.ListEnumExamStatusFieldRefInput<$PrismaModel>
@@ -815,40 +781,6 @@ export type NestedEnumExecutionStatusWithAggregatesFilter<$PrismaModel = never> 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumExecutionStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumExecutionStatusFilter<$PrismaModel>
-}
-
-export type NestedEnumGeneratorTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.GeneratorType | Prisma.EnumGeneratorTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.GeneratorType[] | Prisma.ListEnumGeneratorTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.GeneratorType[] | Prisma.ListEnumGeneratorTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumGeneratorTypeFilter<$PrismaModel> | $Enums.GeneratorType
-}
-
-export type NestedEnumGeneratorPatternFilter<$PrismaModel = never> = {
-  equals?: $Enums.GeneratorPattern | Prisma.EnumGeneratorPatternFieldRefInput<$PrismaModel>
-  in?: $Enums.GeneratorPattern[] | Prisma.ListEnumGeneratorPatternFieldRefInput<$PrismaModel>
-  notIn?: $Enums.GeneratorPattern[] | Prisma.ListEnumGeneratorPatternFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel> | $Enums.GeneratorPattern
-}
-
-export type NestedEnumGeneratorTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.GeneratorType | Prisma.EnumGeneratorTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.GeneratorType[] | Prisma.ListEnumGeneratorTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.GeneratorType[] | Prisma.ListEnumGeneratorTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumGeneratorTypeWithAggregatesFilter<$PrismaModel> | $Enums.GeneratorType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumGeneratorTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumGeneratorTypeFilter<$PrismaModel>
-}
-
-export type NestedEnumGeneratorPatternWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.GeneratorPattern | Prisma.EnumGeneratorPatternFieldRefInput<$PrismaModel>
-  in?: $Enums.GeneratorPattern[] | Prisma.ListEnumGeneratorPatternFieldRefInput<$PrismaModel>
-  notIn?: $Enums.GeneratorPattern[] | Prisma.ListEnumGeneratorPatternFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumGeneratorPatternWithAggregatesFilter<$PrismaModel> | $Enums.GeneratorPattern
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumGeneratorPatternFilter<$PrismaModel>
 }
 
 export type NestedEnumExamStatusFilter<$PrismaModel = never> = {

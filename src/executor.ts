@@ -1,15 +1,16 @@
 import axios from "axios";
 import { config } from "./config";
 import type {
-  GeneratorPattern,
-  ProblemTestGenerator,
+  PerformanceConstraints,
 } from "./generated/prisma/client";
+import { downloadFromS3 } from "./s3";
 import {
   ExecutionFailureContext,
   ExecuteCodeRequest,
   ExecuteCodeResponse,
   ExecutionResult,
   NormalizedTestcase,
+  PerformanceTestResult,
 } from "./types";
 
 interface SubmissionCodeSource {
@@ -289,24 +290,6 @@ function normalizeForCompare(value: string): string {
   return splitPlainLines(value ?? "").join("\n");
 }
 
-function generateArray(
-  size: number,
-  min: number,
-  max: number,
-  pattern: GeneratorPattern,
-): number[] {
-  const arr = Array.from(
-    { length: size },
-    () => Math.floor(Math.random() * (max - min + 1)) + min,
-  );
-
-  if (pattern === "SORTED") arr.sort((a, b) => a - b);
-  if (pattern === "REVERSE") arr.sort((a, b) => b - a);
-  if (pattern === "CONSTANT") arr.fill(arr[0]);
-
-  return arr;
-}
-
 function buildSourceCode(
   submission: SubmissionCodeSource,
   driver?: DriverCodeSource,
@@ -559,89 +542,71 @@ export async function executeSubmission(
   };
 }
 
-export async function runStressCheck(
+export async function runPerformanceTests(
   submission: SubmissionCodeSource,
-  generator: ProblemTestGenerator,
+  perfTestCases: Array<{ name: string; inputFileKey: string; outputFileKey: string }>,
+  constraints: PerformanceConstraints | null,
   driver?: DriverCodeSource,
-): Promise<{
-  status: "ACCEPTED" | "TIME_LIMIT_EXCEEDED";
-  timings: number[];
-} | null> {
-  if (generator.type !== "ARRAY") {
-    return null;
-  }
-
-  const sizes = generator.sizes.filter((size) => size > 0);
-  if (sizes.length === 0) {
-    return null;
-  }
-
+): Promise<PerformanceTestResult> {
   const { language, sourceCode } = buildSourceCode(submission, driver);
 
   const timeLimitMap: Record<string, number> = {
-    c: generator.cppTimeLimitMs,
-    cpp: generator.cppTimeLimitMs,
-    java: generator.javaTimeLimitMs,
-    python: generator.pythonTimeLimitMs,
+    c: constraints?.cppTimeLimitMs ?? 1000,
+    cpp: constraints?.cppTimeLimitMs ?? 1000,
+    java: constraints?.javaTimeLimitMs ?? 2000,
+    python: constraints?.pythonTimeLimitMs ?? 4000,
   };
-  const effectiveTimeLimit = timeLimitMap[language] ?? generator.cppTimeLimitMs;
+  const effectiveTimeLimit = timeLimitMap[language] ?? 1000;
 
-  const timings: number[] = [];
+  let lastExecutionTimeMs = 0;
+  let lastMemoryKb = 0;
 
-  try {
-    const size = sizes[0];
+  for (const perfCase of perfTestCases) {
+    const inputContent = await downloadFromS3(perfCase.inputFileKey);
+    const expectedOutput = await downloadFromS3(perfCase.outputFileKey);
 
-    console.log("Size: ", size, "\n");
-    const arr = generateArray(
-      size,
-      generator.minValue,
-      generator.maxValue,
-      generator.pattern,
-    );
-    const input = `${size}\n${arr.join(" ")}`;
-    try {
-      console.log("Generator:", JSON.stringify(generator, null, 2) + "\n");
+    const result = await runCode({
+      language,
+      version: "*",
+      files: [
+        {
+          name: language === "java" ? "Main.java" : "main",
+          content: sourceCode,
+        },
+      ],
+      stdin: inputContent,
+    });
 
-      const result = await runCode({
-        language,
-        version: "*",
-        files: [
-          {
-            name: language === "java" ? "Main.java" : "main",
-            content: sourceCode,
-          },
-        ],
-        stdin: `1\n${input}`.trim(),
-      });
+    lastExecutionTimeMs = result.timeMs;
+    lastMemoryKb = result.memoryKb;
 
-      console.log("Result: " + JSON.stringify(result, null, 2) + "\n");
+    const normalizedActual = normalizeForCompare(result.stdout ?? "");
+    const normalizedExpected = normalizeForCompare(expectedOutput);
 
-      const time = Number(result.timeMs);
-      const runtime = Number.isFinite(time) ? time : 0;
-      timings.push(runtime);
-
-      if (runtime > effectiveTimeLimit) {
-        return {
-          status: "TIME_LIMIT_EXCEEDED",
-          timings,
-        };
-      }
-
+    if (normalizedActual !== normalizedExpected) {
       return {
-        status: "ACCEPTED",
-        timings,
+        status: "WRONG_ANSWER",
+        executionTimeMs: lastExecutionTimeMs,
+        memoryKb: lastMemoryKb,
+        failedCaseName: perfCase.name,
       };
-    } catch (error) {
-      console.log("RunCode Error: \n", error);
-      throw error;
-    }
-  } catch (error) {
-    if (error instanceof SubmissionExecutionError) {
-      return null;
     }
 
-    throw error;
+    if (lastExecutionTimeMs > effectiveTimeLimit) {
+      return {
+        status: "BAD_SCALING",
+        executionTimeMs: lastExecutionTimeMs,
+        memoryKb: lastMemoryKb,
+        failedCaseName: perfCase.name,
+      };
+    }
   }
+
+  return {
+    status: "ACCEPTED",
+    executionTimeMs: lastExecutionTimeMs,
+    memoryKb: lastMemoryKb,
+  };
 }
 
 export async function executeCode(

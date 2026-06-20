@@ -3,7 +3,8 @@ import {
   type Submission,
   type selfSubmission as SelfSubmission,
   type ExecutionStatus,
-  type ProblemTestGenerator,
+  type PerformanceConstraints,
+  type PerformanceTestCase,
   type ProgrammingLanguage,
 } from "./generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -36,10 +37,16 @@ export async function getSelfSubmissionById(
   return prisma.selfSubmission.findUnique({ where: { id: selfSubmissionId } });
 }
 
-export async function getProblemTestGeneratorByProblemId(
+export async function getPerformanceConstraintsByProblemId(
   problemId: string,
-): Promise<ProblemTestGenerator | null> {
-  return prisma.problemTestGenerator.findUnique({ where: { problemId } });
+): Promise<PerformanceConstraints | null> {
+  return prisma.performanceConstraints.findUnique({ where: { problemId } });
+}
+
+export async function getPerformanceTestCasesByProblemId(
+  problemId: string,
+): Promise<PerformanceTestCase[]> {
+  return prisma.performanceTestCase.findMany({ where: { problemId } });
 }
 
 type RawCaseItem = { input?: unknown; output?: unknown; ouptut?: unknown };

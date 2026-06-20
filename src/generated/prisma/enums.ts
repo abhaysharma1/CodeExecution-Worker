@@ -28,25 +28,6 @@ export const ProgrammingLanguage = {
 export type ProgrammingLanguage = (typeof ProgrammingLanguage)[keyof typeof ProgrammingLanguage]
 
 
-export const GeneratorType = {
-  ARRAY: 'ARRAY',
-  STRING: 'STRING',
-  MATRIX: 'MATRIX'
-} as const
-
-export type GeneratorType = (typeof GeneratorType)[keyof typeof GeneratorType]
-
-
-export const GeneratorPattern = {
-  RANDOM: 'RANDOM',
-  SORTED: 'SORTED',
-  REVERSE: 'REVERSE',
-  CONSTANT: 'CONSTANT'
-} as const
-
-export type GeneratorPattern = (typeof GeneratorPattern)[keyof typeof GeneratorPattern]
-
-
 export const ExamStatus = {
   scheduled: 'scheduled',
   active: 'active',

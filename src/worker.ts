@@ -3,7 +3,8 @@ import {
   connectDb,
   disconnectDb,
   getDriverCodeByProblemIdAndLanguage,
-  getProblemTestGeneratorByProblemId,
+  getPerformanceConstraintsByProblemId,
+  getPerformanceTestCasesByProblemId,
   getSelfSubmissionById,
   getSubmissionById,
   getTestcasesByProblemId,
@@ -16,7 +17,7 @@ import {
 } from "./db";
 import {
   executeSubmission,
-  runStressCheck,
+  runPerformanceTests,
   SubmissionExecutionError,
 } from "./executor";
 import { logger } from "./logger";
@@ -91,13 +92,13 @@ export async function processExamSubmissionById(submissionId: string): Promise<v
       return;
     }
 
-    const generator = await getProblemTestGeneratorByProblemId(
+    const perfTestCases = await getPerformanceTestCasesByProblemId(
       submission.problemId,
     );
 
-    if (!generator) {
+    if (perfTestCases.length === 0) {
       await markSubmissionCompleted(submissionId, execution);
-      logger.info("Exam submission finished (no stress generator)", {
+      logger.info("Exam submission finished (no performance test cases)", {
         submissionId,
         passedCount: execution.passedCount,
         totalTestcases: execution.totalTestcases,
@@ -108,38 +109,34 @@ export async function processExamSubmissionById(submissionId: string): Promise<v
       return;
     }
 
-    const stressResult = await runStressCheck(
+    const constraints = await getPerformanceConstraintsByProblemId(
+      submission.problemId,
+    );
+
+    const perfResult = await runPerformanceTests(
       submission,
-      generator,
+      perfTestCases,
+      constraints,
       driver ?? undefined,
     );
 
-    if (!stressResult) {
-      await markSubmissionCompleted(submissionId, execution);
-      logger.warn("Exam submission skipped stress check", {
-        submissionId,
-        problemId: submission.problemId,
-      });
-      return;
-    }
-
-    const stressStatus = stressResult.status === "TIME_LIMIT_EXCEEDED" ? "BAD_SCALING" : "ACCEPTED";
+    const statusOverride = perfResult.status === "ACCEPTED" ? "ACCEPTED" : perfResult.status;
 
     await markSubmissionCompleted(
       submissionId,
       execution,
-      stressStatus,
+      statusOverride,
     );
 
-    logger.info("Exam submission finished (stress check)", {
+    logger.info("Exam submission finished (performance tests)", {
       submissionId,
       passedCount: execution.passedCount,
       totalTestcases: execution.totalTestcases,
-      executionTimeMs: execution.executionTimeMs,
-      memoryKb: execution.memoryKb,
+      executionTimeMs: perfResult.executionTimeMs,
+      memoryKb: perfResult.memoryKb,
       elapsedMs: Date.now() - startedAt,
-      stressStatus: stressResult.status,
-      sizesTested: stressResult.timings.length,
+      perfStatus: perfResult.status,
+      failedCase: perfResult.failedCaseName,
     });
   } catch (error) {
     if (error instanceof SubmissionExecutionError) {
@@ -221,13 +218,13 @@ export async function processPracticeSubmissionById(selfSubmissionId: string): P
       return;
     }
 
-    const generator = await getProblemTestGeneratorByProblemId(
+    const perfTestCases = await getPerformanceTestCasesByProblemId(
       selfSubmission.problemId,
     );
 
-    if (!generator) {
+    if (perfTestCases.length === 0) {
       await markSelfSubmissionCompleted(selfSubmissionId, execution);
-      logger.info("Practice submission finished (no stress generator)", {
+      logger.info("Practice submission finished (no performance test cases)", {
         selfSubmissionId,
         passedCount: execution.passedCount,
         totalTestcases: execution.totalTestcases,
@@ -238,38 +235,34 @@ export async function processPracticeSubmissionById(selfSubmissionId: string): P
       return;
     }
 
-    const stressResult = await runStressCheck(
+    const constraints = await getPerformanceConstraintsByProblemId(
+      selfSubmission.problemId,
+    );
+
+    const perfResult = await runPerformanceTests(
       selfSubmission,
-      generator,
+      perfTestCases,
+      constraints,
       driver ?? undefined,
     );
 
-    if (!stressResult) {
-      await markSelfSubmissionCompleted(selfSubmissionId, execution);
-      logger.warn("Practice submission skipped stress check", {
-        selfSubmissionId,
-        problemId: selfSubmission.problemId,
-      });
-      return;
-    }
-
-    const stressStatus = stressResult.status === "TIME_LIMIT_EXCEEDED" ? "BAD_SCALING" : "ACCEPTED";
+    const statusOverride = perfResult.status === "ACCEPTED" ? "ACCEPTED" : perfResult.status;
 
     await markSelfSubmissionCompleted(
       selfSubmissionId,
       execution,
-      stressStatus,
+      statusOverride,
     );
 
-    logger.info("Practice submission finished (stress check)", {
+    logger.info("Practice submission finished (performance tests)", {
       selfSubmissionId,
       passedCount: execution.passedCount,
       totalTestcases: execution.totalTestcases,
-      executionTimeMs: execution.executionTimeMs,
-      memoryKb: execution.memoryKb,
+      executionTimeMs: perfResult.executionTimeMs,
+      memoryKb: perfResult.memoryKb,
       elapsedMs: Date.now() - startedAt,
-      stressStatus: stressResult.status,
-      sizesTested: stressResult.timings.length,
+      perfStatus: perfResult.status,
+      failedCase: perfResult.failedCaseName,
     });
   } catch (error) {
     if (error instanceof SubmissionExecutionError) {

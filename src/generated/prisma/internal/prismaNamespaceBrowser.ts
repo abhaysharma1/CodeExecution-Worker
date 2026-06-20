@@ -62,7 +62,8 @@ export const ModelName = {
   referenceSolution: 'referenceSolution',
   RunTestCase: 'RunTestCase',
   selfSubmission: 'selfSubmission',
-  ProblemTestGenerator: 'ProblemTestGenerator',
+  PerformanceConstraints: 'PerformanceConstraints',
+  PerformanceTestCase: 'PerformanceTestCase',
   Exam: 'Exam',
   ExamProblem: 'ExamProblem',
   ExamEnrollment: 'ExamEnrollment',
@@ -257,23 +258,31 @@ export const SelfSubmissionScalarFieldEnum = {
 export type SelfSubmissionScalarFieldEnum = (typeof SelfSubmissionScalarFieldEnum)[keyof typeof SelfSubmissionScalarFieldEnum]
 
 
-export const ProblemTestGeneratorScalarFieldEnum = {
+export const PerformanceConstraintsScalarFieldEnum = {
   id: 'id',
   problemId: 'problemId',
-  type: 'type',
-  pattern: 'pattern',
-  minValue: 'minValue',
-  maxValue: 'maxValue',
   cppTimeLimitMs: 'cppTimeLimitMs',
   javaTimeLimitMs: 'javaTimeLimitMs',
   pythonTimeLimitMs: 'pythonTimeLimitMs',
   jsTimeLimitMs: 'jsTimeLimitMs',
   memoryLimitMB: 'memoryLimitMB',
-  sizes: 'sizes',
   createdAt: 'createdAt'
 } as const
 
-export type ProblemTestGeneratorScalarFieldEnum = (typeof ProblemTestGeneratorScalarFieldEnum)[keyof typeof ProblemTestGeneratorScalarFieldEnum]
+export type PerformanceConstraintsScalarFieldEnum = (typeof PerformanceConstraintsScalarFieldEnum)[keyof typeof PerformanceConstraintsScalarFieldEnum]
+
+
+export const PerformanceTestCaseScalarFieldEnum = {
+  id: 'id',
+  problemId: 'problemId',
+  name: 'name',
+  inputFileKey: 'inputFileKey',
+  outputFileKey: 'outputFileKey',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PerformanceTestCaseScalarFieldEnum = (typeof PerformanceTestCaseScalarFieldEnum)[keyof typeof PerformanceTestCaseScalarFieldEnum]
 
 
 export const ExamScalarFieldEnum = {

@@ -114,7 +114,8 @@ model Problem {
   complexityTestingCases complexityTestingCases?
   driverCode             driverCode[]
   referenceSolutions     referenceSolution[]
-  problemTestGenerators  ProblemTestGenerator?
+  performanceConstraints  PerformanceConstraints?
+  performanceTestCases    PerformanceTestCase[]
   aiconversations        AIConversation[]
   airateLimits           AIRateLimit[]
   groupProblemStats      GroupProblemStats[]
@@ -220,17 +221,11 @@ model selfSubmission {
   @@index([userId])
 }
 
-model ProblemTestGenerator {
+model PerformanceConstraints {
   id String @id @default(uuid())
 
   problemId String  @unique
   problem   Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
-
-  type    GeneratorType
-  pattern GeneratorPattern
-
-  minValue Int
-  maxValue Int
 
   cppTimeLimitMs    Int @default(1000)
   javaTimeLimitMs   Int @default(2000)
@@ -239,24 +234,22 @@ model ProblemTestGenerator {
 
   memoryLimitMB Int @default(256)
 
-  sizes Int[] // e.g. [1000, 10000, 100000]
-
   createdAt DateTime @default(now())
 
   @@index([problemId])
 }
 
-enum GeneratorType {
-  ARRAY
-  STRING
-  MATRIX
-}
+model PerformanceTestCase {
+  id            String   @id @default(uuid())
+  problemId     String
+  problem       Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  name          String
+  inputFileKey  String   // S3 object key for input file
+  outputFileKey String   // S3 object key for expected output file
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-enum GeneratorPattern {
-  RANDOM
-  SORTED
-  REVERSE
-  CONSTANT
+  @@index([problemId])
 }
 
 // ===== Exams & Submissions =====

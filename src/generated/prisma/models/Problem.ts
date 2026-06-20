@@ -241,7 +241,8 @@ export type ProblemWhereInput = {
   complexityTestingCases?: Prisma.XOR<Prisma.ComplexityTestingCasesNullableScalarRelationFilter, Prisma.complexityTestingCasesWhereInput> | null
   driverCode?: Prisma.DriverCodeListRelationFilter
   referenceSolutions?: Prisma.ReferenceSolutionListRelationFilter
-  problemTestGenerators?: Prisma.XOR<Prisma.ProblemTestGeneratorNullableScalarRelationFilter, Prisma.ProblemTestGeneratorWhereInput> | null
+  performanceConstraints?: Prisma.XOR<Prisma.PerformanceConstraintsNullableScalarRelationFilter, Prisma.PerformanceConstraintsWhereInput> | null
+  performanceTestCases?: Prisma.PerformanceTestCaseListRelationFilter
   aiconversations?: Prisma.AIConversationListRelationFilter
   airateLimits?: Prisma.AIRateLimitListRelationFilter
   groupProblemStats?: Prisma.GroupProblemStatsListRelationFilter
@@ -265,7 +266,8 @@ export type ProblemOrderByWithRelationInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesOrderByWithRelationInput
   driverCode?: Prisma.driverCodeOrderByRelationAggregateInput
   referenceSolutions?: Prisma.referenceSolutionOrderByRelationAggregateInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorOrderByWithRelationInput
+  performanceConstraints?: Prisma.PerformanceConstraintsOrderByWithRelationInput
+  performanceTestCases?: Prisma.PerformanceTestCaseOrderByRelationAggregateInput
   aiconversations?: Prisma.AIConversationOrderByRelationAggregateInput
   airateLimits?: Prisma.AIRateLimitOrderByRelationAggregateInput
   groupProblemStats?: Prisma.GroupProblemStatsOrderByRelationAggregateInput
@@ -292,7 +294,8 @@ export type ProblemWhereUniqueInput = Prisma.AtLeast<{
   complexityTestingCases?: Prisma.XOR<Prisma.ComplexityTestingCasesNullableScalarRelationFilter, Prisma.complexityTestingCasesWhereInput> | null
   driverCode?: Prisma.DriverCodeListRelationFilter
   referenceSolutions?: Prisma.ReferenceSolutionListRelationFilter
-  problemTestGenerators?: Prisma.XOR<Prisma.ProblemTestGeneratorNullableScalarRelationFilter, Prisma.ProblemTestGeneratorWhereInput> | null
+  performanceConstraints?: Prisma.XOR<Prisma.PerformanceConstraintsNullableScalarRelationFilter, Prisma.PerformanceConstraintsWhereInput> | null
+  performanceTestCases?: Prisma.PerformanceTestCaseListRelationFilter
   aiconversations?: Prisma.AIConversationListRelationFilter
   airateLimits?: Prisma.AIRateLimitListRelationFilter
   groupProblemStats?: Prisma.GroupProblemStatsListRelationFilter
@@ -344,7 +347,8 @@ export type ProblemCreateInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -368,7 +372,8 @@ export type ProblemUncheckedCreateInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -392,7 +397,8 @@ export type ProblemUpdateInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -416,7 +422,8 @@ export type ProblemUncheckedUpdateInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -592,18 +599,32 @@ export type ProblemUpdateOneRequiredWithoutSelfSubmissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProblemUpdateToOneWithWhereWithoutSelfSubmissionsInput, Prisma.ProblemUpdateWithoutSelfSubmissionsInput>, Prisma.ProblemUncheckedUpdateWithoutSelfSubmissionsInput>
 }
 
-export type ProblemCreateNestedOneWithoutProblemTestGeneratorsInput = {
-  create?: Prisma.XOR<Prisma.ProblemCreateWithoutProblemTestGeneratorsInput, Prisma.ProblemUncheckedCreateWithoutProblemTestGeneratorsInput>
-  connectOrCreate?: Prisma.ProblemCreateOrConnectWithoutProblemTestGeneratorsInput
+export type ProblemCreateNestedOneWithoutPerformanceConstraintsInput = {
+  create?: Prisma.XOR<Prisma.ProblemCreateWithoutPerformanceConstraintsInput, Prisma.ProblemUncheckedCreateWithoutPerformanceConstraintsInput>
+  connectOrCreate?: Prisma.ProblemCreateOrConnectWithoutPerformanceConstraintsInput
   connect?: Prisma.ProblemWhereUniqueInput
 }
 
-export type ProblemUpdateOneRequiredWithoutProblemTestGeneratorsNestedInput = {
-  create?: Prisma.XOR<Prisma.ProblemCreateWithoutProblemTestGeneratorsInput, Prisma.ProblemUncheckedCreateWithoutProblemTestGeneratorsInput>
-  connectOrCreate?: Prisma.ProblemCreateOrConnectWithoutProblemTestGeneratorsInput
-  upsert?: Prisma.ProblemUpsertWithoutProblemTestGeneratorsInput
+export type ProblemUpdateOneRequiredWithoutPerformanceConstraintsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProblemCreateWithoutPerformanceConstraintsInput, Prisma.ProblemUncheckedCreateWithoutPerformanceConstraintsInput>
+  connectOrCreate?: Prisma.ProblemCreateOrConnectWithoutPerformanceConstraintsInput
+  upsert?: Prisma.ProblemUpsertWithoutPerformanceConstraintsInput
   connect?: Prisma.ProblemWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProblemUpdateToOneWithWhereWithoutProblemTestGeneratorsInput, Prisma.ProblemUpdateWithoutProblemTestGeneratorsInput>, Prisma.ProblemUncheckedUpdateWithoutProblemTestGeneratorsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProblemUpdateToOneWithWhereWithoutPerformanceConstraintsInput, Prisma.ProblemUpdateWithoutPerformanceConstraintsInput>, Prisma.ProblemUncheckedUpdateWithoutPerformanceConstraintsInput>
+}
+
+export type ProblemCreateNestedOneWithoutPerformanceTestCasesInput = {
+  create?: Prisma.XOR<Prisma.ProblemCreateWithoutPerformanceTestCasesInput, Prisma.ProblemUncheckedCreateWithoutPerformanceTestCasesInput>
+  connectOrCreate?: Prisma.ProblemCreateOrConnectWithoutPerformanceTestCasesInput
+  connect?: Prisma.ProblemWhereUniqueInput
+}
+
+export type ProblemUpdateOneRequiredWithoutPerformanceTestCasesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProblemCreateWithoutPerformanceTestCasesInput, Prisma.ProblemUncheckedCreateWithoutPerformanceTestCasesInput>
+  connectOrCreate?: Prisma.ProblemCreateOrConnectWithoutPerformanceTestCasesInput
+  upsert?: Prisma.ProblemUpsertWithoutPerformanceTestCasesInput
+  connect?: Prisma.ProblemWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProblemUpdateToOneWithWhereWithoutPerformanceTestCasesInput, Prisma.ProblemUpdateWithoutPerformanceTestCasesInput>, Prisma.ProblemUncheckedUpdateWithoutPerformanceTestCasesInput>
 }
 
 export type ProblemCreateNestedOneWithoutExamProblemsInput = {
@@ -720,7 +741,8 @@ export type ProblemCreateWithoutTestCaseInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -743,7 +765,8 @@ export type ProblemUncheckedCreateWithoutTestCaseInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -782,7 +805,8 @@ export type ProblemUpdateWithoutTestCaseInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -805,7 +829,8 @@ export type ProblemUncheckedUpdateWithoutTestCaseInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -828,7 +853,8 @@ export type ProblemCreateWithoutComplexityTestingCasesInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -851,7 +877,8 @@ export type ProblemUncheckedCreateWithoutComplexityTestingCasesInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -890,7 +917,8 @@ export type ProblemUpdateWithoutComplexityTestingCasesInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -913,7 +941,8 @@ export type ProblemUncheckedUpdateWithoutComplexityTestingCasesInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -936,7 +965,8 @@ export type ProblemCreateWithoutDriverCodeInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutProblemInput
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -959,7 +989,8 @@ export type ProblemUncheckedCreateWithoutDriverCodeInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutProblemInput
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -998,7 +1029,8 @@ export type ProblemUpdateWithoutDriverCodeInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutProblemNestedInput
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -1021,7 +1053,8 @@ export type ProblemUncheckedUpdateWithoutDriverCodeInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutProblemNestedInput
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -1044,7 +1077,8 @@ export type ProblemCreateWithoutReferenceSolutionsInput = {
   submissions?: Prisma.SubmissionCreateNestedManyWithoutProblemInput
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -1067,7 +1101,8 @@ export type ProblemUncheckedCreateWithoutReferenceSolutionsInput = {
   submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutProblemInput
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -1106,7 +1141,8 @@ export type ProblemUpdateWithoutReferenceSolutionsInput = {
   submissions?: Prisma.SubmissionUpdateManyWithoutProblemNestedInput
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -1129,7 +1165,8 @@ export type ProblemUncheckedUpdateWithoutReferenceSolutionsInput = {
   submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutProblemNestedInput
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -1152,7 +1189,8 @@ export type ProblemCreateWithoutRunTestCaseInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -1175,7 +1213,8 @@ export type ProblemUncheckedCreateWithoutRunTestCaseInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -1214,7 +1253,8 @@ export type ProblemUpdateWithoutRunTestCaseInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -1237,7 +1277,8 @@ export type ProblemUncheckedUpdateWithoutRunTestCaseInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -1260,7 +1301,8 @@ export type ProblemCreateWithoutSelfSubmissionsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -1283,7 +1325,8 @@ export type ProblemUncheckedCreateWithoutSelfSubmissionsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -1322,7 +1365,8 @@ export type ProblemUpdateWithoutSelfSubmissionsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -1345,14 +1389,15 @@ export type ProblemUncheckedUpdateWithoutSelfSubmissionsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
 }
 
-export type ProblemCreateWithoutProblemTestGeneratorsInput = {
+export type ProblemCreateWithoutPerformanceConstraintsInput = {
   id?: string
   number: number
   title: string
@@ -1369,13 +1414,14 @@ export type ProblemCreateWithoutProblemTestGeneratorsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutProblemInput
 }
 
-export type ProblemUncheckedCreateWithoutProblemTestGeneratorsInput = {
+export type ProblemUncheckedCreateWithoutPerformanceConstraintsInput = {
   id?: string
   number: number
   title: string
@@ -1392,29 +1438,30 @@ export type ProblemUncheckedCreateWithoutProblemTestGeneratorsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutProblemInput
 }
 
-export type ProblemCreateOrConnectWithoutProblemTestGeneratorsInput = {
+export type ProblemCreateOrConnectWithoutPerformanceConstraintsInput = {
   where: Prisma.ProblemWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProblemCreateWithoutProblemTestGeneratorsInput, Prisma.ProblemUncheckedCreateWithoutProblemTestGeneratorsInput>
+  create: Prisma.XOR<Prisma.ProblemCreateWithoutPerformanceConstraintsInput, Prisma.ProblemUncheckedCreateWithoutPerformanceConstraintsInput>
 }
 
-export type ProblemUpsertWithoutProblemTestGeneratorsInput = {
-  update: Prisma.XOR<Prisma.ProblemUpdateWithoutProblemTestGeneratorsInput, Prisma.ProblemUncheckedUpdateWithoutProblemTestGeneratorsInput>
-  create: Prisma.XOR<Prisma.ProblemCreateWithoutProblemTestGeneratorsInput, Prisma.ProblemUncheckedCreateWithoutProblemTestGeneratorsInput>
+export type ProblemUpsertWithoutPerformanceConstraintsInput = {
+  update: Prisma.XOR<Prisma.ProblemUpdateWithoutPerformanceConstraintsInput, Prisma.ProblemUncheckedUpdateWithoutPerformanceConstraintsInput>
+  create: Prisma.XOR<Prisma.ProblemCreateWithoutPerformanceConstraintsInput, Prisma.ProblemUncheckedCreateWithoutPerformanceConstraintsInput>
   where?: Prisma.ProblemWhereInput
 }
 
-export type ProblemUpdateToOneWithWhereWithoutProblemTestGeneratorsInput = {
+export type ProblemUpdateToOneWithWhereWithoutPerformanceConstraintsInput = {
   where?: Prisma.ProblemWhereInput
-  data: Prisma.XOR<Prisma.ProblemUpdateWithoutProblemTestGeneratorsInput, Prisma.ProblemUncheckedUpdateWithoutProblemTestGeneratorsInput>
+  data: Prisma.XOR<Prisma.ProblemUpdateWithoutPerformanceConstraintsInput, Prisma.ProblemUncheckedUpdateWithoutPerformanceConstraintsInput>
 }
 
-export type ProblemUpdateWithoutProblemTestGeneratorsInput = {
+export type ProblemUpdateWithoutPerformanceConstraintsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1431,13 +1478,14 @@ export type ProblemUpdateWithoutProblemTestGeneratorsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutProblemNestedInput
 }
 
-export type ProblemUncheckedUpdateWithoutProblemTestGeneratorsInput = {
+export type ProblemUncheckedUpdateWithoutPerformanceConstraintsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   number?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1454,6 +1502,119 @@ export type ProblemUncheckedUpdateWithoutProblemTestGeneratorsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
+  aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
+  airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
+  groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
+  studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
+}
+
+export type ProblemCreateWithoutPerformanceTestCasesInput = {
+  id?: string
+  number: number
+  title: string
+  description: string
+  difficulty: $Enums.problemDifficulty
+  source?: string
+  isPublished?: boolean
+  examProblems?: Prisma.ExamProblemCreateNestedManyWithoutProblemInput
+  tags?: Prisma.ProblemTagCreateNestedManyWithoutProblemInput
+  testCase?: Prisma.TestCaseCreateNestedOneWithoutProblemInput
+  runTestCase?: Prisma.RunTestCaseCreateNestedOneWithoutProblemInput
+  selfSubmissions?: Prisma.selfSubmissionCreateNestedManyWithoutProblemInput
+  submissions?: Prisma.SubmissionCreateNestedManyWithoutProblemInput
+  complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
+  driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
+  referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
+  airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
+  groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
+  studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutProblemInput
+}
+
+export type ProblemUncheckedCreateWithoutPerformanceTestCasesInput = {
+  id?: string
+  number: number
+  title: string
+  description: string
+  difficulty: $Enums.problemDifficulty
+  source?: string
+  isPublished?: boolean
+  examProblems?: Prisma.ExamProblemUncheckedCreateNestedManyWithoutProblemInput
+  tags?: Prisma.ProblemTagUncheckedCreateNestedManyWithoutProblemInput
+  testCase?: Prisma.TestCaseUncheckedCreateNestedOneWithoutProblemInput
+  runTestCase?: Prisma.RunTestCaseUncheckedCreateNestedOneWithoutProblemInput
+  selfSubmissions?: Prisma.selfSubmissionUncheckedCreateNestedManyWithoutProblemInput
+  submissions?: Prisma.SubmissionUncheckedCreateNestedManyWithoutProblemInput
+  complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
+  driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
+  referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
+  airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
+  groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
+  studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutProblemInput
+}
+
+export type ProblemCreateOrConnectWithoutPerformanceTestCasesInput = {
+  where: Prisma.ProblemWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProblemCreateWithoutPerformanceTestCasesInput, Prisma.ProblemUncheckedCreateWithoutPerformanceTestCasesInput>
+}
+
+export type ProblemUpsertWithoutPerformanceTestCasesInput = {
+  update: Prisma.XOR<Prisma.ProblemUpdateWithoutPerformanceTestCasesInput, Prisma.ProblemUncheckedUpdateWithoutPerformanceTestCasesInput>
+  create: Prisma.XOR<Prisma.ProblemCreateWithoutPerformanceTestCasesInput, Prisma.ProblemUncheckedCreateWithoutPerformanceTestCasesInput>
+  where?: Prisma.ProblemWhereInput
+}
+
+export type ProblemUpdateToOneWithWhereWithoutPerformanceTestCasesInput = {
+  where?: Prisma.ProblemWhereInput
+  data: Prisma.XOR<Prisma.ProblemUpdateWithoutPerformanceTestCasesInput, Prisma.ProblemUncheckedUpdateWithoutPerformanceTestCasesInput>
+}
+
+export type ProblemUpdateWithoutPerformanceTestCasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumproblemDifficultyFieldUpdateOperationsInput | $Enums.problemDifficulty
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  examProblems?: Prisma.ExamProblemUpdateManyWithoutProblemNestedInput
+  tags?: Prisma.ProblemTagUpdateManyWithoutProblemNestedInput
+  testCase?: Prisma.TestCaseUpdateOneWithoutProblemNestedInput
+  runTestCase?: Prisma.RunTestCaseUpdateOneWithoutProblemNestedInput
+  selfSubmissions?: Prisma.selfSubmissionUpdateManyWithoutProblemNestedInput
+  submissions?: Prisma.SubmissionUpdateManyWithoutProblemNestedInput
+  complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
+  driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
+  referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
+  airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
+  groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
+  studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutProblemNestedInput
+}
+
+export type ProblemUncheckedUpdateWithoutPerformanceTestCasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  number?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  difficulty?: Prisma.EnumproblemDifficultyFieldUpdateOperationsInput | $Enums.problemDifficulty
+  source?: Prisma.StringFieldUpdateOperationsInput | string
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  examProblems?: Prisma.ExamProblemUncheckedUpdateManyWithoutProblemNestedInput
+  tags?: Prisma.ProblemTagUncheckedUpdateManyWithoutProblemNestedInput
+  testCase?: Prisma.TestCaseUncheckedUpdateOneWithoutProblemNestedInput
+  runTestCase?: Prisma.RunTestCaseUncheckedUpdateOneWithoutProblemNestedInput
+  selfSubmissions?: Prisma.selfSubmissionUncheckedUpdateManyWithoutProblemNestedInput
+  submissions?: Prisma.SubmissionUncheckedUpdateManyWithoutProblemNestedInput
+  complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
+  driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
+  referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -1476,7 +1637,8 @@ export type ProblemCreateWithoutExamProblemsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -1499,7 +1661,8 @@ export type ProblemUncheckedCreateWithoutExamProblemsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -1538,7 +1701,8 @@ export type ProblemUpdateWithoutExamProblemsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -1561,7 +1725,8 @@ export type ProblemUncheckedUpdateWithoutExamProblemsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -1584,7 +1749,8 @@ export type ProblemCreateWithoutSubmissionsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -1607,7 +1773,8 @@ export type ProblemUncheckedCreateWithoutSubmissionsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -1646,7 +1813,8 @@ export type ProblemUpdateWithoutSubmissionsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -1669,7 +1837,8 @@ export type ProblemUncheckedUpdateWithoutSubmissionsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -1692,7 +1861,8 @@ export type ProblemCreateWithoutTagsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -1715,7 +1885,8 @@ export type ProblemUncheckedCreateWithoutTagsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -1754,7 +1925,8 @@ export type ProblemUpdateWithoutTagsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -1777,7 +1949,8 @@ export type ProblemUncheckedUpdateWithoutTagsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -1801,7 +1974,8 @@ export type ProblemCreateWithoutAiconversationsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutProblemInput
@@ -1824,7 +1998,8 @@ export type ProblemUncheckedCreateWithoutAiconversationsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -1863,7 +2038,8 @@ export type ProblemUpdateWithoutAiconversationsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutProblemNestedInput
@@ -1886,7 +2062,8 @@ export type ProblemUncheckedUpdateWithoutAiconversationsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -1909,7 +2086,8 @@ export type ProblemCreateWithoutAirateLimitsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutProblemInput
@@ -1932,7 +2110,8 @@ export type ProblemUncheckedCreateWithoutAirateLimitsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -1971,7 +2150,8 @@ export type ProblemUpdateWithoutAirateLimitsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutProblemNestedInput
@@ -1994,7 +2174,8 @@ export type ProblemUncheckedUpdateWithoutAirateLimitsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -2017,7 +2198,8 @@ export type ProblemCreateWithoutGroupProblemStatsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   studentProblemStats?: Prisma.StudentProblemStatsCreateNestedManyWithoutProblemInput
@@ -2040,7 +2222,8 @@ export type ProblemUncheckedCreateWithoutGroupProblemStatsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -2079,7 +2262,8 @@ export type ProblemUpdateWithoutGroupProblemStatsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUpdateManyWithoutProblemNestedInput
@@ -2102,7 +2286,8 @@ export type ProblemUncheckedUpdateWithoutGroupProblemStatsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   studentProblemStats?: Prisma.StudentProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -2125,7 +2310,8 @@ export type ProblemCreateWithoutStudentProblemStatsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsCreateNestedManyWithoutProblemInput
@@ -2148,7 +2334,8 @@ export type ProblemUncheckedCreateWithoutStudentProblemStatsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedCreateNestedOneWithoutProblemInput
   driverCode?: Prisma.driverCodeUncheckedCreateNestedManyWithoutProblemInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedCreateNestedManyWithoutProblemInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedCreateNestedOneWithoutProblemInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedCreateNestedOneWithoutProblemInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedCreateNestedManyWithoutProblemInput
   aiconversations?: Prisma.AIConversationUncheckedCreateNestedManyWithoutProblemInput
   airateLimits?: Prisma.AIRateLimitUncheckedCreateNestedManyWithoutProblemInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedCreateNestedManyWithoutProblemInput
@@ -2187,7 +2374,8 @@ export type ProblemUpdateWithoutStudentProblemStatsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUpdateManyWithoutProblemNestedInput
@@ -2210,7 +2398,8 @@ export type ProblemUncheckedUpdateWithoutStudentProblemStatsInput = {
   complexityTestingCases?: Prisma.complexityTestingCasesUncheckedUpdateOneWithoutProblemNestedInput
   driverCode?: Prisma.driverCodeUncheckedUpdateManyWithoutProblemNestedInput
   referenceSolutions?: Prisma.referenceSolutionUncheckedUpdateManyWithoutProblemNestedInput
-  problemTestGenerators?: Prisma.ProblemTestGeneratorUncheckedUpdateOneWithoutProblemNestedInput
+  performanceConstraints?: Prisma.PerformanceConstraintsUncheckedUpdateOneWithoutProblemNestedInput
+  performanceTestCases?: Prisma.PerformanceTestCaseUncheckedUpdateManyWithoutProblemNestedInput
   aiconversations?: Prisma.AIConversationUncheckedUpdateManyWithoutProblemNestedInput
   airateLimits?: Prisma.AIRateLimitUncheckedUpdateManyWithoutProblemNestedInput
   groupProblemStats?: Prisma.GroupProblemStatsUncheckedUpdateManyWithoutProblemNestedInput
@@ -2228,6 +2417,7 @@ export type ProblemCountOutputType = {
   submissions: number
   driverCode: number
   referenceSolutions: number
+  performanceTestCases: number
   aiconversations: number
   airateLimits: number
   groupProblemStats: number
@@ -2241,6 +2431,7 @@ export type ProblemCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   submissions?: boolean | ProblemCountOutputTypeCountSubmissionsArgs
   driverCode?: boolean | ProblemCountOutputTypeCountDriverCodeArgs
   referenceSolutions?: boolean | ProblemCountOutputTypeCountReferenceSolutionsArgs
+  performanceTestCases?: boolean | ProblemCountOutputTypeCountPerformanceTestCasesArgs
   aiconversations?: boolean | ProblemCountOutputTypeCountAiconversationsArgs
   airateLimits?: boolean | ProblemCountOutputTypeCountAirateLimitsArgs
   groupProblemStats?: boolean | ProblemCountOutputTypeCountGroupProblemStatsArgs
@@ -2302,6 +2493,13 @@ export type ProblemCountOutputTypeCountReferenceSolutionsArgs<ExtArgs extends ru
 /**
  * ProblemCountOutputType without action
  */
+export type ProblemCountOutputTypeCountPerformanceTestCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PerformanceTestCaseWhereInput
+}
+
+/**
+ * ProblemCountOutputType without action
+ */
 export type ProblemCountOutputTypeCountAiconversationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AIConversationWhereInput
 }
@@ -2345,7 +2543,8 @@ export type ProblemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   complexityTestingCases?: boolean | Prisma.Problem$complexityTestingCasesArgs<ExtArgs>
   driverCode?: boolean | Prisma.Problem$driverCodeArgs<ExtArgs>
   referenceSolutions?: boolean | Prisma.Problem$referenceSolutionsArgs<ExtArgs>
-  problemTestGenerators?: boolean | Prisma.Problem$problemTestGeneratorsArgs<ExtArgs>
+  performanceConstraints?: boolean | Prisma.Problem$performanceConstraintsArgs<ExtArgs>
+  performanceTestCases?: boolean | Prisma.Problem$performanceTestCasesArgs<ExtArgs>
   aiconversations?: boolean | Prisma.Problem$aiconversationsArgs<ExtArgs>
   airateLimits?: boolean | Prisma.Problem$airateLimitsArgs<ExtArgs>
   groupProblemStats?: boolean | Prisma.Problem$groupProblemStatsArgs<ExtArgs>
@@ -2394,7 +2593,8 @@ export type ProblemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   complexityTestingCases?: boolean | Prisma.Problem$complexityTestingCasesArgs<ExtArgs>
   driverCode?: boolean | Prisma.Problem$driverCodeArgs<ExtArgs>
   referenceSolutions?: boolean | Prisma.Problem$referenceSolutionsArgs<ExtArgs>
-  problemTestGenerators?: boolean | Prisma.Problem$problemTestGeneratorsArgs<ExtArgs>
+  performanceConstraints?: boolean | Prisma.Problem$performanceConstraintsArgs<ExtArgs>
+  performanceTestCases?: boolean | Prisma.Problem$performanceTestCasesArgs<ExtArgs>
   aiconversations?: boolean | Prisma.Problem$aiconversationsArgs<ExtArgs>
   airateLimits?: boolean | Prisma.Problem$airateLimitsArgs<ExtArgs>
   groupProblemStats?: boolean | Prisma.Problem$groupProblemStatsArgs<ExtArgs>
@@ -2416,7 +2616,8 @@ export type $ProblemPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     complexityTestingCases: Prisma.$complexityTestingCasesPayload<ExtArgs> | null
     driverCode: Prisma.$driverCodePayload<ExtArgs>[]
     referenceSolutions: Prisma.$referenceSolutionPayload<ExtArgs>[]
-    problemTestGenerators: Prisma.$ProblemTestGeneratorPayload<ExtArgs> | null
+    performanceConstraints: Prisma.$PerformanceConstraintsPayload<ExtArgs> | null
+    performanceTestCases: Prisma.$PerformanceTestCasePayload<ExtArgs>[]
     aiconversations: Prisma.$AIConversationPayload<ExtArgs>[]
     airateLimits: Prisma.$AIRateLimitPayload<ExtArgs>[]
     groupProblemStats: Prisma.$GroupProblemStatsPayload<ExtArgs>[]
@@ -2833,7 +3034,8 @@ export interface Prisma__ProblemClient<T, Null = never, ExtArgs extends runtime.
   complexityTestingCases<T extends Prisma.Problem$complexityTestingCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Problem$complexityTestingCasesArgs<ExtArgs>>): Prisma.Prisma__complexityTestingCasesClient<runtime.Types.Result.GetResult<Prisma.$complexityTestingCasesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   driverCode<T extends Prisma.Problem$driverCodeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Problem$driverCodeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$driverCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   referenceSolutions<T extends Prisma.Problem$referenceSolutionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Problem$referenceSolutionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$referenceSolutionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  problemTestGenerators<T extends Prisma.Problem$problemTestGeneratorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Problem$problemTestGeneratorsArgs<ExtArgs>>): Prisma.Prisma__ProblemTestGeneratorClient<runtime.Types.Result.GetResult<Prisma.$ProblemTestGeneratorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  performanceConstraints<T extends Prisma.Problem$performanceConstraintsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Problem$performanceConstraintsArgs<ExtArgs>>): Prisma.Prisma__PerformanceConstraintsClient<runtime.Types.Result.GetResult<Prisma.$PerformanceConstraintsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  performanceTestCases<T extends Prisma.Problem$performanceTestCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Problem$performanceTestCasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PerformanceTestCasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   aiconversations<T extends Prisma.Problem$aiconversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Problem$aiconversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AIConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   airateLimits<T extends Prisma.Problem$airateLimitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Problem$airateLimitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AIRateLimitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   groupProblemStats<T extends Prisma.Problem$groupProblemStatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Problem$groupProblemStatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupProblemStatsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3468,22 +3670,46 @@ export type Problem$referenceSolutionsArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
- * Problem.problemTestGenerators
+ * Problem.performanceConstraints
  */
-export type Problem$problemTestGeneratorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Problem$performanceConstraintsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ProblemTestGenerator
+   * Select specific fields to fetch from the PerformanceConstraints
    */
-  select?: Prisma.ProblemTestGeneratorSelect<ExtArgs> | null
+  select?: Prisma.PerformanceConstraintsSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ProblemTestGenerator
+   * Omit specific fields from the PerformanceConstraints
    */
-  omit?: Prisma.ProblemTestGeneratorOmit<ExtArgs> | null
+  omit?: Prisma.PerformanceConstraintsOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ProblemTestGeneratorInclude<ExtArgs> | null
-  where?: Prisma.ProblemTestGeneratorWhereInput
+  include?: Prisma.PerformanceConstraintsInclude<ExtArgs> | null
+  where?: Prisma.PerformanceConstraintsWhereInput
+}
+
+/**
+ * Problem.performanceTestCases
+ */
+export type Problem$performanceTestCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PerformanceTestCase
+   */
+  select?: Prisma.PerformanceTestCaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PerformanceTestCase
+   */
+  omit?: Prisma.PerformanceTestCaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PerformanceTestCaseInclude<ExtArgs> | null
+  where?: Prisma.PerformanceTestCaseWhereInput
+  orderBy?: Prisma.PerformanceTestCaseOrderByWithRelationInput | Prisma.PerformanceTestCaseOrderByWithRelationInput[]
+  cursor?: Prisma.PerformanceTestCaseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PerformanceTestCaseScalarFieldEnum | Prisma.PerformanceTestCaseScalarFieldEnum[]
 }
 
 /**

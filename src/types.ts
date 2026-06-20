@@ -53,3 +53,10 @@ export interface ExecuteCodeResponse {
   timeMs: number;
   memoryKb: number;
 }
+
+export interface PerformanceTestResult {
+  status: "ACCEPTED" | "WRONG_ANSWER" | "BAD_SCALING";
+  executionTimeMs: number;
+  memoryKb: number;
+  failedCaseName?: string;
+}
