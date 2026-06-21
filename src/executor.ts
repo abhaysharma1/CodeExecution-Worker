@@ -1,8 +1,6 @@
 import axios from "axios";
 import { config } from "./config";
-import type {
-  PerformanceConstraints,
-} from "./generated/prisma/client";
+import type { PerformanceConstraints } from "./generated/prisma/client";
 import { downloadFromS3 } from "./s3";
 import {
   ExecutionFailureContext,
@@ -544,7 +542,11 @@ export async function executeSubmission(
 
 export async function runPerformanceTests(
   submission: SubmissionCodeSource,
-  perfTestCases: Array<{ name: string; inputFileKey: string; outputFileKey: string }>,
+  perfTestCases: Array<{
+    name: string;
+    inputFileKey: string;
+    outputFileKey: string;
+  }>,
   constraints: PerformanceConstraints | null,
   driver?: DriverCodeSource,
 ): Promise<PerformanceTestResult> {
@@ -584,9 +586,9 @@ export async function runPerformanceTests(
     const normalizedActual = normalizeForCompare(result.stdout ?? "");
     const normalizedExpected = normalizeForCompare(expectedOutput);
 
-    if (normalizedActual !== normalizedExpected) {
+    if (lastExecutionTimeMs > effectiveTimeLimit) {
       return {
-        status: "WRONG_ANSWER",
+        status: "BAD_SCALING",
         executionTimeMs: lastExecutionTimeMs,
         memoryKb: lastMemoryKb,
         failedCaseName: perfCase.name,
@@ -595,9 +597,9 @@ export async function runPerformanceTests(
       };
     }
 
-    if (lastExecutionTimeMs > effectiveTimeLimit) {
+    if (normalizedActual !== normalizedExpected) {
       return {
-        status: "BAD_SCALING",
+        status: "WRONG_ANSWER",
         executionTimeMs: lastExecutionTimeMs,
         memoryKb: lastMemoryKb,
         failedCaseName: perfCase.name,
