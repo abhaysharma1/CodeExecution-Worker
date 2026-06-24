@@ -329,8 +329,8 @@ async function runCode(
         version: request.version ?? "*",
         files: request.files,
         stdin: request.stdin ?? "",
-        run_timeout: request.run_timeout,
-        compile_timeout: request.compile_timeout
+        run_timeout: request.run_timeout ?? 5000,
+        compile_timeout: request.compile_timeout ?? 5000,
       },
       {
         timeout: 30_000,
