@@ -329,6 +329,8 @@ async function runCode(
         version: request.version ?? "*",
         files: request.files,
         stdin: request.stdin ?? "",
+        run_timeout: request.run_timeout,
+        compile_timeout: request.compile_timeout
       },
       {
         timeout: 30_000,
@@ -577,6 +579,8 @@ export async function runPerformanceTests(
           content: sourceCode,
         },
       ],
+      run_timeout: effectiveTimeLimit + 500,
+      compile_timeout: 5000,
       stdin: inputContent,
     });
 

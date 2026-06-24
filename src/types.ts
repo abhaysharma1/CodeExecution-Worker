@@ -44,6 +44,8 @@ export interface ExecuteCodeRequest {
     content: string;
   }>;
   stdin?: string;
+  run_timeout: number;
+  compile_timeout: number;
 }
 
 export interface ExecuteCodeResponse {
