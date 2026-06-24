@@ -579,7 +579,7 @@ export async function runPerformanceTests(
           content: sourceCode,
         },
       ],
-      run_timeout: effectiveTimeLimit + 500,
+      run_timeout: effectiveTimeLimit + 50,
       compile_timeout: 5000,
       stdin: inputContent,
     });
